@@ -113,6 +113,7 @@ input {
 body,
 body[data-theme="light"] {
   --color-bg: #fffffe;
+  --color-card-bg: #94a1b2;
   --color-title: #010101;
   --color-paragraph: #16161a;
   --color-stroke: #010101;
@@ -123,6 +124,7 @@ body[data-theme="light"] {
 
 body[data-theme="dark"] {
   --color-bg: #16161a;
+  --color-card-bg: #242629;
   --color-title: #fffffe;
   --color-paragraph: #94a1b2;
   --color-stroke: #010101;
