@@ -1,9 +1,145 @@
+/* reset */
+html,
+body,
+div,
+span,
+object,
+iframe,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+code,
+em,
+img,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+b,
+u,
+i,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+main,
+canvas,
+embed,
+footer,
+header,
+nav,
+section,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: none;
+}
+
+footer,
+header,
+nav,
+section,
+main {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  color: inherit;
+  font: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+/* styles/globals.css */
+
+body,
+body[data-theme="light"] {
+  --color-bg: #fffffe;
+  --color-title: #010101;
+  --color-paragraph: #16161a;
+  --color-stroke: #010101;
+  --color-purple: #7f5af0;
+  --color-green: #2cb67d;
+  --color-bg-toggle: #7f5af0;
+}
+
+body[data-theme="dark"] {
+  --color-bg: #16161a;
+  --color-title: #fffffe;
+  --color-paragraph: #94a1b2;
+  --color-stroke: #010101;
+  --color-purple: #7f5af0;
+  --color-green: #2cb67d;
+  --color-bg-toggle: #2cb67d;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background 0.25s ease-in-out;
 }
 
 a {
@@ -12,5 +148,24 @@ a {
 }
 
 * {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-title);
+}
+
+p {
+  color: var(--color-paragraph);
+}
+
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
