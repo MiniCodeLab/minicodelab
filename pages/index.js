@@ -10,14 +10,14 @@ export default function Home() {
     <div>
       <Head>
         <title>Mini Code Lab {'/>'}</title>
-        <link rel="icon" href="/icon-flask.png" />
+        <link rel="icon" href="/flask.png" />
       </Head>
       <UiMenu>
         <Menu />
       </UiMenu>
       <Card>
         <div className="card-header">
-          <Image src="/icon-flask.png" alt="Flask" width={100} height={100} />
+          <Image src="/flask.png" alt="Flask" width={100} height={100} />
           <h1>Hola somos Mini Code Lab</h1>
           <Button>Click Me!</Button>
         </div>

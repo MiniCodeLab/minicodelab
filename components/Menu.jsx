@@ -12,22 +12,22 @@ const Menu = () => {
         <ul>
             <li>
                 <Link href="/">
-                    <a><Image src="/icon-flask.png" alt="Flask" width={50} height={50} /></a>
+                    <a><Image src="/flask.png" alt="Flask icon" width={50} height={50} /></a>
                 </Link>
             </li>
             <li>
                 <Link href="/feed">
-                    <a>Feed</a>
+                <a><Image src="/feed.png" alt="Feed icon" width={50} height={50} /></a>
                 </Link>
             </li>
             <li>
                 <Link href="/calendar">
-                    <a>Calendar</a>
+                <a><Image src="/calendar.png" alt="Calendar icon" width={50} height={50} /></a>
                 </Link>
             </li>
             <li>
                 <Link href="/about">
-                    <a>About</a>
+                <a><Image src="/about.png" alt="About icon" width={50} height={50} /></a>
                 </Link>
             </li>
             <li>
