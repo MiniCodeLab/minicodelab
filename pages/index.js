@@ -17,7 +17,7 @@ export default function Home() {
       </UiMenu>
       <Card>
         <div className="card-header">
-          <Image src="/flask.png" alt="Flask" width={100} height={100} />
+          <Image src="/logo.png" alt="Mini Code Lab logo" width={100} height={100} />
           <h1>Hola somos Mini Code Lab</h1>
           <Button>Click Me!</Button>
         </div>
