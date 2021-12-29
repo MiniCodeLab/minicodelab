@@ -1,4 +1,4 @@
-/* reset */
+/* RESET */
 html,
 body,
 div,
@@ -96,6 +96,12 @@ button {
   outline: none;
   color: inherit;
   font: inherit;
+  font-size: 1.1rem;
+  padding: 10px;
+  font-weight: 500;
+}
+button:hover {
+  cursor: pointer;
 }
 
 table {
@@ -108,8 +114,7 @@ input {
   border-radius: 0;
 }
 
-/* styles/globals.css */
-
+/* THEMES */
 body,
 body[data-theme="light"] {
   --color-bg: #fffffe;
@@ -133,6 +138,7 @@ body[data-theme="dark"] {
   --color-bg-toggle: #2cb67d;
 }
 
+/* GLOBAL STYLES */
 html,
 body {
   padding: 0;
@@ -160,14 +166,45 @@ h4,
 h5,
 h6 {
   color: var(--color-title);
+  font-weight: bold;
 }
 
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.5rem;
+}
 p {
   color: var(--color-paragraph);
+  font-size: 1.1rem;
 }
 
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+/* MEDIA QUERIES */
+@media (min-width: 320px) and (max-width: 767px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+  }
+  h3 {
+    font-size: 0.9rem;
+  }
+  p {
+    color: var(--color-paragraph);
+    font-size: 0.9rem;
+  }
+  button {
+    font-size: 0.9rem;
+  }
 }
