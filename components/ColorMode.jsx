@@ -10,10 +10,12 @@ const ColorMode = () => {
     window.localStorage.setItem("theme", activeTheme);
   }, [activeTheme]);
   return (
+    <div className="colormode-icon-container">
     <Image aria-label={`Change to ${inactiveTheme} mode`}
       title={`Change to ${inactiveTheme} mode`}
       type="button"
-      onClick={() => setActiveTheme(inactiveTheme)} src="/colormode.png" alt="ColorMode" width={50} height={50} />
+      onClick={() => setActiveTheme(inactiveTheme)} src="/colormode.png" alt="ColorMode" layout="fill" className="colormode-icon" />
+      </div>
   );
 };
 

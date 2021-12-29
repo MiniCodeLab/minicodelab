@@ -29,4 +29,11 @@ export const Card = styled.div`
     position: relative !important;
     object-fit: contain;
   }
+
+  @media (min-width: 320px) and (max-width: 767px) {
+    .card-image-container {
+      width: 70px;
+      height: 70px;
+    }
+  }
 `;
