@@ -21,7 +21,11 @@ const Feed: React.FC<Props> = ({ posts }) => {
       {posts.map((post) => (
         <h1 key={post.id}>
           <Link href={`/feed/${post.id}`}>
-            <a>{post.title}</a>
+            <a>
+              {post.title}
+              {post.author}
+              {post.description}
+            </a>
           </Link>
         </h1>
       ))}
@@ -47,7 +51,11 @@ export const getStaticProps = async () => {
   const posts = data.results.map((databaseRow) => {
     return {
       id: databaseRow.id,
-      title: databaseRow.properties.title.title[0].text.content
+      title: databaseRow.properties.title.title[0].text.content,
+      cover: databaseRow.properties.cover.files[0].file.url,
+      author: databaseRow.properties.author.rich_text[0].plain_text,
+      description: databaseRow.properties.description.rich_text[0].plain_text,
+      tags: databaseRow.properties.tags.multi_select
     };
   });
 

@@ -81,4 +81,9 @@ export type DatabaseResponse = {
 export type Post = {
   id: string;
   title: string;
+  cover: string;
+  author: string;
+  description: string;
+  tags: string;
+  url: string;
 };
