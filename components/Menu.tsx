@@ -1,13 +1,12 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
 const ColorMode = dynamic(() => import("./ColorMode"), {
-  ssr: false,
+  ssr: false
 });
 
-const Menu = () => {
+const Menu: React.FC = () => {
   return (
     <ul>
       <li>
