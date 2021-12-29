@@ -6,12 +6,13 @@ export default function Calendar() {
     return (
         <div>
             <Head>
-                <title>Mini Code Lab {'/>'}</title>
-                <link rel="icon" href="/icon-flask.png" />
+                <title>Mini Code Lab {'/>'} Calendar</title>
+                <link rel="icon" href="/flask.png" />
             </Head>
             <UiMenu>
                 <Menu />
             </UiMenu>
+            <h1>Calendar</h1>
         </div>
     )
 }

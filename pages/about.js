@@ -6,12 +6,13 @@ export default function About() {
     return (
         <div>
             <Head>
-                <title>Mini Code Lab {'/>'}</title>
-                <link rel="icon" href="/icon-flask.png" />
+                <title>Mini Code Lab {'/>'} About</title>
+                <link rel="icon" href="/flask.png" />
             </Head>
             <UiMenu>
                 <Menu />
             </UiMenu>
+            <h1>About</h1>
         </div>
     )
 }
