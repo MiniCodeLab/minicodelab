@@ -35,6 +35,7 @@ const Feed: React.FC<Props> = ({ posts }) => {
             <h1>{post.title}</h1>
           </div>
           <p className="card-copy">{post.description}</p> 
+          {/* <p className="card-copy">{post.tags}</p>  */}
           <Link href={`/feed/${post.id}`}>
           <Button>Leer más</Button>
           </Link>
