@@ -86,4 +86,5 @@ export type Post = {
   description: string;
   tags: string;
   url: string;
+  post_id: string
 };

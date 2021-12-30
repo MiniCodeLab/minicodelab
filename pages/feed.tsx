@@ -25,19 +25,14 @@ const Feed: React.FC<Props> = ({ posts }) => {
         <Card key={post.id}>
           <div className="card-header">
             <div className="card-image-container">
-              <Image
-                src={post.cover}
-                alt={post.title}
-                layout="fill"
-                className="card-image"
-              />
+              <Image src={post.cover} alt={post.title} layout="fill" className="card-image" />
             </div>
             <h1>{post.title}</h1>
           </div>
-          <p className="card-copy">{post.description}</p> 
+          <p className="card-copy">{post.description}</p>
           {/* <p className="card-copy">{post.tags}</p>  */}
-          <Link href={`/feed/${post.id}`}>
-          <Button>Leer más</Button>
+          <Link href={`/feed/${post.post_id}`}>
+            <Button>Leer más</Button>
           </Link>
         </Card>
       ))}
@@ -63,6 +58,7 @@ export const getStaticProps = async () => {
   const posts = data.results.map((databaseRow) => {
     return {
       id: databaseRow.id,
+      post_id: databaseRow.properties.post_id.rich_text[0].plain_text,
       title: databaseRow.properties.title.title[0].text.content,
       cover: databaseRow.properties.cover.files[0].file.url,
       author: databaseRow.properties.author.rich_text[0].plain_text,
