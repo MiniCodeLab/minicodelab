@@ -1,8 +1,24 @@
 import { GetServerSidePropsResult } from 'next';
 import { Post } from 'types/notion';
+import Head from 'next/head';
 
-const Post: React.FC<Props> = ({ post }) => {
-  return <div dangerouslySetInnerHTML={{ __html: post }} />;
+import { UiPost } from '../../styles/uiComponents/UiPost';
+import Menu from 'components/Menu';
+import { UiMenu } from 'styles/uiComponents/UiMenu';
+const Post = ({ post }) => {
+  return (
+    <div>
+      <Head>
+        <title>Mini Code Lab {'/>'} Feed</title>
+        <link rel="icon" href="/flask.png" />
+      </Head>
+
+      <UiMenu>
+        <Menu />
+      </UiMenu>
+      <UiPost dangerouslySetInnerHTML={{ __html: post }} />
+    </div>
+  );
 };
 
 export type Props = {

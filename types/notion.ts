@@ -77,7 +77,7 @@ export type DatabaseResponse = {
   }[];
 };
 
-// Client code types
+// Client code types -> TODO: DATES 
 export type Post = {
   id: string;
   title: string;
@@ -88,3 +88,12 @@ export type Post = {
   url: string;
   post_id: string
 };
+
+// Client code types -> TODO: DATES 
+export type Calendar = {
+  id: string;
+  title: string;
+  cover: string;
+  description: string;
+  tags: string;
+}

@@ -46,10 +46,10 @@ export type Props = {
 
 export const getStaticProps = async () => {
   const notion = new Client({
-    auth: process.env.NEXT_PUBLIC_NOTION_SECRET
+    auth: process.env.NEXT_PUBLIC_NOTION_POST_SECRET
   });
 
-  const databaseId = process.env.NEXT_PUBLIC_NOTION_DATABASE_ID;
+  const databaseId = process.env.NEXT_PUBLIC_NOTION_POST_DB_ID;
 
   const data = (await notion.databases.query({
     database_id: databaseId
