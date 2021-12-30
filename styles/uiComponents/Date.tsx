@@ -1,55 +1,53 @@
 import styled from '@emotion/styled';
 
-export const Card = styled.div`
+export const Date = styled.div`
+  text-align: center;
+  flex-direction: column;
   background-color: var(--color-card-bg);
   border: 3px solid var(--color-stroke);
   padding: 2.5rem;
   border-radius: 3px;
   margin: 25px;
-  width: 40vw;
+  width: 25vw;
   @media (min-width: 320px) and (max-width: 767px) {
-    width: 90vw;
+    width: 70vw;
   }
-  & .card-header {
+
+  & .date-header {
     display: flex;
+    flex-direction: column;
     margin-bottom: 2rem;
     padding-top: 0px;
     align-items: center;
   }
 
-  & .card-header h1 {
+  & .date-header h1 {
     padding: 0px 20px;
   }
 
-  & .card-copy {
+  & .date-copy {
     margin-bottom: 14px;
   }
 
-  & .card-image-container {
+  & .date-image-container {
     width: 100px;
     height: 100px;
     position: relative;
   }
 
-  & .card-image {
+  & .date-image {
     width: 100%;
     height: 100%;
     position: relative !important;
     object-fit: contain;
   }
-  & .card-date {
+  & .date-date {
     color: var(--color-purple);
     text-align: right;
     margin-bottom: 8px;
   }
-
-  & .card-tags {
-    text-align: right;
-    color: var(--color-green);
-    margin-bottom: 8px;
-  }
   @media (min-width: 320px) and (max-width: 767px) {
-    .card-image-container {
+    .date-image-container {
       width: 70px;
       height: 70px;
     }

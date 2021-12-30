@@ -5,6 +5,7 @@ export const UiMenu = styled.nav`
     display: flex;
     justify-content: space-around;
     margin-top: 25px;
+    margin-bottom: 20px;
 
     li {
       cursor: pointer;
