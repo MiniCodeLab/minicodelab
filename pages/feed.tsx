@@ -1,10 +1,13 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
+import { DatabaseResponse, Post } from 'types/notion';
 import { Client } from '@notionhq/client';
 
 import Menu from 'components/Menu';
 import { UiMenu } from 'styles/uiComponents/UiMenu';
-import { DatabaseResponse, Post } from 'types/notion';
+import { Card } from 'styles/uiComponents/Card';
+import { Button } from 'styles/uiComponents/Button';
 
 const Feed: React.FC<Props> = ({ posts }) => {
   return (
@@ -19,15 +22,23 @@ const Feed: React.FC<Props> = ({ posts }) => {
       </UiMenu>
 
       {posts.map((post) => (
-        <h1 key={post.id}>
+        <Card key={post.id}>
+          <div className="card-header">
+            <div className="card-image-container">
+              <Image
+                src={post.cover}
+                alt={post.title}
+                layout="fill"
+                className="card-image"
+              />
+            </div>
+            <h1>{post.title}</h1>
+          </div>
+          <p className="card-copy">{post.description}</p> 
           <Link href={`/feed/${post.id}`}>
-            <a>
-              {post.title}
-              {post.author}
-              {post.description}
-            </a>
+          <Button>Leer más</Button>
           </Link>
-        </h1>
+        </Card>
       ))}
     </div>
   );
