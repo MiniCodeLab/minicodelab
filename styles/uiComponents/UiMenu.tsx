@@ -6,6 +6,9 @@ export const UiMenu = styled.nav`
     justify-content: space-around;
     margin-top: 25px;
     margin-bottom: 20px;
+    padding-bottom: 30px;
+    border-bottom: 3px solid var(--color-stroke);
+
 
     li {
       cursor: pointer;
@@ -14,8 +17,8 @@ export const UiMenu = styled.nav`
 
   .icon-container,
   .colormode-icon-container {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     position: relative;
   }
 
@@ -30,8 +33,23 @@ export const UiMenu = styled.nav`
   @media (min-width: 320px) and (max-width: 767px) {
     .icon-container,
     .colormode-icon-container {
-      width: 35px;
-      height: 35px;
+      width: 45px;
+      height: 45px;
+    }
+
+    ul {
+      position: fixed;
+      bottom: 0;
+      display: flex;
+      justify-content: space-around;
+      background-color: var(--color-bg);
+      border-top: 3px solid var(--color-stroke);
+      width: 100vw;
+      margin: 0;
+      padding: 10px;
+      z-index: 1;
+      
+
     }
   }
 `;

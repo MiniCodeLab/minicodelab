@@ -32,6 +32,7 @@ const Feed: React.FC<Props> = ({ posts }) => {
               <h1>{post.title}</h1>
             </div>
             <p className="card-copy">{post.description}</p>
+            <div className="card-footer">
             <p className="card-date">{post.date}</p>
             {post.tags.map((tag) => {
               return <p className="card-tags">{tag.name}</p>;
@@ -39,6 +40,7 @@ const Feed: React.FC<Props> = ({ posts }) => {
             <Link href={`/feed/${post.post_id}`}>
               <Button>Leer más</Button>
             </Link>
+            </div>
           </Card>
         ))}
       </FlexWrap>

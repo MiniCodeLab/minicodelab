@@ -23,6 +23,7 @@ export const Card = styled.div`
 
   & .card-copy {
     margin-bottom: 14px;
+    font-weight: bold;
   }
 
   & .card-image-container {
@@ -41,12 +42,20 @@ export const Card = styled.div`
     color: var(--color-purple);
     text-align: right;
     margin-bottom: 8px;
+    font-weight: bold;
+    border: 3px black solid;
+    padding: 7px;
+    display: inline-block;
   }
 
   & .card-tags {
     text-align: right;
     color: var(--color-green);
     margin-bottom: 8px;
+    font-weight: bold;
+    border: 3px black solid;
+    padding: 7px;
+    display: inline-block;
   }
   @media (min-width: 320px) and (max-width: 767px) {
     .card-image-container {

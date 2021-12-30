@@ -6,6 +6,7 @@ export const Button = styled.button`
   margin: 10px 0px 0px 0px;
   color: var(--color-text);
   background: var(--color-purple);
+  font-weight: bold;
 
   &:hover {
     background: var(--color-green);
