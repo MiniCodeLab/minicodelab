@@ -38,6 +38,14 @@ export const Card = styled.div`
     position: relative !important;
     object-fit: contain;
   }
+
+  & .card-tags {
+
+
+
+  }
+
+  
   & .card-date {
     color: var(--color-purple);
     text-align: right;
