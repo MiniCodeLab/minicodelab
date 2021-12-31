@@ -9,6 +9,7 @@ import { UiMenu } from 'styles/uiComponents/UiMenu';
 import { Card } from 'styles/uiComponents/Card';
 import { Button } from 'styles/uiComponents/Button';
 import { FlexWrap } from 'styles/uiComponents/FlexWrap';
+import { Tag } from 'styles/uiComponents/Tag';
 
 const Feed: React.FC<Props> = ({ posts }) => {
   console.log(posts);
@@ -33,13 +34,13 @@ const Feed: React.FC<Props> = ({ posts }) => {
             </div>
             <p className="card-copy">{post.description}</p>
             <div className="card-footer">
-            <p className="card-date">{post.date}</p>
-            {post.tags.map((tag) => {
-              return <p className="card-tags">{tag.name}</p>;
-            })}
-            <Link href={`/feed/${post.post_id}`}>
-              <Button>Leer más</Button>
-            </Link>
+              <p className="card-date">{post.date}</p>
+              {post.tags.map((tag) => {
+                return <Tag color={tag.color} key={tag.id}>{tag.name}</Tag>;
+              })}
+              <Link href={`/feed/${post.post_id}`}>
+                <Button>Leer más</Button>
+              </Link>
             </div>
           </Card>
         ))}

@@ -8,6 +8,7 @@ import { UiMenu } from 'styles/uiComponents/UiMenu';
 import { Date } from 'styles/uiComponents/Date';
 import { FlexWrap } from 'styles/uiComponents/FlexWrap';
 import { Button } from 'styles/uiComponents/Button';
+import { Tag } from 'styles/uiComponents/Tag';
 
 const Feed: React.FC<Props> = ({ calendar }) => {
   return (
@@ -32,9 +33,13 @@ const Feed: React.FC<Props> = ({ calendar }) => {
             <h3>{date.date}</h3>
             <p className="date-copy">{date.description}</p>
             {date.tags.map((tag) => {
-              return <p className="card-tags">{tag.name}</p>;
+              return (
+                <Tag color={tag.color} key={tag.id}>
+                  {tag.name}
+                </Tag>
+              );
             })}
-               <Button>Link</Button>
+            <Button>Link</Button>
           </Date>
         ))}
       </FlexWrap>

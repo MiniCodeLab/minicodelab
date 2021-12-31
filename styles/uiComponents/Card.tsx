@@ -39,13 +39,6 @@ export const Card = styled.div`
     object-fit: contain;
   }
 
-  & .card-tags {
-
-
-
-  }
-
-  
   & .card-date {
     color: var(--color-purple);
     text-align: right;
@@ -54,6 +47,7 @@ export const Card = styled.div`
     border: 3px black solid;
     padding: 7px;
     display: inline-block;
+    background-color: var(--color-bg);
   }
 
   & .card-tags {
