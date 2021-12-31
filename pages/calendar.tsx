@@ -35,7 +35,7 @@ const Feed: React.FC<Props> = ({ calendar }) => {
             {date.tags.map((tag) => {
               return (
                 <Tag color={tag.color} key={tag.id}>
-                  {tag.name}
+                 <p>{tag.name}</p>
                 </Tag>
               );
             })}

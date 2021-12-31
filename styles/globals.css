@@ -97,8 +97,8 @@ button {
   color: inherit;
   font: inherit;
   font-size: 1.1rem;
-  padding: 10px;
   font-weight: 500;
+
 }
 button:hover {
   cursor: pointer;
@@ -111,7 +111,7 @@ table {
 
 input {
   -webkit-appearance: none;
-  border-radius: 0;
+  border-radius: 8px;
 }
 
 /* THEMES */

@@ -6,7 +6,7 @@ export const Date = styled.div`
   background-color: var(--color-card-bg);
   border: 3px solid var(--color-stroke);
   padding: 2.5rem;
-  border-radius: 3px;
+  border-radius: 8px;
   margin: 25px;
   width: 25vw;
   @media (min-width: 320px) and (max-width: 767px) {

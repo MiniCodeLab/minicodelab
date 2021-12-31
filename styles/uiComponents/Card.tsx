@@ -4,7 +4,7 @@ export const Card = styled.div`
   background-color: var(--color-card-bg);
   border: 3px solid var(--color-stroke);
   padding: 2.5rem;
-  border-radius: 3px;
+  border-radius: 8px;
   margin: 25px;
   width: 40vw;
   @media (min-width: 320px) and (max-width: 767px) {
@@ -39,26 +39,18 @@ export const Card = styled.div`
     object-fit: contain;
   }
 
+  & .card-footer {
+    display: flex;
+    align-items: baseline;
+  }
   & .card-date {
     color: var(--color-purple);
-    text-align: right;
-    margin-bottom: 8px;
     font-weight: bold;
-    border: 3px black solid;
+    border-radius: 8px;
+    border: 3px var(--color-stroke) solid;
     padding: 7px;
     display: inline-block;
     background-color: var(--color-bg);
-  }
-
-  & .card-tags {
-    text-align: right;
-    color: var(--color-green);
-    margin-bottom: 8px;
-    font-weight: bold;
-    border: 3px black solid;
-    padding: 7px;
-    display: inline-block;
-  }
   @media (min-width: 320px) and (max-width: 767px) {
     .card-image-container {
       width: 70px;

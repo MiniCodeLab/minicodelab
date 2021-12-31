@@ -36,7 +36,11 @@ const Feed: React.FC<Props> = ({ posts }) => {
             <div className="card-footer">
               <p className="card-date">{post.date}</p>
               {post.tags.map((tag) => {
-                return <Tag color={tag.color} key={tag.id}>{tag.name}</Tag>;
+                return (
+                  <Tag color={tag.color} key={tag.id}>
+                    <p>{tag.name}</p>
+                  </Tag>
+                );
               })}
               <Link href={`/feed/${post.post_id}`}>
                 <Button>Leer más</Button>
