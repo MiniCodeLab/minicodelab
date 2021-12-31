@@ -87,7 +87,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 
@@ -98,7 +98,6 @@ button {
   font: inherit;
   font-size: 1.1rem;
   font-weight: 500;
-
 }
 button:hover {
   cursor: pointer;
@@ -115,8 +114,10 @@ input {
 }
 
 /* THEMES */
+
+
 body,
-body[data-theme="dark"] {
+body[data-theme='dark'] {
   --color-bg: #16161a;
   --color-card-bg: #242629;
   --color-title: #fffffe;
@@ -127,7 +128,7 @@ body[data-theme="dark"] {
   --color-bg-toggle: #2cb67d;
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --color-bg: #fffffe;
   --color-card-bg: #94a1b2;
   --color-title: #010101;
@@ -137,14 +138,17 @@ body[data-theme="light"] {
   --color-green: #2cb67d;
   --color-bg-toggle: #7f5af0;
 }
+:root {
+  --box-shadow: rgba(0, 0, 0, 0.486) 0px 5px 15px;
+}
 
 /* GLOBAL STYLES */
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
   transition: background 0.25s ease-in-out;

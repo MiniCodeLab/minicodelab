@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Card = styled.div`
+box-shadow: var(--box-shadow);
   background-color: var(--color-card-bg);
   border: 3px solid var(--color-stroke);
   padding: 2.5rem;

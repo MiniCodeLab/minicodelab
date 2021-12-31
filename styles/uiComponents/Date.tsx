@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Date = styled.div`
+  box-shadow: var(--box-shadow);
   text-align: center;
   flex-direction: column;
   background-color: var(--color-card-bg);
