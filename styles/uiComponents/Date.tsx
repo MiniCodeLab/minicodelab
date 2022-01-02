@@ -9,9 +9,9 @@ export const Date = styled.div`
   padding: 2.5rem;
   border-radius: 8px;
   margin: 25px;
-  width: 25vw;
+  max-width: 25vw;
   @media (min-width: 320px) and (max-width: 767px) {
-    width: 70vw;
+    max-width: 70vw;
   }
 
   & .date-header {

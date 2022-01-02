@@ -5,6 +5,7 @@ import { DatabaseResponse, Post } from 'types/notion';
 import { Client } from '@notionhq/client';
 
 import Menu from 'components/Menu';
+import { UiContentPage } from 'styles/uiComponents/UiContentPage';
 import { UiMenu } from 'styles/uiComponents/UiMenu';
 import { Card } from 'styles/uiComponents/Card';
 import { Button } from 'styles/uiComponents/Button';
@@ -14,7 +15,7 @@ import { Tag } from 'styles/uiComponents/Tag';
 const Feed: React.FC<Props> = ({ posts }) => {
   console.log(posts);
   return (
-    <div>
+    <UiContentPage>
       <Head>
         <title>Mini Code Lab {'/>'} Feed</title>
         <link rel="icon" href="/flask.png" />
@@ -49,7 +50,7 @@ const Feed: React.FC<Props> = ({ posts }) => {
           </Card>
         ))}
       </FlexWrap>
-    </div>
+    </UiContentPage>
   );
 };
 

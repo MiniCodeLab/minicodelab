@@ -7,9 +7,9 @@ box-shadow: var(--box-shadow);
   padding: 2.5rem;
   border-radius: 8px;
   margin: 25px;
-  width: 40vw;
+  max-width: 40vw;
   @media (min-width: 320px) and (max-width: 767px) {
-    width: 90vw;
+    max-width: 90vw;
   }
   & .card-header {
     display: flex;
@@ -43,6 +43,7 @@ box-shadow: var(--box-shadow);
   & .card-footer {
     display: flex;
     align-items: baseline;
+    flex-wrap: wrap;
   }
   & .card-date {
     color: var(--color-purple);

@@ -4,6 +4,7 @@ import { DatabaseResponse, Calendar } from 'types/notion';
 import { Client } from '@notionhq/client';
 
 import Menu from 'components/Menu';
+import { UiContentPage } from 'styles/uiComponents/UiContentPage';
 import { UiMenu } from 'styles/uiComponents/UiMenu';
 import { Date } from 'styles/uiComponents/Date';
 import { FlexWrap } from 'styles/uiComponents/FlexWrap';
@@ -12,7 +13,7 @@ import { Tag } from 'styles/uiComponents/Tag';
 
 const Feed: React.FC<Props> = ({ calendar }) => {
   return (
-    <div>
+    <UiContentPage>
       <Head>
         <title>Mini Code Lab {'/>'} Feed</title>
         <link rel="icon" href="/flask.png" />
@@ -35,7 +36,7 @@ const Feed: React.FC<Props> = ({ calendar }) => {
             {date.tags.map((tag) => {
               return (
                 <Tag color={tag.color} key={tag.id}>
-                 <p>{tag.name}</p>
+                  <p>{tag.name}</p>
                 </Tag>
               );
             })}
@@ -43,7 +44,7 @@ const Feed: React.FC<Props> = ({ calendar }) => {
           </Date>
         ))}
       </FlexWrap>
-    </div>
+    </UiContentPage>
   );
 };
 

@@ -9,7 +9,6 @@ export const UiMenu = styled.nav`
     padding-bottom: 30px;
     border-bottom: 3px solid var(--color-stroke);
 
-
     li {
       cursor: pointer;
     }
@@ -48,8 +47,6 @@ export const UiMenu = styled.nav`
       margin: 0;
       padding: 10px;
       z-index: 1;
-      
-
     }
   }
 `;

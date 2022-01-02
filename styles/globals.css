@@ -115,7 +115,6 @@ input {
 
 /* THEMES */
 
-
 body,
 body[data-theme='dark'] {
   --color-bg: #16161a;
@@ -126,6 +125,7 @@ body[data-theme='dark'] {
   --color-purple: #7f5af0;
   --color-green: #2cb67d;
   --color-bg-toggle: #2cb67d;
+  --size-menu: 50px;
 }
 
 body[data-theme='light'] {
