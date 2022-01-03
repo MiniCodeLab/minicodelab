@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 import { UiPost } from '../../styles/uiComponents/UiPost';
 import Menu from 'components/Menu';
-import { UiMenu } from 'styles/uiComponents/UiMenu';
-import { Button } from 'styles/uiComponents/Button';
+import { UImenu } from 'styles/uiComponents/UImenu';
+import { UIbutton } from 'styles/uiComponents/UIbutton';
 const Post = ({ post }) => {
   return (
     <div>
@@ -15,12 +15,12 @@ const Post = ({ post }) => {
         <link rel="icon" href="/flask.png" />
       </Head>
 
-      <UiMenu>
+      <UImenu>
         <Menu />
-      </UiMenu>
+      </UImenu>
       <UiPost dangerouslySetInnerHTML={{ __html: post }} />
       <Link href="/feed">
-        <Button>Volver al feed</Button>
+        <UIbutton>Volver al feed</UIbutton>
       </Link>
     </div>
   );

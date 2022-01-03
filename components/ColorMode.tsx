@@ -11,17 +11,15 @@ const ColorMode: React.FC = () => {
   }, [activeTheme]);
 
   return (
-    <div className="colormode-icon-container">
-      <Image
-        alt="ColorMode"
-        aria-label={`Change to ${inactiveTheme} mode`}
-        className="colormode-icon"
-        layout="fill"
-        onClick={() => setActiveTheme(inactiveTheme)}
-        src="/colormode.png"
-        title={`Change to ${inactiveTheme} mode`}
-      />
-    </div>
+    <Image
+      alt="ColorMode"
+      aria-label={`Change to ${inactiveTheme} mode`}
+      width={25}
+      height={25}
+      onClick={() => setActiveTheme(inactiveTheme)}
+      src="/colormode.png"
+      title={`Change to ${inactiveTheme} mode`}
+    />
   );
 };
 

@@ -4,47 +4,51 @@ import { DatabaseResponse, Calendar } from 'types/notion';
 import { Client } from '@notionhq/client';
 
 import Menu from 'components/Menu';
-import { UiContentPage } from 'styles/uiComponents/UiContentPage';
-import { UiMenu } from 'styles/uiComponents/UiMenu';
-import { Date } from 'styles/uiComponents/Date';
-import { FlexWrap } from 'styles/uiComponents/FlexWrap';
-import { Button } from 'styles/uiComponents/Button';
-import { Tag } from 'styles/uiComponents/Tag';
+import { UImenu } from 'styles/uiComponents/UImenu';
+import { UIcard } from 'styles/uiComponents/UIcard';
+import { UIlist } from 'styles/uiComponents/UIlist';
+import { UIbutton } from 'styles/uiComponents/UIbutton';
+import { UItag } from 'styles/uiComponents/UItag';
 
 const Feed: React.FC<Props> = ({ calendar }) => {
   return (
-    <UiContentPage>
+    <div>
       <Head>
         <title>Mini Code Lab {'/>'} Feed</title>
         <link rel="icon" href="/flask.png" />
       </Head>
 
-      <UiMenu>
+      <UImenu>
         <Menu />
-      </UiMenu>
-      <FlexWrap>
+      </UImenu>
+      <UIlist>
         {calendar.map((date) => (
-          <Date key={date.id}>
-            <div className="date-header">
-              <div className="date-image-container">
-                <Image src={date.cover} alt={date.title} layout="fill" className="date-image" />
-              </div>
+          <UIcard key={date.id}>
+            <div className="card-header">
+              <Image src={date.cover} alt={date.title} width={48} height={48} />
               <h2>{date.title}</h2>
             </div>
-            <h3>{date.date}</h3>
-            <p className="date-copy">{date.description}</p>
-            {date.tags.map((tag) => {
-              return (
-                <Tag color={tag.color} key={tag.id}>
-                  <p>{tag.name}</p>
-                </Tag>
-              );
-            })}
-            <Button>Link</Button>
-          </Date>
+            <div className="card-body">
+              <h3>{date.date}</h3>
+              <p>{date.description}</p>
+            </div>
+
+            <div className="card-footer">
+              <UIbutton>Link</UIbutton>
+              <div>
+                {date.tags.map((tag) => {
+                  return (
+                    <UItag color={tag.color} key={tag.id}>
+                      <p>{tag.name}</p>
+                    </UItag>
+                  );
+                })}
+              </div>
+            </div>
+          </UIcard>
         ))}
-      </FlexWrap>
-    </UiContentPage>
+      </UIlist>
+    </div>
   );
 };
 

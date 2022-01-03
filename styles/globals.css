@@ -96,8 +96,6 @@ button {
   outline: none;
   color: inherit;
   font: inherit;
-  font-size: 1.1rem;
-  font-weight: 500;
 }
 button:hover {
   cursor: pointer;
@@ -110,11 +108,24 @@ table {
 
 input {
   -webkit-appearance: none;
-  border-radius: 8px;
 }
+/* END - RESET */
+
+/* GLOBAL VARIABLES */
+:root {
+  --border-stroke: 3px;
+  --border-radius: 8px;
+  --title-h1: 1.5rem;
+  --title-h2: 1rem;
+  --title-h3: 0.8rem;
+  --paragraph: 0.7rem;
+  --text-to-mobile: 1.5;
+  --button-text: 0.7rem;
+  --box-shadow: rgba(0, 0, 0, 0.486) 0px 5px 15px;
+}
+/* END - GLOBAL VARIABLES */
 
 /* THEMES */
-
 body,
 body[data-theme='dark'] {
   --color-bg: #16161a;
@@ -124,8 +135,6 @@ body[data-theme='dark'] {
   --color-stroke: #010101;
   --color-purple: #7f5af0;
   --color-green: #2cb67d;
-  --color-bg-toggle: #2cb67d;
-  --size-menu: 50px;
 }
 
 body[data-theme='light'] {
@@ -136,11 +145,8 @@ body[data-theme='light'] {
   --color-stroke: #010101;
   --color-purple: #7f5af0;
   --color-green: #2cb67d;
-  --color-bg-toggle: #7f5af0;
 }
-:root {
-  --box-shadow: rgba(0, 0, 0, 0.486) 0px 5px 15px;
-}
+/* END - THEMES */
 
 /* GLOBAL STYLES */
 html,
@@ -174,18 +180,20 @@ h6 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: var(--title-h1);
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: var(--title-h2);
 }
+
 h3 {
-  font-size: 1.5rem;
+  font-size: var(--title-h3);
 }
+
 p {
   color: var(--color-paragraph);
-  font-size: 1.1rem;
+  font-size: var(--paragraph);
 }
 
 *,
@@ -193,22 +201,25 @@ p {
 *:after {
   box-sizing: border-box;
 }
-/* MEDIA QUERIES */
-@media (min-width: 320px) and (max-width: 767px) {
+/* END - GLOBAL STYLES */
+
+/* MEDIA DESKTOP */
+@media (min-width: 840px) {
   h1 {
-    font-size: 1.6rem;
+    font-size: calc(var(--title-h3) * (var(--text-to-mobile)));
   }
   h2 {
-    font-size: 1.1rem;
+    font-size: calc(var(--title-h3) * (var(--text-to-mobile)));
   }
   h3 {
-    font-size: 0.9rem;
+    font-size: calc(var(--title-h3) * (var(--text-to-mobile)));
   }
   p {
     color: var(--color-paragraph);
-    font-size: 0.9rem;
+    font-size: calc(var(--paragraph) * (var(--text-to-mobile)));
   }
   button {
-    font-size: 0.9rem;
+    font-size: calc(var(--button-text) * (var(--text-to-mobile)));
   }
 }
+/* END - MEDIA DESKTOP */

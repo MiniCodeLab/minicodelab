@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 
-export const Tag = styled.div`
+export const UItag = styled.button`
   font-weight: bold;
-  border-radius: 8px;
   border: 3px var(--color-stroke) solid;
   padding: 7px;
   display: inline-block;

@@ -1,8 +1,8 @@
-import Link from "next/link";
-import Image from "next/image";
-import dynamic from "next/dynamic";
+import Link from 'next/link';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
-const ColorMode = dynamic(() => import("./ColorMode"), {
+const ColorMode = dynamic(() => import('./ColorMode'), {
   ssr: false
 });
 
@@ -10,63 +10,18 @@ const Menu: React.FC = () => {
   return (
     <ul>
       <li>
-        <Link href="/">
-          <div className="icon-container">
-            <a>
-              <Image
-                src="/flask.png"
-                alt="Flask icon"
-                layout="fill"
-                className="icon"
-              />
-            </a>
-          </div>
-        </Link>
-      </li>
-      <li>
-        <Link href="/feed">
+        <Link href="/" passHref>
           <a>
-            <div className="icon-container">
-              <Image
-                src="/feed.png"
-                alt="Feed icon"
-                layout="fill"
-                className="icon"
-              />
-            </div>
+            <Image src="/longlogo.png" alt="logo icon" width={151} height={25} />
           </a>
         </Link>
       </li>
       <li>
-        <Link href="/calendar">
-          <a>
-            {" "}
-            <div className="icon-container">
-              <Image
-                src="/calendar.png"
-                alt="Calendar icon"
-                layout="fill"
-                className="icon"
-              />
-            </div>
+        <Link href="/calendar" passHref>
+          <a className="other">
+            <Image src="/calendar.png" alt="Calendar icon" width={25} height={25} />
           </a>
         </Link>
-      </li>
-      <li>
-        <Link href="/about">
-          <a>
-            <div className="icon-container">
-              <Image
-                src="/about.png"
-                alt="About icon"
-                layout="fill"
-                className="icon"
-              />
-            </div>
-          </a>
-        </Link>
-      </li>
-      <li>
         <ColorMode />
       </li>
     </ul>
