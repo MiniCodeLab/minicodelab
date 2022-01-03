@@ -201,6 +201,25 @@ p {
 *:after {
   box-sizing: border-box;
 }
+.post-button{
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-card-bg); 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: var(--color-stroke); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-stroke); 
+}
 /* END - GLOBAL STYLES */
 
 /* MEDIA DESKTOP */
@@ -220,11 +239,6 @@ p {
   }
   button {
     font-size: calc(var(--button-text) * (var(--text-to-mobile)));
-  }
-  .post-button{
-    display: flex;
-    justify-content: center;
-    margin: 20px;
   }
 }
 /* END - MEDIA DESKTOP */

@@ -6,7 +6,7 @@ import { UIfooter } from '../styles/uiComponents/UIfooter';
 const Footer: React.FC = () => {
   return (
     <UIfooter>
-      <Fade cascade triggerOnce>
+      <Fade cascade triggerOnce duration={600}>
         <ul>
           <li>
             <Image src="/github.png" alt="logo twitter" width={25} height={25} />

@@ -12,9 +12,15 @@ export const UiPost = styled.article`
     margin: 20px 0;
   }
 
+  h1{
+    border-bottom: 3px solid var(--color-title);
+  }
+
   img {
-    width: 60%;
+    align-self: center;
+    width: 70%;
     padding: 20px 0px;
+    margin: 10px 0px;
   }
   pre {
     background: var(--color-card-bg);

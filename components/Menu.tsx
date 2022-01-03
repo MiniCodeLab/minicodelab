@@ -19,21 +19,21 @@ const Menu: React.FC = () => {
           </Link>
         </li>
       </AttentionSeeker>
-      <li>
-        <Fade cascade triggerOnce>
-        <Link href="/calendar" passHref>
-          <a className="other">
-            <Image src="/calendar.png" alt="Calendar icon" width={25} height={25} />
-          </a>
-        </Link>
-        <Link href="/about" passHref>
-          <a className="other">
-            <Image src="/about.png" alt="About icon" width={25} height={25} />
-          </a>
-        </Link>
-        <ColorMode />
+      <Fade cascade triggerOnce duration={800}>
+        <li>
+          <Link href="/calendar" passHref>
+            <a className="other">
+              <Image src="/calendar.png" alt="Calendar icon" width={25} height={25} />
+            </a>
+          </Link>
+          <Link href="/about" passHref>
+            <a className="other">
+              <Image src="/about.png" alt="About icon" width={25} height={25} />
+            </a>
+          </Link>
+          <ColorMode />
+        </li>
       </Fade>
-      </li>
     </ul>
   );
 };
