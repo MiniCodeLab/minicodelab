@@ -9,7 +9,7 @@ const ColorMode = dynamic(() => import('./ColorMode'), {
 const Menu: React.FC = () => {
   return (
     <ul>
-      <li>
+      <li className="logo">
         <Link href="/" passHref>
           <a>
             <Image src="/longlogo.png" alt="logo icon" width={151} height={25} />
@@ -20,6 +20,11 @@ const Menu: React.FC = () => {
         <Link href="/calendar" passHref>
           <a className="other">
             <Image src="/calendar.png" alt="Calendar icon" width={25} height={25} />
+          </a>
+        </Link>
+        <Link href="/about" passHref>
+          <a className="other">
+            <Image src="/about.png" alt="About icon" width={25} height={25} />
           </a>
         </Link>
         <ColorMode />

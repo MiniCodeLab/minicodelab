@@ -32,9 +32,7 @@ export type Props = {
 
 export const getServerSideProps = async ({ params }): Promise<GetServerSidePropsResult<Props>> => {
   const res = await fetch(`https://potion-api.now.sh/html?id=${params.id}`);
-  console.log(res.body);
   const resText = await res.text();
-  console.log(resText);
   return {
     props: {
       post: resText

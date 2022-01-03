@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
 
 export const UItag = styled.button`
-  font-weight: bold;
-  border: 3px var(--color-stroke) solid;
-  padding: 7px;
   display: inline-block;
-  margin: 0px 4px;
   background: ${(props) => props.color || 'inherit'};
+  border: 3px solid var(--color-stroke);
+  margin: 0px 4px;
+  color: var(--color-stroke);
+
+  font-weight: bold;
+  font-size: var(--paragraph);
+  padding: 7px;
 
   &:hover {
     cursor: pointer;

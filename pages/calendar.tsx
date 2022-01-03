@@ -4,6 +4,7 @@ import { DatabaseResponse, Calendar } from 'types/notion';
 import { Client } from '@notionhq/client';
 
 import Menu from 'components/Menu';
+import Footer from 'components/Footer';
 import { UImenu } from 'styles/uiComponents/UImenu';
 import { UIcard } from 'styles/uiComponents/UIcard';
 import { UIlist } from 'styles/uiComponents/UIlist';
@@ -26,20 +27,21 @@ const Feed: React.FC<Props> = ({ calendar }) => {
           <UIcard key={date.id}>
             <div className="card-header">
               <Image src={date.cover} alt={date.title} width={48} height={48} />
-              <h2>{date.title}</h2>
+              <div>
+                <h1>{date.title}</h1>
+                <p className="date">{date.date}</p>
+              </div>
             </div>
             <div className="card-body">
-              <h3>{date.date}</h3>
               <p>{date.description}</p>
             </div>
-
             <div className="card-footer">
               <UIbutton>Link</UIbutton>
               <div>
                 {date.tags.map((tag) => {
                   return (
                     <UItag color={tag.color} key={tag.id}>
-                      <p>{tag.name}</p>
+                      {tag.name}
                     </UItag>
                   );
                 })}
@@ -48,6 +50,7 @@ const Feed: React.FC<Props> = ({ calendar }) => {
           </UIcard>
         ))}
       </UIlist>
+      <Footer />
     </div>
   );
 };

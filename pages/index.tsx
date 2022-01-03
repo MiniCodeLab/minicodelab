@@ -5,6 +5,7 @@ import { DatabaseResponse, Post } from 'types/notion';
 import { Client } from '@notionhq/client';
 
 import Menu from 'components/Menu';
+import Footer from 'components/Footer';
 import { UImenu } from 'styles/uiComponents/UImenu';
 import { UIcard } from 'styles/uiComponents/UIcard';
 import { UIbutton } from 'styles/uiComponents/UIbutton';
@@ -12,7 +13,6 @@ import { UIlist } from 'styles/uiComponents/UIlist';
 import { UItag } from 'styles/uiComponents/UItag';
 
 const Home: React.FC<Props> = ({ posts }) => {
-  console.log(posts);
   return (
     <div>
       <Head>
@@ -27,8 +27,10 @@ const Home: React.FC<Props> = ({ posts }) => {
           <UIcard key={post.id}>
             <div className="card-header">
               <Image src={post.cover} alt={post.title} width={48} height={48} />
-              <h1>{post.title}</h1>
-              <p className="card-date">{post.date}</p>
+              <div>
+                <h1>{post.title}</h1>
+                <p className="date">{post.date}</p>
+              </div>
             </div>
             <div className="card-body">
               <p>{post.description}</p>
@@ -41,7 +43,7 @@ const Home: React.FC<Props> = ({ posts }) => {
                 {post.tags.map((tag) => {
                   return (
                     <UItag color={tag.color} key={tag.id}>
-                      <p>{tag.name}</p>
+                      {tag.name}
                     </UItag>
                   );
                 })}
@@ -50,6 +52,7 @@ const Home: React.FC<Props> = ({ posts }) => {
           </UIcard>
         ))}
       </UIlist>
+      <Footer />
     </div>
   );
 };

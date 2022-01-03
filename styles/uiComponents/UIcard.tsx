@@ -11,9 +11,22 @@ export const UIcard = styled.div`
   @media (min-width: 840px) {
     width: calc(50% - 40px);
   }
+  .card-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 10px 0;
+    .date {
+      margin: 5px 0;
+    }
+  }
+  .card-body {
+    margin: 10px 0;
+  }
   .card-footer {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    margin: 10px 0;
   }
 `;
