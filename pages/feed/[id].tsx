@@ -5,8 +5,10 @@ import Link from 'next/link';
 
 import { UiPost } from '../../styles/uiComponents/UiPost';
 import Menu from 'components/Menu';
+import Footer from 'components/Footer';
 import { UImenu } from 'styles/uiComponents/UImenu';
 import { UIbutton } from 'styles/uiComponents/UIbutton';
+import { Fade } from 'react-awesome-reveal';
 const Post = ({ post }) => {
   return (
     <div>
@@ -18,10 +20,15 @@ const Post = ({ post }) => {
       <UImenu>
         <Menu />
       </UImenu>
-      <UiPost dangerouslySetInnerHTML={{ __html: post }} />
-      <Link href="/">
-        <UIbutton>Volver al feed</UIbutton>
-      </Link>
+      <Fade duration={1500} triggerOnce>
+        <UiPost dangerouslySetInnerHTML={{ __html: post }} />
+        <Link href="/">
+          <div className="post-button">
+            <UIbutton>Volver al feed</UIbutton>
+          </div>
+        </Link>
+      </Fade>
+      <Footer />
     </div>
   );
 };

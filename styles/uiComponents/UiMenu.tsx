@@ -10,11 +10,11 @@ export const UImenu = styled.nav`
       margin: 10px 50px;
       cursor: pointer;
       .other {
-        margin-right: 15px;
+        margin-right: 19px;
       }
       a:hover {
         transition: 0.5s;
-        transform: scale(1.5);
+        transform: scale(1.3);
       }
     }
   }

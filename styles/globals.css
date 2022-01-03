@@ -221,5 +221,10 @@ p {
   button {
     font-size: calc(var(--button-text) * (var(--text-to-mobile)));
   }
+  .post-button{
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+  }
 }
 /* END - MEDIA DESKTOP */

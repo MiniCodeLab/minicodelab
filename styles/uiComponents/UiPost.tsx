@@ -20,11 +20,10 @@ export const UiPost = styled.article`
     background: var(--color-card-bg);
     border: 1px solid #ddd;
     border-radius: 8px;
-    border-left: 3px solid var(--color-bg-toggle);
+    border-left: 3px solid var(--color-green);
     color: var(--color-paragraph);
     page-break-inside: avoid;
     font-family: monospace;
-    font-size: 15px;
     line-height: 1.6;
     margin-bottom: 1.6em;
     max-width: 100%;
@@ -44,5 +43,8 @@ export const UiPost = styled.article`
   code {
     color: var(--color-bg-toggle);
     font-weight: bold;
+  }
+  .post-button{
+    margin: 20px;
   }
 `;

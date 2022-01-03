@@ -11,7 +11,7 @@ import { UIcard } from 'styles/uiComponents/UIcard';
 import { UIbutton } from 'styles/uiComponents/UIbutton';
 import { UIlist } from 'styles/uiComponents/UIlist';
 import { UItag } from 'styles/uiComponents/UItag';
-
+import { Fade } from 'react-awesome-reveal';
 const Home: React.FC<Props> = ({ posts }) => {
   return (
     <div>
@@ -22,36 +22,39 @@ const Home: React.FC<Props> = ({ posts }) => {
       <UImenu>
         <Menu />
       </UImenu>
-      <UIlist>
-        {posts.map((post) => (
-          <UIcard key={post.id}>
-            <div className="card-header">
-              <Image src={post.cover} alt={post.title} width={48} height={48} />
-              <div>
-                <h1>{post.title}</h1>
-                <p className="date">{post.date}</p>
+      <Fade cascade duration={1500}>
+        <UIlist>
+          {posts.map((post) => (
+            <UIcard key={post.id}>
+              <div className="card-header">
+                <Image src={post.cover} alt={post.title} width={48} height={48} />
+                <div>
+                  <h1>{post.title}</h1>
+                  <p className="date">{post.date}</p>
+                  <p>{post.author}</p>
+                </div>
               </div>
-            </div>
-            <div className="card-body">
-              <p>{post.description}</p>
-            </div>
-            <div className="card-footer">
-              <Link href={`/feed/${post.post_id}`}>
-                <UIbutton>Leer más</UIbutton>
-              </Link>
-              <div>
-                {post.tags.map((tag) => {
-                  return (
-                    <UItag color={tag.color} key={tag.id}>
-                      {tag.name}
-                    </UItag>
-                  );
-                })}
+              <div className="card-body">
+                <p>{post.description}</p>
               </div>
-            </div>
-          </UIcard>
-        ))}
-      </UIlist>
+              <div className="card-footer">
+                <Link href={`/feed/${post.post_id}`}>
+                  <UIbutton>Leer más</UIbutton>
+                </Link>
+                <div>
+                  {post.tags.map((tag) => {
+                    return (
+                      <UItag color={tag.color} key={tag.id}>
+                        {tag.name}
+                      </UItag>
+                    );
+                  })}
+                </div>
+              </div>
+            </UIcard>
+          ))}
+        </UIlist>
+      </Fade>
       <Footer />
     </div>
   );

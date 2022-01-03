@@ -10,6 +10,7 @@ import { UIcard } from 'styles/uiComponents/UIcard';
 import { UIlist } from 'styles/uiComponents/UIlist';
 import { UIbutton } from 'styles/uiComponents/UIbutton';
 import { UItag } from 'styles/uiComponents/UItag';
+import { Fade } from 'react-awesome-reveal';
 
 const Feed: React.FC<Props> = ({ calendar }) => {
   return (
@@ -22,6 +23,7 @@ const Feed: React.FC<Props> = ({ calendar }) => {
       <UImenu>
         <Menu />
       </UImenu>
+      <Fade cascade duration={1500}>
       <UIlist>
         {calendar.map((date) => (
           <UIcard key={date.id}>
@@ -50,6 +52,7 @@ const Feed: React.FC<Props> = ({ calendar }) => {
           </UIcard>
         ))}
       </UIlist>
+      </Fade>
       <Footer />
     </div>
   );
