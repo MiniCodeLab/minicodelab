@@ -6,12 +6,13 @@ import { Client } from '@notionhq/client';
 
 import Menu from 'components/Menu';
 import Footer from 'components/Footer';
-import { UImenu } from 'styles/uiComponents/UImenu';
-import { UIcard } from 'styles/uiComponents/UIcard';
-import { UIbutton } from 'styles/uiComponents/UIbutton';
-import { UIlist } from 'styles/uiComponents/UIlist';
-import { UItag } from 'styles/uiComponents/UItag';
-import { Fade } from 'react-awesome-reveal';
+
+import { Menu as Nav } from 'styles/uiComponents/Menu';
+import { Card } from 'styles/uiComponents/Card';
+import { Button } from 'styles/uiComponents/Button';
+import { List } from 'styles/uiComponents/List';
+import { Tag } from 'styles/uiComponents/Tag';
+
 const Home: React.FC<Props> = ({ posts }) => {
   return (
     <div>
@@ -19,42 +20,41 @@ const Home: React.FC<Props> = ({ posts }) => {
         <title>Mini Code Lab {'/>'}</title>
         <link rel="icon" href="/flask.png" />
       </Head>
-      <UImenu>
+      <Nav>
         <Menu />
-      </UImenu>
-      <Fade cascade duration={1500}>
-        <UIlist>
-          {posts.map((post) => (
-            <UIcard key={post.id}>
-              <div className="card-header">
-                <Image src={post.cover} alt={post.title} width={48} height={48} />
-                <div>
-                  <h1>{post.title}</h1>
-                  <p className="date">{post.date}</p>
-                  <p>{post.author}</p>
-                </div>
+      </Nav>
+
+      <List>
+        {posts.map((post) => (
+          <Card key={post.id}>
+            <div className="card-header">
+              <Image src={post.cover} alt={post.title} width={48} height={48} />
+              <div>
+                <h1>{post.title}</h1>
+                <p className="date">{post.date}</p>
+                <p>{post.author}</p>
               </div>
-              <div className="card-body">
-                <p>{post.description}</p>
+            </div>
+            <div className="card-body">
+              <p>{post.description}</p>
+            </div>
+            <div className="card-footer">
+              <Link href={`/feed/${post.post_id}`}>
+                <Button>Leer más</Button>
+              </Link>
+              <div>
+                {post.tags.map((tag) => {
+                  return (
+                    <Tag color={tag.color} key={tag.id}>
+                      {tag.name}
+                    </Tag>
+                  );
+                })}
               </div>
-              <div className="card-footer">
-                <Link href={`/feed/${post.post_id}`}>
-                  <UIbutton>Leer más</UIbutton>
-                </Link>
-                <div>
-                  {post.tags.map((tag) => {
-                    return (
-                      <UItag color={tag.color} key={tag.id}>
-                        {tag.name}
-                      </UItag>
-                    );
-                  })}
-                </div>
-              </div>
-            </UIcard>
-          ))}
-        </UIlist>
-      </Fade>
+            </div>
+          </Card>
+        ))}
+      </List>
       <Footer />
     </div>
   );

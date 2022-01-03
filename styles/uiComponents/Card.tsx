@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const UIcard = styled.div`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px;

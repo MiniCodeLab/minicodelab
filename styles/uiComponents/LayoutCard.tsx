@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const UIaboutCard = styled.div`
+export const LayoutCard = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px;
@@ -15,14 +15,13 @@ export const UIaboutCard = styled.div`
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    
   }
 
   .about-card-body {
     margin-bottom: 15px;
-    text-align:center;
+    text-align: center;
 
-    p{
+    p {
       margin: 10px;
       text-align: justify;
     }

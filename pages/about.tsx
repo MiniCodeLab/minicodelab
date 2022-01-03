@@ -4,9 +4,10 @@ import Menu from 'components/Menu';
 import Footer from 'components/Footer';
 
 import AboutCard from 'components/AboutCard';
-import { UImenu } from 'styles/uiComponents/UImenu';
-import { UIlist } from 'styles/uiComponents/UIlist';
-import { Fade } from 'react-awesome-reveal';
+
+import { Menu as Nav } from 'styles/uiComponents/Menu';
+import { List } from 'styles/uiComponents/List';
+
 const About: React.FC = () => {
   return (
     <div>
@@ -14,17 +15,15 @@ const About: React.FC = () => {
         <title>Mini Code Lab {'/>'} About</title>
         <link rel="icon" href="/flask.png" />
       </Head>
-      <UImenu>
+      <Nav>
         <Menu />
-      </UImenu>
-      <Fade cascade duration={1500}>
-        <UIlist>
-          <AboutCard />
-          <AboutCard />
-          <AboutCard />
-          <AboutCard />
-        </UIlist>
-      </Fade>
+      </Nav>
+      <List>
+        <AboutCard />
+        <AboutCard />
+        <AboutCard />
+        <AboutCard />
+      </List>
       <Footer />
     </div>
   );

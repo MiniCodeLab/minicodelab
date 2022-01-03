@@ -5,12 +5,12 @@ import { Client } from '@notionhq/client';
 
 import Menu from 'components/Menu';
 import Footer from 'components/Footer';
-import { UImenu } from 'styles/uiComponents/UImenu';
-import { UIcard } from 'styles/uiComponents/UIcard';
-import { UIlist } from 'styles/uiComponents/UIlist';
-import { UIbutton } from 'styles/uiComponents/UIbutton';
-import { UItag } from 'styles/uiComponents/UItag';
-import { Fade } from 'react-awesome-reveal';
+
+import { Menu as Nav } from 'styles/uiComponents/Menu';
+import { Card } from 'styles/uiComponents/Card';
+import { List } from 'styles/uiComponents/List';
+import { Button } from 'styles/uiComponents/Button';
+import { Tag } from 'styles/uiComponents/Tag';
 
 const Feed: React.FC<Props> = ({ calendar }) => {
   return (
@@ -20,13 +20,12 @@ const Feed: React.FC<Props> = ({ calendar }) => {
         <link rel="icon" href="/flask.png" />
       </Head>
 
-      <UImenu>
+      <Nav>
         <Menu />
-      </UImenu>
-      <Fade cascade duration={1500}>
-      <UIlist>
+      </Nav>
+      <List>
         {calendar.map((date) => (
-          <UIcard key={date.id}>
+          <Card key={date.id}>
             <div className="card-header">
               <Image src={date.cover} alt={date.title} width={48} height={48} />
               <div>
@@ -38,21 +37,20 @@ const Feed: React.FC<Props> = ({ calendar }) => {
               <p>{date.description}</p>
             </div>
             <div className="card-footer">
-              <UIbutton>Link</UIbutton>
+              <Button>Link</Button>
               <div>
                 {date.tags.map((tag) => {
                   return (
-                    <UItag color={tag.color} key={tag.id}>
+                    <Tag color={tag.color} key={tag.id}>
                       {tag.name}
-                    </UItag>
+                    </Tag>
                   );
                 })}
               </div>
             </div>
-          </UIcard>
+          </Card>
         ))}
-      </UIlist>
-      </Fade>
+      </List>
       <Footer />
     </div>
   );

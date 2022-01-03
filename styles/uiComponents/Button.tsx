@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const UIbutton = styled.button`
+export const Button = styled.button`
   border: 3px solid var(--color-stroke);
   color: var(--color-stroke);
   background: var(--color-purple);

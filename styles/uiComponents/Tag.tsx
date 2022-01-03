@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const UItag = styled.button`
+export const Tag = styled.button`
   display: inline-block;
   background: ${(props) => props.color || 'inherit'};
   border: 3px solid var(--color-stroke);

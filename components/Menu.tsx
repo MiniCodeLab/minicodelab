@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { AttentionSeeker, Fade } from 'react-awesome-reveal';
 
 const ColorMode = dynamic(() => import('./ColorMode'), {
   ssr: false
@@ -9,32 +8,34 @@ const ColorMode = dynamic(() => import('./ColorMode'), {
 
 const Menu: React.FC = () => {
   return (
-    <ul>
-      <AttentionSeeker effect="tada">
-        <li className="logo">
-          <Link href="/" passHref>
-            <a>
-              <Image src="/longlogo.png" alt="logo icon" width={151} height={25} />
-            </a>
-          </Link>
-        </li>
-      </AttentionSeeker>
-      <Fade cascade triggerOnce duration={800}>
+    <nav>
+      <div className="logo">
+        <Link href="/" passHref>
+          <a>
+            <Image src="/longlogo.png" alt="logo icon" width={151} height={25} priority />
+          </a>
+        </Link>
+      </div>
+      <ul>
         <li>
           <Link href="/calendar" passHref>
-            <a className="other">
+            <a>
               <Image src="/calendar.png" alt="Calendar icon" width={25} height={25} />
             </a>
           </Link>
+        </li>
+        <li>
           <Link href="/about" passHref>
-            <a className="other">
+            <a>
               <Image src="/about.png" alt="About icon" width={25} height={25} />
             </a>
           </Link>
+        </li>
+        <li>
           <ColorMode />
         </li>
-      </Fade>
-    </ul>
+      </ul>
+    </nav>
   );
 };
 

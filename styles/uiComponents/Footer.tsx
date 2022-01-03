@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const UIfooter = styled.footer`
+export const Footer = styled.footer`
   background-color: var(--color-card-bg);
   border-top: 3px solid var(--color-stroke);
   ul {

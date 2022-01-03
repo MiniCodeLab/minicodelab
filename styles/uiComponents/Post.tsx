@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const UiPost = styled.article`
+export const Post = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,7 @@ export const UiPost = styled.article`
     margin: 20px 0;
   }
 
-  h1{
+  h1 {
     border-bottom: 3px solid var(--color-title);
   }
 
@@ -40,17 +40,17 @@ export const UiPost = styled.article`
     padding: 20px 0px;
   }
 
-  pre code{
-   padding: 10px;
-   color: var(--color-paragraph);
-   font-weight: 300;
+  pre code {
+    padding: 10px;
+    color: var(--color-paragraph);
+    font-weight: 300;
   }
 
   code {
     color: var(--color-bg-toggle);
     font-weight: bold;
   }
-  .post-button{
+  .post-button {
     margin: 20px;
   }
 `;
