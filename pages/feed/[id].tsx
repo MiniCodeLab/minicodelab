@@ -19,7 +19,7 @@ const Post = ({ post }) => {
         <Menu />
       </UImenu>
       <UiPost dangerouslySetInnerHTML={{ __html: post }} />
-      <Link href="/feed">
+      <Link href="/">
         <UIbutton>Volver al feed</UIbutton>
       </Link>
     </div>
