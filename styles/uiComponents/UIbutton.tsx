@@ -5,7 +5,7 @@ export const UIbutton = styled.button`
   color: var(--color-stroke);
   background: var(--color-purple);
   font-weight: bold;
-  font-size: var(--paragraph);
+  font-size: var(--title-h2);
   padding: 7px;
 
   &:hover {

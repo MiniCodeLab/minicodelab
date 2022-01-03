@@ -17,7 +17,7 @@ export const UIcard = styled.div`
     justify-content: space-between;
     margin: 10px 0;
     .date {
-      margin: 5px 0;
+      margin: 8px 0;
     }
   }
   .card-body {
