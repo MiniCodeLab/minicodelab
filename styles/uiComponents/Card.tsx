@@ -25,9 +25,11 @@ export const Card = styled.div`
     }
 
     .date-author {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 5px;
       margin: 8px 0;
-      text-align: right;
-      white-space: pre;
     }
   }
 
