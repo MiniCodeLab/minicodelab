@@ -17,9 +17,9 @@ export const Menu = styled.nav`
       li {
         margin: 10px 20px;
         cursor: pointer;
-        a:hover {
+        &:hover {
           transition: 0.5s;
-          transform: scale(1.3);
+          transform: scale(1.5);
         }
       }
     }

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 import { DatabaseResponse, Post } from 'types/notion';
 import { Client } from '@notionhq/client';
 
@@ -14,6 +15,12 @@ import { List } from 'styles/uiComponents/List';
 import { Tag } from 'styles/uiComponents/Tag';
 
 const Home: React.FC<Props> = ({ posts }) => {
+  const [filteredPost, setFilteredPost] = useState<Post[]>([]);
+
+  const handleClick = (name) => {
+    setFilteredPost(posts.filter((post) => post.tags.find((tag) => tag.name === name)));
+  };
+
   return (
     <div>
       <Head>
@@ -23,15 +30,16 @@ const Home: React.FC<Props> = ({ posts }) => {
       <Nav>
         <Menu />
       </Nav>
-
       <List>
-        {posts.map((post) => (
+        {(filteredPost.length ? filteredPost : posts).map((post) => (
           <Card key={post.id}>
             <div className="card-header">
               <Image src={post.cover} alt={post.title} width={50} height={50} />
               <div>
                 <h1>{post.title}</h1>
-                <p className="date-author">{post.date} - {post.author}</p>
+                <p className="date-author">
+                  {post.date} - {post.author}
+                </p>
               </div>
             </div>
             <div className="card-body">
@@ -44,7 +52,7 @@ const Home: React.FC<Props> = ({ posts }) => {
               <div>
                 {post.tags.map((tag) => {
                   return (
-                    <Tag color={tag.color} key={tag.id}>
+                    <Tag color={tag.color} key={tag.id} onClick={() => handleClick(tag.name)}>
                       {tag.name}
                     </Tag>
                   );

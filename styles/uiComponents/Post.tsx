@@ -22,7 +22,7 @@ export const Post = styled.article`
 
   img {
     align-self: center;
-    width: 70%;
+    width: 100%;
     padding: 20px 0px;
     margin: 10px 0px;
   }

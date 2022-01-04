@@ -9,11 +9,10 @@ const AboutCard: React.FC = () => {
     <>
       {about.map((member) => {
         return (
-          <LayoutCard>
+          <LayoutCard key={member.name}>
             <div className="about-card-header">
               <h1>{member.name}</h1>
               <h2>{member.position}</h2>
-              <h2>{member.job}</h2>
             </div>
             <div className="about-card-body">
               <Image src={member.photo} alt={member.name} width={490} height={490} />
