@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 
-const ColorMode = dynamic(() => import('./ColorMode'), {
-  ssr: false
-});
+import ColorMode from './ColorMode';
+import longLogo from 'public/images/longlogo.png';
+import calendar from 'public/images/calendar.png';
+import about from 'public/images/about.png';
 
 const Menu: React.FC = () => {
   return (
@@ -12,7 +12,14 @@ const Menu: React.FC = () => {
       <div className="logo">
         <Link href="/" passHref>
           <a>
-            <Image src="/longlogo.png" alt="logo icon" width={151} height={25} priority />
+            <Image
+              alt="logo icon"
+              height={25}
+              placeholder="blur"
+              priority
+              src={longLogo}
+              width={151}
+            />
           </a>
         </Link>
       </div>
@@ -20,14 +27,14 @@ const Menu: React.FC = () => {
         <li>
           <Link href="/calendar" passHref>
             <a>
-              <Image src="/calendar.png" alt="Calendar icon" width={25} height={25} />
+              <Image src={calendar} alt="Calendar icon" width={25} height={25} />
             </a>
           </Link>
         </li>
         <li>
           <Link href="/about" passHref>
             <a>
-              <Image src="/about.png" alt="About icon" width={25} height={25} />
+              <Image src={about} alt="About icon" width={25} height={25} />
             </a>
           </Link>
         </li>

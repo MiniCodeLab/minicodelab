@@ -17,7 +17,7 @@ const Feed: React.FC<Props> = ({ calendar }) => {
     <div>
       <Head>
         <title>Mini Code Lab {'/>'} Feed</title>
-        <link rel="icon" href="/flask.png" />
+        <link rel="icon" href="/images/flask.png" />
       </Head>
 
       <Nav>

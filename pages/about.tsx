@@ -13,7 +13,7 @@ const About: React.FC = () => {
     <div>
       <Head>
         <title>Mini Code Lab {'/>'} About</title>
-        <link rel="icon" href="/flask.png" />
+        <link rel="icon" href="/images/flask.png" />
       </Head>
       <Nav>
         <Menu />

@@ -1,6 +1,13 @@
 import Image from 'next/image';
 
-import { Footer as FooterUi } from '../styles/uiComponents/Footer';
+import { Footer as FooterUi } from 'styles/uiComponents/Footer';
+import github from 'public/images/github.png';
+import linkedin from 'public/images/linkedin.png';
+import instagram from 'public/images/instagram.png';
+import tiktok from 'public/images/tik-tok.png';
+import twitch from 'public/images/twitch.png';
+import youtube from 'public/images/youtube.png';
+import twitter from 'public/images/twitter.png';
 
 const Footer: React.FC = () => {
   return (
@@ -8,37 +15,37 @@ const Footer: React.FC = () => {
       <ul>
         <li>
           <a href="https://github.com/MiniCodeLab">
-            <Image src="/github.png" alt="logo github" width={30} height={30} />
+            <Image src={github} alt="logo github" width={30} height={30} />
           </a>
         </li>
         <li>
           <a href="https://www.linkedin.com/in/mini-code-lab-studio-285595229/">
-            <Image src="/linkedin.png" alt="logo linkedin" width={30} height={30} />
+            <Image src={linkedin} alt="logo linkedin" width={30} height={30} />
           </a>
         </li>
         <li>
           <a href="https://www.instagram.com/minicodelab/">
-            <Image src="/instagram.png" alt="logo instagram" width={30} height={30} />
+            <Image src={instagram} alt="logo instagram" width={30} height={30} />
           </a>
         </li>
         <li>
           <a href="">
-            <Image src="/tik-tok.png" alt="logo tik-tok" width={30} height={30} />
+            <Image src={tiktok} alt="logo tik-tok" width={30} height={30} />
           </a>
         </li>
         <li>
           <a href="https://www.twitch.tv/minicodelab">
-            <Image src="/twitch.png" alt="logo twitch" width={30} height={30} />
+            <Image src={twitch} alt="logo twitch" width={30} height={30} />
           </a>
         </li>
         <li>
           <a href="https://www.youtube.com/channel/UCN1SyK4zRHbdIO6HptDoDOA">
-            <Image src="/youtube.png" alt="logo youtube" width={30} height={30} />
+            <Image src={youtube} alt="logo youtube" width={30} height={30} />
           </a>
         </li>
         <li>
           <a href="https://twitter.com/minicodelab/">
-            <Image src="/twitter.png" alt="logo twitter" width={30} height={30} />
+            <Image src={twitter} alt="logo twitter" width={30} height={30} />
           </a>
         </li>
       </ul>
