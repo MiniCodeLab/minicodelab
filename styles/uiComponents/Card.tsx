@@ -16,7 +16,7 @@ export const Card = styled.div`
     align-items: flex-end;
     justify-content: space-between;
     margin: 10px 0;
-    .date {
+    .date-author {
       margin: 8px 0;
     }
   }

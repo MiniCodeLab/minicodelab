@@ -20,9 +20,6 @@ const About: React.FC = () => {
       </Nav>
       <List>
         <AboutCard />
-        <AboutCard />
-        <AboutCard />
-        <AboutCard />
       </List>
       <Footer />
     </div>

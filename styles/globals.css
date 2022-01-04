@@ -225,10 +225,10 @@ p {
 /* MEDIA DESKTOP */
 @media (min-width: 840px) {
   h1 {
-    font-size: calc(var(--title-h3) * (var(--text-to-mobile)));
+    font-size: calc(var(--title-h1) * (var(--text-to-mobile)));
   }
   h2 {
-    font-size: calc(var(--title-h3) * (var(--text-to-mobile)));
+    font-size: calc(var(--title-h2) * (var(--text-to-mobile)));
   }
   h3 {
     font-size: calc(var(--title-h3) * (var(--text-to-mobile)));

@@ -4,8 +4,12 @@ export const Post = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 20px 80px;
+  margin: 20px 30px;
   text-align: justify;
+
+  @media (min-width: 840px) {
+    margin: 20px 100px;
+  }
   & h1,
   h2,
   p {

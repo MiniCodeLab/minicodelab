@@ -28,11 +28,10 @@ const Home: React.FC<Props> = ({ posts }) => {
         {posts.map((post) => (
           <Card key={post.id}>
             <div className="card-header">
-              <Image src={post.cover} alt={post.title} width={48} height={48} />
+              <Image src={post.cover} alt={post.title} width={50} height={50} />
               <div>
                 <h1>{post.title}</h1>
-                <p className="date">{post.date}</p>
-                <p>{post.author}</p>
+                <p className="date-author">{post.date} - {post.author}</p>
               </div>
             </div>
             <div className="card-body">

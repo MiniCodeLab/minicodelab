@@ -1,16 +1,48 @@
 {
-    "about": [
-        {
-
-        },
-        {
-
-        },
-        {
-
-        },
-        {
-            
-        }
-    ]
+  "about": [
+    {
+      "name": "Cristian Castillo",
+      "position": "Technical Lead of Mini code lab",
+      "job": "Senior FullStack Developer at Olympic Channel",
+      "description": "Desde que conocí a Cristian supe que sería un crack dentro de este mundillo 💻 y en pocos meses se confirmaba lo que todos sabíamos, es un tipo con una capacidad técnica sorprendente. Ha conseguido metas que muchos desarrolladores no han llegado alcanzar en toda su carrera y lo mejor es que no tiene límites 🚀. Además de todo esto es un gran compañero y amigo 🤟, siempre dispuesto a colaborar, y un gran formador porque trasmite con simpatía y simplicidad conceptos complejos... Pero que os voy a decir si es parte de esa familia que encontramos en la vida 💕",
+      "photo": "/cristian.png",
+      "linkedin": null,
+      "github": null,
+      "twitter": null,
+      "instagram": null
+    },
+    {
+      "name": "Alberto Rivera",
+      "position": "Creator of Mini code lab",
+      "job": "Freelancer &  Lead Teach at Upgrade Hub",
+      "description": null,
+      "photo": "/alberto.png",
+      "linkedin": null,
+      "github": null,
+      "twitter": null,
+      "instagram": null
+    },
+    {
+      "name": "Álvaro Torres",
+      "position": "Junior Developer & CM in Mini code lab",
+      "job": "Freelancer &  Assistant Upgrade Hub",
+      "description": "Músico, productor y genio del audiovisual reinventado en desarrollador web. Dadas sus dotes adquiridas a través del resto de experiencias ajenas a este mundo, Álvaro eleva el gusto y la creatividad a cualquier proyecto 📷. Apasionado del cine, videojuegos y música vuelca todo lo aprendido en cualquiera de estos medios en todo lo que hace, además de tener un afán imparable por compartirlo. Sus ganas de aprender constantes y el apoyo incesable en cualquier proyecto lo hace un compañero indispensable, además de ser un amigo increíble 🧑🏻‍🎤",
+      "photo": "/alvaro.png",
+      "linkedin": "https://www.linkedin.com/in/alvaro-torres-kns/",
+      "github": "https://github.com/kNS303",
+      "twitter": "https://twitter.com/kNS303",
+      "instagram": "https://www.instagram.com/kns303/"
+    },
+    {
+      "name": "Antonio Rosales",
+      "position": "Mid Passionate Developer",
+      "job": "Freelancer & Lead Teacher Upgrade Hub ",
+      "description": "Antonio tiene una capacidad de aprendizaje extremadamente inusual. En pocos meses desde que se propuso aprender a programar alcanzó un nivel que pocos se podían imaginar, adaptándose y solventando cualquier situación o problemática que se le ponía por delante. Es un trabajador incansable, creativo y de una calidad humana sin igual. Una persona que está en constante evolución y que tiene una inquietud por ello infalible. Conocer a Antonio es un construir un pilar fundamental en la vida de cualquiera 🚀❤",
+      "photo": "/antonio.png",
+      "linkedin": "https://www.linkedin.com/in/antonio-rosales-martinez-925397213/",
+      "github": "https://github.com/lethamburn",
+      "twitter": "https://twitter.com/lethamburn",
+      "instagram": null
+    }
+  ]
 }
