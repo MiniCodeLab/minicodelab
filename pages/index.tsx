@@ -15,39 +15,47 @@ import { List } from 'styles/uiComponents/List';
 import { Tag } from 'styles/uiComponents/Tag';
 
 const Home: React.FC<Props> = ({ posts }) => {
-  const [filteredPost, setFilteredPost] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
   const handleClick = (name) => {
-    setFilteredPost(posts.filter((post) => post.tags.find((tag) => tag.name === name)));
+    setFilteredPosts(posts.filter((post) => post.tags.find((tag) => tag.name === name)));
   };
 
   return (
     <div>
       <Head>
         <title>Mini Code Lab {'/>'}</title>
-        <link rel="icon" href="/flask.png" />
+        <link rel="icon" href="/images/flask.png" />
       </Head>
+
       <Nav>
         <Menu />
       </Nav>
       <List>
-        {(filteredPost.length ? filteredPost : posts).map((post) => (
+        {(filteredPosts.length ? filteredPosts : posts).map((post) => (
           <Card key={post.id}>
             <div className="card-header">
-              <Image src={post.cover} alt={post.title} width={50} height={50} />
-              <div>
+              <div className="card-image">
+                <Image src={post.cover} alt={post.title} width={60} height={60} layout="fixed" />
+              </div>
+
+              <div className="card-content">
                 <h1>{post.title}</h1>
                 <p className="date-author">
                   {post.date} - {post.author}
                 </p>
               </div>
             </div>
+
             <div className="card-body">
               <p>{post.description}</p>
             </div>
+
             <div className="card-footer">
-              <Link href={`/feed/${post.post_id}`}>
-                <Button>Leer más</Button>
+              <Link href={`/feed/${post.post_id}`} passHref>
+                <a>
+                  <Button>Leer más</Button>
+                </a>
               </Link>
               <div>
                 {post.tags.map((tag) => {

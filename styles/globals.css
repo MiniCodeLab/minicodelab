@@ -127,7 +127,7 @@ input {
 
 /* THEMES */
 body,
-body[data-theme='dark'] {
+body.dark-mode {
   --color-bg: #16161a;
   --color-card-bg: #242629;
   --color-title: #fffffe;
@@ -137,7 +137,7 @@ body[data-theme='dark'] {
   --color-green: #2cb67d;
 }
 
-body[data-theme='light'] {
+body.light-mode {
   --color-bg: #fffffe;
   --color-card-bg: #94a1b2;
   --color-title: #010101;
@@ -201,7 +201,7 @@ p {
 *:after {
   box-sizing: border-box;
 }
-.post-button{
+.post-button {
   display: flex;
   justify-content: center;
   margin: 20px;
@@ -210,15 +210,15 @@ p {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-card-bg); 
+  background: var(--color-card-bg);
 }
- 
+
 ::-webkit-scrollbar-thumb {
-  background: var(--color-stroke); 
+  background: var(--color-stroke);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-stroke); 
+  background: var(--color-stroke);
 }
 /* END - GLOBAL STYLES */
 

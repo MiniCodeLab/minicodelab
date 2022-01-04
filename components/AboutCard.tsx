@@ -1,8 +1,13 @@
 import Image from 'next/image';
 
-import { LayoutCard } from '../styles/uiComponents/LayoutCard';
+import { LayoutCard } from 'styles/uiComponents/LayoutCard';
+import github from 'public/images/github.png';
+import linkedin from 'public/images/linkedin.png';
+import instagram from 'public/images/instagram.png';
+import twitter from 'public/images/twitter.png';
+import aboutData from 'about.json';
 
-import { about } from '../about.json';
+const { about } = aboutData;
 
 const AboutCard: React.FC = () => {
   return (
@@ -22,28 +27,28 @@ const AboutCard: React.FC = () => {
               {member.github ? (
                 <li>
                   <a href={member.github}>
-                    <Image src="/github.png" alt="Github icon" width={25} height={25} />
+                    <Image src={github} alt="Github icon" width={25} height={25} />
                   </a>
                 </li>
               ) : null}
               {member.linkedin ? (
                 <li>
                   <a href={member.linkedin}>
-                    <Image src="/linkedin.png" alt="Linkedin icon" width={25} height={25} />
+                    <Image src={linkedin} alt="Linkedin icon" width={25} height={25} />
                   </a>
                 </li>
               ) : null}
               {member.instagram ? (
                 <li>
                   <a href={member.instagram}>
-                    <Image src="/instagram.png" alt="Instagram icon" width={25} height={25} />
+                    <Image src={instagram} alt="Instagram icon" width={25} height={25} />
                   </a>
                 </li>
               ) : null}
               {member.twitter ? (
                 <li>
                   <a href={member.twitter}>
-                    <Image src="/twitter.png" alt="Twitter icon" width={25} height={25} />
+                    <Image src={twitter} alt="Twitter icon" width={25} height={25} />
                   </a>
                 </li>
               ) : null}

@@ -13,17 +13,19 @@ const PostById = ({ post }) => {
     <div>
       <Head>
         <title>Mini Code Lab {'/>'} Feed</title>
-        <link rel="icon" href="/flask.png" />
+        <link rel="icon" href="/images/flask.png" />
       </Head>
 
       <Nav>
         <Menu />
       </Nav>
       <PostUi dangerouslySetInnerHTML={{ __html: post }} />
-      <Link href="/">
-        <div className="post-button">
-          <Button>Volver al feed</Button>
-        </div>
+      <Link href="/" passHref>
+        <a>
+          <div className="post-button">
+            <Button>Volver al feed</Button>
+          </div>
+        </a>
       </Link>
       <Footer />
     </div>
