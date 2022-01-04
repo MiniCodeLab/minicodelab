@@ -43,7 +43,8 @@ const Home: React.FC<Props> = ({ posts }) => {
               <div className="card-content">
                 <h1>{post.title}</h1>
                 <p className="date-author">
-                  {post.date} - {post.author}
+                  <span>{post.date}</span>
+                  <span>{post.author}</span>
                 </p>
               </div>
             </div>
