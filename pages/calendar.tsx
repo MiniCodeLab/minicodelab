@@ -11,6 +11,7 @@ import { Card } from 'styles/uiComponents/Card';
 import { List } from 'styles/uiComponents/List';
 import { Button } from 'styles/uiComponents/Button';
 import { Tag } from 'styles/uiComponents/Tag';
+import { GetStaticPropsResult } from 'next';
 
 const Feed: React.FC<Props> = ({ calendar }) => {
   return (
@@ -60,7 +61,7 @@ export type Props = {
   calendar: Calendar[];
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps = async (): Promise<GetStaticPropsResult<Props>> => {
   const notion = new Client({
     auth: process.env.NEXT_PUBLIC_NOTION_CALENDAR_SECRET
   });
@@ -85,7 +86,8 @@ export const getStaticProps = async () => {
   return {
     props: {
       calendar
-    }
+    },
+    revalidate: 60 * 60 * 24
   };
 };
 

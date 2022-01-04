@@ -15,37 +15,37 @@ const Footer: React.FC = () => {
       <ul>
         <li>
           <a href="https://github.com/MiniCodeLab">
-            <Image src={github} alt="logo github" width={30} height={30} />
+            <Image src={github} alt="logo github" width={40} height={40} />
           </a>
         </li>
         <li>
           <a href="https://www.linkedin.com/in/mini-code-lab-studio-285595229/">
-            <Image src={linkedin} alt="logo linkedin" width={30} height={30} />
+            <Image src={linkedin} alt="logo linkedin" width={40} height={40} />
           </a>
         </li>
         <li>
           <a href="https://www.instagram.com/minicodelab/">
-            <Image src={instagram} alt="logo instagram" width={30} height={30} />
+            <Image src={instagram} alt="logo instagram" width={40} height={40} />
           </a>
         </li>
         <li>
           <a href="">
-            <Image src={tiktok} alt="logo tik-tok" width={30} height={30} />
+            <Image src={tiktok} alt="logo tik-tok" width={40} height={40} />
           </a>
         </li>
         <li>
           <a href="https://www.twitch.tv/minicodelab">
-            <Image src={twitch} alt="logo twitch" width={30} height={30} />
+            <Image src={twitch} alt="logo twitch" width={40} height={40} />
           </a>
         </li>
         <li>
           <a href="https://www.youtube.com/channel/UCN1SyK4zRHbdIO6HptDoDOA">
-            <Image src={youtube} alt="logo youtube" width={30} height={30} />
+            <Image src={youtube} alt="logo youtube" width={40} height={40} />
           </a>
         </li>
         <li>
           <a href="https://twitter.com/minicodelab/">
-            <Image src={twitter} alt="logo twitter" width={30} height={30} />
+            <Image src={twitter} alt="logo twitter" width={40} height={40} />
           </a>
         </li>
       </ul>

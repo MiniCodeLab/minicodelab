@@ -84,15 +84,14 @@ export type DatabaseResponse = {
 
 // Client code types -> TODO: DATES 
 export type Post = {
-  id: string;
-  title: string;
-  cover: string;
   author: string;
-  description: string;
-  tags: any;
-  url: string;
-  post_id: string;
+  cover: string;
   date: string
+  description: string;
+  id: string;
+  post_id: string;
+  tags: any;
+  title: string;
 };
 
 // Client code types -> TODO: DATES 

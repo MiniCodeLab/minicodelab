@@ -13,6 +13,7 @@ import { Card } from 'styles/uiComponents/Card';
 import { Button } from 'styles/uiComponents/Button';
 import { List } from 'styles/uiComponents/List';
 import { Tag } from 'styles/uiComponents/Tag';
+import { GetStaticPropsResult } from 'next';
 
 const Home: React.FC<Props> = ({ posts }) => {
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
@@ -79,7 +80,7 @@ export type Props = {
   posts: Post[];
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps = async (): Promise<GetStaticPropsResult<Props>> => {
   const notion = new Client({
     auth: process.env.NEXT_PUBLIC_NOTION_POST_SECRET
   });
@@ -106,7 +107,8 @@ export const getStaticProps = async () => {
   return {
     props: {
       posts
-    }
+    },
+    revalidate: 3600
   };
 };
 

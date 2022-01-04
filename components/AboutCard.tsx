@@ -19,6 +19,7 @@ const AboutCard: React.FC = () => {
               <h1>{member.name}</h1>
               <h2>{member.position}</h2>
             </div>
+
             <div className="about-card-body">
               <Image src={member.photo} alt={member.name} width={490} height={490} />
               <p>{member.description}</p>
@@ -27,28 +28,28 @@ const AboutCard: React.FC = () => {
               {member.github ? (
                 <li>
                   <a href={member.github}>
-                    <Image src={github} alt="Github icon" width={25} height={25} />
+                    <Image src={github} alt="Github icon" width={40} height={40} />
                   </a>
                 </li>
               ) : null}
               {member.linkedin ? (
                 <li>
                   <a href={member.linkedin}>
-                    <Image src={linkedin} alt="Linkedin icon" width={25} height={25} />
+                    <Image src={linkedin} alt="Linkedin icon" width={40} height={40} />
                   </a>
                 </li>
               ) : null}
               {member.instagram ? (
                 <li>
                   <a href={member.instagram}>
-                    <Image src={instagram} alt="Instagram icon" width={25} height={25} />
+                    <Image src={instagram} alt="Instagram icon" width={40} height={40} />
                   </a>
                 </li>
               ) : null}
               {member.twitter ? (
                 <li>
                   <a href={member.twitter}>
-                    <Image src={twitter} alt="Twitter icon" width={25} height={25} />
+                    <Image src={twitter} alt="Twitter icon" width={40} height={40} />
                   </a>
                 </li>
               ) : null}

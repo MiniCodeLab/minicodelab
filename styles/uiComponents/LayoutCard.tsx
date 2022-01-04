@@ -14,7 +14,11 @@ export const LayoutCard = styled.div`
   .about-card-header {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+
+    > h1 {
+      margin-bottom: 10px;
+    }
   }
 
   .about-card-body {
@@ -22,7 +26,7 @@ export const LayoutCard = styled.div`
     text-align: center;
 
     p {
-      margin: 10px;
+      margin-top: 20px;
       text-align: left;
     }
   }
@@ -30,6 +34,8 @@ export const LayoutCard = styled.div`
   .about-card-footer {
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
+
     li {
       margin-left: 5px;
     }
