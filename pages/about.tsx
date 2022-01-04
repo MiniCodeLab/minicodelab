@@ -18,6 +18,7 @@ const About: React.FC = () => {
       <Nav>
         <Menu />
       </Nav>
+      
       <List>
         <AboutCard />
       </List>

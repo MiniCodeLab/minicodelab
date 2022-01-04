@@ -11,11 +11,11 @@ const ColorMode: React.FC = () => {
     <Image
       alt="ColorMode"
       aria-label={`Change to ${altTheme} mode`}
-      height={25}
+      height={40}
       onClick={darkMode.toggle}
       src={colormode}
       title={`Change to ${altTheme} mode`}
-      width={25}
+      width={40}
     />
   );
 };

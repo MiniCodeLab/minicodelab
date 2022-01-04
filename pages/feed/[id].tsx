@@ -1,5 +1,4 @@
 import { GetServerSidePropsResult } from 'next';
-import { Post } from 'types/notion';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -8,6 +7,7 @@ import Menu from 'components/Menu';
 import Footer from 'components/Footer';
 import { Menu as Nav } from 'styles/uiComponents/Menu';
 import { Button } from 'styles/uiComponents/Button';
+
 const PostById = ({ post }) => {
   return (
     <div>
@@ -39,6 +39,7 @@ export type Props = {
 export const getServerSideProps = async ({ params }): Promise<GetServerSidePropsResult<Props>> => {
   const res = await fetch(`https://potion-api.now.sh/html?id=${params.id}`);
   const resText = await res.text();
+
   return {
     props: {
       post: resText

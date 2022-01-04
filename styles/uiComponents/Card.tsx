@@ -27,6 +27,7 @@ export const Card = styled.div`
     .date-author {
       margin: 8px 0;
       text-align: right;
+      white-space: pre;
     }
   }
 

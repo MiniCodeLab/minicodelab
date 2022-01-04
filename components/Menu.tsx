@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import ColorMode from './ColorMode';
 import longLogo from 'public/images/longlogo.png';
 import calendar from 'public/images/calendar.png';
 import about from 'public/images/about.png';
+import ColorMode from './ColorMode';
 
 const Menu: React.FC = () => {
   return (
@@ -14,11 +14,11 @@ const Menu: React.FC = () => {
           <a>
             <Image
               alt="logo icon"
-              height={25}
+              height={33}
               placeholder="blur"
               priority
               src={longLogo}
-              width={151}
+              width={200}
             />
           </a>
         </Link>
@@ -27,14 +27,14 @@ const Menu: React.FC = () => {
         <li>
           <Link href="/calendar" passHref>
             <a>
-              <Image src={calendar} alt="Calendar icon" width={25} height={25} />
+              <Image src={calendar} alt="Calendar icon" width={40} height={40} />
             </a>
           </Link>
         </li>
         <li>
           <Link href="/about" passHref>
             <a>
-              <Image src={about} alt="About icon" width={25} height={25} />
+              <Image src={about} alt="About icon" width={40} height={40} />
             </a>
           </Link>
         </li>
