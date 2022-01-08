@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
           </a>
         </li>
         <li>
-          <a href="">
+          <a href="https://www.tiktok.com/@minicodelab">
             <Image src={tiktok} alt="logo tik-tok" width={40} height={40} />
           </a>
         </li>
