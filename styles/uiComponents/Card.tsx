@@ -11,17 +11,21 @@ export const Card = styled.div`
 
   @media (min-width: 840px) {
     width: calc(50% - 40px);
+    height: min-content;
   }
 
   .card-header {
     align-items: flex-start;
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
 
     .card-content {
       text-align: right;
       margin-left: 32px;
+
+      >h2{
+        font-size: var(--title-h1);
+      }
     }
 
     .date-author {
@@ -35,12 +39,21 @@ export const Card = styled.div`
 
   .card-body {
     margin: 10px 0;
+    min-height: 72px;
   }
 
   .card-footer {
-    align-items: flex-end;
+    align-items: center;
     display: flex;
+    gap: 1rem;
     justify-content: space-between;
     margin: 10px 0;
+  }
+
+  .tag-container {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    padding-top: 4px;
   }
 `;
