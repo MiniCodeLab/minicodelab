@@ -13,6 +13,7 @@ import { Card } from 'styles/uiComponents/Card';
 import { Button } from 'styles/uiComponents/Button';
 import { List } from 'styles/uiComponents/List';
 import { Tag } from 'styles/uiComponents/Tag';
+import { PageLayout } from 'styles/uiComponents/PageLayout';
 import { GetStaticPropsResult } from 'next';
 
 const Home: React.FC<Props> = ({ posts }) => {
@@ -23,7 +24,7 @@ const Home: React.FC<Props> = ({ posts }) => {
   };
 
   return (
-    <div>
+    <PageLayout>
       <Head>
         <title>Mini Code Lab {'/>'}</title>
         <link rel="icon" href="/images/flask.png" />
@@ -41,10 +42,18 @@ const Home: React.FC<Props> = ({ posts }) => {
               </div>
 
               <div className="card-content">
-                <h1>{post.title}</h1>
+                <h2>{post.title}</h2>
                 <p className="date-author">
                   <span>{post.date}</span>
-                  <span>{post.author}</span>
+                  <div className="tag-container">
+                    {post.tags.map((tag) => {
+                      return (
+                        <Tag color={tag.color} key={tag.id} onClick={() => handleClick(tag.name)}>
+                          {tag.name}
+                        </Tag>
+                      );
+                    })}
+                  </div>
                 </p>
               </div>
             </div>
@@ -59,21 +68,13 @@ const Home: React.FC<Props> = ({ posts }) => {
                   <Button>Leer más</Button>
                 </a>
               </Link>
-              <div>
-                {post.tags.map((tag) => {
-                  return (
-                    <Tag color={tag.color} key={tag.id} onClick={() => handleClick(tag.name)}>
-                      {tag.name}
-                    </Tag>
-                  );
-                })}
-              </div>
+              <p>{post.author}</p>
             </div>
           </Card>
         ))}
       </List>
       <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

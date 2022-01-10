@@ -7,10 +7,11 @@ import AboutCard from 'components/AboutCard';
 
 import { Menu as Nav } from 'styles/uiComponents/Menu';
 import { List } from 'styles/uiComponents/List';
+import { PageLayout } from 'styles/uiComponents/PageLayout';
 
 const About: React.FC = () => {
   return (
-    <div>
+    <PageLayout>
       <Head>
         <title>Mini Code Lab {'/>'} About</title>
         <link rel="icon" href="/images/flask.png" />
@@ -23,7 +24,7 @@ const About: React.FC = () => {
         <AboutCard />
       </List>
       <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

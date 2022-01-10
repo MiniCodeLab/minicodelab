@@ -11,11 +11,12 @@ import { Card } from 'styles/uiComponents/Card';
 import { List } from 'styles/uiComponents/List';
 import { Button } from 'styles/uiComponents/Button';
 import { Tag } from 'styles/uiComponents/Tag';
+import { PageLayout } from 'styles/uiComponents/PageLayout';
 import { GetStaticPropsResult } from 'next';
 
 const Feed: React.FC<Props> = ({ calendar }) => {
   return (
-    <div>
+    <PageLayout>
       <Head>
         <title>Mini Code Lab {'/>'} Feed</title>
         <link rel="icon" href="/images/flask.png" />
@@ -53,7 +54,7 @@ const Feed: React.FC<Props> = ({ calendar }) => {
         ))}
       </List>
       <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
