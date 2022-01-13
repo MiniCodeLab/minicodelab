@@ -1,25 +1,14 @@
+import Layout from 'components/Layout';
 import { GetServerSidePropsResult } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
+import { Button } from 'styles/ui/Button';
+import { Post as PostUi } from '../../styles/ui/Post';
 
-import { Post as PostUi } from '../../styles/uiComponents/Post';
-import Menu from 'components/Menu';
-import Footer from 'components/Footer';
-import { Menu as Nav } from 'styles/uiComponents/Menu';
-import { Button } from 'styles/uiComponents/Button';
-
-const PostById = ({ post }) => {
+const PostPage = ({ post }) => {
   return (
-    <div>
-      <Head>
-        <title>Mini Code Lab {'/>'} Feed</title>
-        <link rel="icon" href="/images/flask.png" />
-      </Head>
-
-      <Nav>
-        <Menu />
-      </Nav>
+    <Layout title="Feed">
       <PostUi dangerouslySetInnerHTML={{ __html: post }} />
+
       <Link href="/" passHref>
         <a>
           <div className="post-button">
@@ -27,8 +16,7 @@ const PostById = ({ post }) => {
           </div>
         </a>
       </Link>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
@@ -47,4 +35,4 @@ export const getServerSideProps = async ({ params }): Promise<GetServerSideProps
   };
 };
 
-export default PostById;
+export default PostPage;

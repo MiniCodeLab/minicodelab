@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const Menu = styled.nav`
+export const Navigation = styled.nav`
   --icon-space: 20px;
 
   nav {

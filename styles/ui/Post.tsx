@@ -10,6 +10,7 @@ export const Post = styled.article`
   @media (min-width: 840px) {
     margin: 20px 100px;
   }
+
   & h1,
   h2,
   p {
