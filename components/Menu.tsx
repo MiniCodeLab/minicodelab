@@ -1,9 +1,8 @@
-import Link from 'next/link';
 import Image from 'next/image';
-
-import longLogo from 'public/images/longlogo.png';
-import calendar from 'public/images/calendar.png';
+import Link from 'next/link';
 import about from 'public/images/about.png';
+import calendar from 'public/images/calendar.png';
+import longLogo from 'public/images/longlogo.png';
 import ColorMode from './ColorMode';
 
 const Menu: React.FC = () => {
@@ -23,6 +22,7 @@ const Menu: React.FC = () => {
           </a>
         </Link>
       </div>
+
       <ul>
         <li>
           <Link href="/calendar" passHref>

@@ -1,80 +1,51 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
-import { DatabaseResponse, Post } from 'types/notion';
 import { Client } from '@notionhq/client';
-
-import Menu from 'components/Menu';
-import Footer from 'components/Footer';
-
-import { Menu as Nav } from 'styles/uiComponents/Menu';
-import { Card } from 'styles/uiComponents/Card';
-import { Button } from 'styles/uiComponents/Button';
-import { List } from 'styles/uiComponents/List';
-import { Tag } from 'styles/uiComponents/Tag';
-import { PageLayout } from 'styles/uiComponents/PageLayout';
+import Layout from 'components/Layout';
 import { GetStaticPropsResult } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from 'styles/ui/Button';
+import {
+  Card,
+  CardArticleLink,
+  CardHeader,
+  CardMediaContent,
+  CardsWrapper,
+  CardTitle
+} from 'styles/ui/Card';
+import { DatabaseResponse, Post } from 'types/notion';
 
-const Home: React.FC<Props> = ({ posts }) => {
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-
-  const handleClick = (name) => {
-    setFilteredPosts(posts.filter((post) => post.tags.find((tag) => tag.name === name)));
-  };
-
+const HomePage: React.FC<Props> = ({ posts }) => {
   return (
-    <PageLayout>
-      <Head>
-        <title>Mini Code Lab {'/>'}</title>
-        <link rel="icon" href="/images/flask.png" />
-      </Head>
-
-      <Nav>
-        <Menu />
-      </Nav>
-      <List>
-        {(filteredPosts.length ? filteredPosts : posts).map((post) => (
+    <Layout>
+      <CardsWrapper>
+        {posts.map((post) => (
           <Card key={post.id}>
-            <div className="card-header">
-              <div className="card-image">
+            <CardHeader isArticle>
+              <div>
                 <Image src={post.cover} alt={post.title} width={60} height={60} layout="fixed" />
               </div>
 
-              <div className="card-content">
+              <CardTitle>
                 <h2>{post.title}</h2>
-                <p className="date-author">
-                  <span>{post.date}</span>
-                  <div className="tag-container">
-                    {post.tags.map((tag) => {
-                      return (
-                        <Tag color={tag.color} key={tag.id} onClick={() => handleClick(tag.name)}>
-                          {tag.name}
-                        </Tag>
-                      );
-                    })}
-                  </div>
-                </p>
-              </div>
-            </div>
+                <p>Creado por: {post.author}</p>
+              </CardTitle>
+            </CardHeader>
 
-            <div className="card-body">
+            <CardMediaContent isArticle>
               <p>{post.description}</p>
-            </div>
 
-            <div className="card-footer">
-              <Link href={`/feed/${post.post_id}`} passHref>
-                <a>
-                  <Button>Leer más</Button>
-                </a>
-              </Link>
-              <p>{post.author}</p>
-            </div>
+              <CardArticleLink>
+                <Link href={`/feed/${post.post_id}`} passHref>
+                  <a>
+                    <Button>Leer más</Button>
+                  </a>
+                </Link>
+              </CardArticleLink>
+            </CardMediaContent>
           </Card>
         ))}
-      </List>
-      <Footer />
-    </PageLayout>
+      </CardsWrapper>
+    </Layout>
   );
 };
 
@@ -98,7 +69,7 @@ export const getStaticProps = async (): Promise<GetStaticPropsResult<Props>> => 
       id: databaseRow.id,
       post_id: databaseRow.properties.post_id.rich_text[0].plain_text,
       title: databaseRow.properties.title.title[0].text.content,
-      cover: databaseRow.properties.cover.files[0].file.url,
+      cover: databaseRow.properties.cover.rich_text[0].plain_text,
       author: databaseRow.properties.author.rich_text[0].plain_text,
       description: databaseRow.properties.description.rich_text[0].plain_text,
       tags: databaseRow.properties.tags.multi_select,
@@ -110,8 +81,8 @@ export const getStaticProps = async (): Promise<GetStaticPropsResult<Props>> => 
     props: {
       posts
     },
-    revalidate: 3600
+    revalidate: 300
   };
 };
 
-export default Home;
+export default HomePage;

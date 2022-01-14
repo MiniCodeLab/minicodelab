@@ -159,7 +159,7 @@ body {
   color: var(--color-text);
   transition: background 0.25s ease-in-out;
   font-size: 100%;
-};
+}
 
 a {
   color: inherit;
