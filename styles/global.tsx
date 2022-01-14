@@ -117,8 +117,8 @@ export const Variables = css`
   :root {
     --border-stroke: 3px;
     --border-radius: 8px;
-    --title-h1: 1.5rem;
-    --title-h2: 1.25rem;
+    --title-h1: 1.75rem;
+    --title-h2: 1.35rem;
     --title-h3: 1rem;
     --paragraph: 1rem;
     --text-to-mobile: 1.5;
@@ -197,6 +197,7 @@ export const AppStyles = css`
   p {
     color: var(--color-paragraph);
     font-size: var(--paragraph);
+    line-height: 110%;
   }
 
   *,
@@ -204,11 +205,13 @@ export const AppStyles = css`
   *:after {
     box-sizing: border-box;
   }
+
   .post-button {
     display: flex;
     justify-content: center;
     margin: 20px;
   }
+
   ::-webkit-scrollbar {
     width: 10px;
   }

@@ -1,9 +1,7 @@
 import Layout from 'components/Layout';
-import { readdirSync, readFileSync } from 'fs';
+import { getPostContent, getPostsPaths } from 'libs/posts';
 import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize';
-import { join } from 'path';
 import { ArticleLayout } from 'styles/ui/ArticleLayout';
 
 const components = {};
@@ -23,12 +21,8 @@ type Props = {
 };
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-  const posts = readdirSync(join(process.cwd(), `posts`)).map(
-    (filename) => `/feed/${filename.split('.')[0]}`
-  );
-
   return {
-    paths: posts,
+    paths: getPostsPaths(),
     fallback: 'blocking'
   };
 }
@@ -36,6 +30,5 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 export const getStaticProps = async ({
   params
 }: GetStaticPropsContext): Promise<GetStaticPropsResult<Props>> => {
-  const source = readFileSync(join(process.cwd(), `posts/${params.id}.mdx`)).toString();
-  return { props: { source: await serialize(source) } };
+  return { props: { source: await getPostContent(params.slug as string) } };
 };
