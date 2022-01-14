@@ -1,38 +1,41 @@
 import Layout from 'components/Layout';
-import { GetServerSidePropsResult } from 'next';
-import Link from 'next/link';
-import { Button } from 'styles/ui/Button';
-import { Post as PostUi } from '../../styles/ui/Post';
+import { readdirSync, readFileSync } from 'fs';
+import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+import { join } from 'path';
+import { ArticleLayout } from 'styles/ui/ArticleLayout';
 
-const PostPage = ({ post }) => {
+const components = {};
+
+export default function TestPage({ source }) {
   return (
-    <Layout title="Feed">
-      <PostUi dangerouslySetInnerHTML={{ __html: post }} />
-
-      <Link href="/" passHref>
-        <a>
-          <div className="post-button">
-            <Button>Volver al feed</Button>
-          </div>
-        </a>
-      </Link>
+    <Layout>
+      <ArticleLayout>
+        <MDXRemote {...source} components={components} />
+      </ArticleLayout>
     </Layout>
   );
+}
+
+type Props = {
+  source: MDXRemoteSerializeResult<Record<string, unknown>>;
 };
 
-export type Props = {
-  post: string;
-};
-
-export const getServerSideProps = async ({ params }): Promise<GetServerSidePropsResult<Props>> => {
-  const res = await fetch(`https://potion-api.now.sh/html?id=${params.id}`);
-  const resText = await res.text();
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+  const posts = readdirSync(join(process.cwd(), `posts`)).map(
+    (filename) => `/feed/${filename.split('.')[0]}`
+  );
 
   return {
-    props: {
-      post: resText
-    }
+    paths: posts,
+    fallback: 'blocking'
   };
-};
+}
 
-export default PostPage;
+export const getStaticProps = async ({
+  params
+}: GetStaticPropsContext): Promise<GetStaticPropsResult<Props>> => {
+  const source = readFileSync(join(process.cwd(), `posts/${params.id}.mdx`)).toString();
+  return { props: { source: await serialize(source) } };
+};
