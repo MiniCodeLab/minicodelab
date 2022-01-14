@@ -1,31 +1,34 @@
-import Head from 'next/head';
-
-import Menu from 'components/Menu';
-import Footer from 'components/Footer';
-
 import AboutCard from 'components/AboutCard';
+import Layout from 'components/Layout';
+import { GetStaticPropsResult } from 'next';
+import { CardsWrapper } from 'styles/ui/Card';
+import { Profile } from 'types/common';
 
-import { Menu as Nav } from 'styles/uiComponents/Menu';
-import { List } from 'styles/uiComponents/List';
-import { PageLayout } from 'styles/uiComponents/PageLayout';
-
-const About: React.FC = () => {
+const AboutPage: React.FC<Props> = ({ profiles }) => {
   return (
-    <PageLayout>
-      <Head>
-        <title>Mini Code Lab {'/>'} About</title>
-        <link rel="icon" href="/images/flask.png" />
-      </Head>
-      <Nav>
-        <Menu />
-      </Nav>
-      
-      <List>
-        <AboutCard />
-      </List>
-      <Footer />
-    </PageLayout>
+    <Layout title="About">
+      <CardsWrapper>
+        <AboutCard profiles={profiles} />
+      </CardsWrapper>
+    </Layout>
   );
 };
 
-export default About;
+export type Props = {
+  profiles: Profile[];
+};
+
+export const getStaticProps = async (): Promise<GetStaticPropsResult<Props>> => {
+  const profiles: Props['profiles'] = await (
+    await fetch(`${process.env.NEXT_PUBLIC_CONTENT_URL}about.json`)
+  ).json();
+
+  return {
+    props: {
+      profiles
+    },
+    revalidate: 60 * 60 * 24
+  };
+};
+
+export default AboutPage;

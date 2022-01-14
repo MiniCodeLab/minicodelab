@@ -1,10 +1,9 @@
 import Image from 'next/image';
+import colormode from 'public/images/colormode.png';
 import useDarkMode from 'use-dark-mode';
 
-import colormode from 'public/images/colormode.png';
-
 const ColorMode: React.FC = () => {
-  const darkMode = useDarkMode(false);
+  const darkMode = useDarkMode(true);
   const altTheme = darkMode ? 'light' : 'dark';
 
   return (

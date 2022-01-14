@@ -1,13 +1,12 @@
 import Image from 'next/image';
-
-import { Footer as FooterUi } from 'styles/uiComponents/Footer';
 import github from 'public/images/github.png';
-import linkedin from 'public/images/linkedin.png';
 import instagram from 'public/images/instagram.png';
+import linkedin from 'public/images/linkedin.png';
 import tiktok from 'public/images/tik-tok.png';
 import twitch from 'public/images/twitch.png';
-import youtube from 'public/images/youtube.png';
 import twitter from 'public/images/twitter.png';
+import youtube from 'public/images/youtube.png';
+import { Footer as FooterUi } from 'styles/ui/Footer';
 
 const Footer: React.FC = () => {
   return (
@@ -49,6 +48,10 @@ const Footer: React.FC = () => {
           </a>
         </li>
       </ul>
+
+      <p>
+        Creado con amor por Mini Code Lab <span role="img">❤️</span>
+      </p>
     </FooterUi>
   );
 };

@@ -49,7 +49,7 @@ export type MultiSelectProperty = {
 
 export type DateProperty = {
   start: string;
-}
+};
 
 export type TableProperty = {
   id: string;
@@ -58,7 +58,7 @@ export type TableProperty = {
   multi_select?: MultiSelectProperty[];
   rich_text: RichTextProperty[];
   title?: TitleProperty[];
-  date?: any
+  date?: any;
 };
 
 export type DatabaseResponse = {
@@ -82,24 +82,24 @@ export type DatabaseResponse = {
   }[];
 };
 
-// Client code types -> TODO: DATES 
+// Client code types -> TODO: DATES
 export type Post = {
   author: string;
   cover: string;
-  date: string
+  date: string;
   description: string;
   id: string;
   post_id: string;
-  tags: any;
+  tags: MultiSelectProperty[];
   title: string;
 };
 
-// Client code types -> TODO: DATES 
+// Client code types -> TODO: DATES
 export type Calendar = {
   id: string;
   title: string;
   cover: string;
   description: string;
   tags: any;
-  date: string
-}
+  date: string;
+};
