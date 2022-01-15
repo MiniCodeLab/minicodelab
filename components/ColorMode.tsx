@@ -1,17 +1,24 @@
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import colormode from 'public/images/colormode.png';
-import useDarkMode from 'use-dark-mode';
+import { useEffect, useState } from 'react';
 
 const ColorMode: React.FC = () => {
-  const darkMode = useDarkMode(true);
-  const altTheme = darkMode ? 'light' : 'dark';
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  const altTheme = theme === 'dark' ? 'light' : 'dark';
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   return (
     <Image
       alt="ColorMode"
       aria-label={`Change to ${altTheme} mode`}
       height={40}
-      onClick={darkMode.toggle}
+      onClick={() => setTheme(altTheme)}
       src={colormode}
       title={`Change to ${altTheme} mode`}
       width={40}
