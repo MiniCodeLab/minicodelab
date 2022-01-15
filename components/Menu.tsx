@@ -11,14 +11,7 @@ const Menu: React.FC = () => {
       <div className="logo">
         <Link href="/" passHref>
           <a>
-            <Image
-              alt="logo icon"
-              height={33}
-              placeholder="blur"
-              priority
-              src={longLogo}
-              width={200}
-            />
+            <Image alt="logo icon" height={33} priority src={longLogo} width={200} />
           </a>
         </Link>
       </div>
