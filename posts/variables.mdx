@@ -1,0 +1,125 @@
+**# Guía Mini Code de Javascript - Variables**
+
+La mayoría de aplicaciones en Javascript necesitan trabajar con cierta información. Esta información debe ser accesible desde cualquier punto de nuestra aplicación, para no olvidar o tener que aprender todo la información que manejamos podemos usar las variables que guardan dicha información y cuando las llamamos nos devuelven el valor almacenado.
+
+Los valores que podemos almacenar en nuestras variables pueden ser de diferentes tipos, desde un texto, un número, un listado.... pero en esto profundizaremos más adelante.
+
+Haciendo una analogía la variable es el nombre de la "caja" en la que podemos guardar nuestra información, pueden contener cualquier dato o información.
+
+# **Declarando una variable**
+
+Para crear una variable en Javascript usamos la palabra `**let**`. Después iría el nombre de nuestra variable, vamos a definir nuestra primera variable:
+
+```jsx
+let avenger;
+```
+
+Ahora podemos usar esta variable y asignarle un valor con el operador `**=**`
+
+```jsx
+let avenger;
+
+avenger = 'Captain America';
+```
+
+> `**var`** o **`let`** → En scripts antiguos, antes de ES6, puedes encontrar la inicialización de las variables con `**var**`. En nuestro caso `**let\*\*` es lo más parecido, pese tener diferencias importantes que veremos en otro post.
+
+Podemos ser aún más concisos a la hora de declarar una variable y hacerlo en una única línea:
+
+```jsx
+let avenger = 'Captain America';
+```
+
+También podemos declarar varias variables en una única línea:
+
+```jsx
+let avenger = 'Captain America',
+  mutant = 'Wolverine',
+  numberFantastics = 4;
+```
+
+A nosotros nos gusta declarar cada variable en una línea diferente por la facilidad que supone a la hora de leer el código:
+
+```jsx
+let avenger = 'Captain America';
+
+let mutant = 'Wolverine';
+
+let numberFantastics = 4;
+```
+
+El valor que hemos dado a nuestra variable puede ser modificado, vamos a ver como nuestro **`avenger`** pasa de ‘Captain America’ a ‘Spiderman’:
+
+```jsx
+let avenger;
+
+avenger = 'Captain America';
+
+avenger = 'Spider'; //Cambio de valor
+```
+
+Además de cambiar el valor podemos copiar el valor de una variable a otra:
+
+```jsx
+let avenger = 'Captain America';
+
+let copyAvenger;
+
+// Copiamos Captain America desde avenger a copyAvenger
+avenger = copyAvenger;
+//Ahora las dos variables tienen el mismo valor
+```
+
+Las variables solo deberían declararse una vez, repetir la declaración de una variable es un error:
+
+```jsx
+let avenger = 'Captain America';
+
+// Repetir el 'let' produce un error
+
+let avenger = 'Black Panther'; // avenger ya ha sido declarado
+```
+
+# Naming de variables
+
+Cuando tenemos que nombrar una variable tenemos algunas limitaciones:
+
+- El nombre de la variable solo debe contener letras, dígitos y los símbolos $ y \_.
+- El primer carácter no debe ser un dígito.
+- Palabras reservadas como **`let`** o **`return`**.
+
+Un ejemplo de nombres válidos sería:
+
+```jsx
+let avenger;
+
+let avenger1;
+```
+
+Nombres que no son válidos:
+
+```jsx
+let 1avenger; // No puede empezar en un dígito
+
+let my-avenger; // No se pueden usar '-'
+```
+
+Nombres reservados:
+
+```jsx
+let let = 'Spiderman'; // No puedes nombrar a tu variable 'let'
+
+let return = 'Venom'; // No puedes nombrar a tu variable 'return'
+```
+
+Siempre que declaremos una variable deberíamos usar nombres descriptivos que hagan referencia al valor que contiene dicha variable. Por ejemplo:
+
+```jsx
+let avengerName = 'Spiderman';
+
+let avengerAge = 16;
+```
+
+Comenzamos nuestra aventura de conocer poco a poco Javascript y sus particularidades, próximamente profundizaremos en el lenguaje.
+
+¡Os toca a vosotros Mini Coders **[🔥](https://emojipedia.org/fire/)**!
