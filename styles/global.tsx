@@ -124,6 +124,9 @@ export const Variables = css`
     --text-to-mobile: 1.5;
     --button-text: 0.7rem;
     --box-shadow: rgba(0, 0, 0, 0.486) 0px 5px 15px;
+    --code-block: rgb(45, 45, 45);
+    --code-text: rgb(204, 153, 205);
+    --code-radius: 4px;
   }
 `;
 
@@ -194,10 +197,11 @@ export const AppStyles = css`
     font-size: var(--title-h3);
   }
 
-  p {
+  p,
+  li {
     color: var(--color-paragraph);
     font-size: var(--paragraph);
-    line-height: 110%;
+    line-height: 120%;
   }
 
   *,
@@ -215,11 +219,16 @@ export const AppStyles = css`
   ::-webkit-scrollbar {
     width: 10px;
   }
+
   ::-webkit-scrollbar-track {
+    border-bottom-left-radius: var(--code-radius);
+    border-bottom-right-radius: var(--code-radius);
     background: var(--color-card-bg);
   }
 
   ::-webkit-scrollbar-thumb {
+    border-bottom-left-radius: var(--code-radius);
+    border-bottom-right-radius: var(--code-radius);
     background: var(--color-stroke);
   }
 
@@ -239,7 +248,8 @@ export const AppStyles = css`
     h3 {
       font-size: calc(var(--title-h3) * (var(--text-to-mobile)));
     }
-    p {
+    p,
+    li {
       color: var(--color-paragraph);
       font-size: calc(var(--paragraph) * (var(--text-to-mobile)));
     }
