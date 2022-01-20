@@ -18,32 +18,34 @@ const HomePage: React.FC<Props> = ({ covers }) => {
   return (
     <Layout>
       <CardsWrapper>
-        {covers.map((post) => (
-          <Card key={post.slug}>
-            <CardHeader isArticle>
-              <div>
-                <Image src={post.cover} alt={post.title} width={60} height={60} layout="fixed" />
-              </div>
+        {covers
+          .sort((a, b) => new Date(b.date).getDate() - new Date(a.date).getDate())
+          .map((post) => (
+            <Card key={post.slug}>
+              <CardHeader isArticle>
+                <div>
+                  <Image src={post.cover} alt={post.title} width={60} height={60} layout="fixed" />
+                </div>
 
-              <CardTitle>
-                <h2>{post.title}</h2>
-                <p>Creado por: {post.author}</p>
-              </CardTitle>
-            </CardHeader>
+                <CardTitle>
+                  <h2>{post.title}</h2>
+                  <p>Creado por: {post.author}</p>
+                </CardTitle>
+              </CardHeader>
 
-            <CardMediaContent isArticle>
-              <p>{post.description}</p>
+              <CardMediaContent isArticle>
+                <p>{post.description}</p>
 
-              <CardArticleLink>
-                <Link href={`/feed/${post.slug}`} passHref>
-                  <a>
-                    <Button>Leer más</Button>
-                  </a>
-                </Link>
-              </CardArticleLink>
-            </CardMediaContent>
-          </Card>
-        ))}
+                <CardArticleLink>
+                  <Link href={`/feed/${post.slug}`} passHref>
+                    <a>
+                      <Button>Leer más</Button>
+                    </a>
+                  </Link>
+                </CardArticleLink>
+              </CardMediaContent>
+            </Card>
+          ))}
       </CardsWrapper>
     </Layout>
   );

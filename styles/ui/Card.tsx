@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 
 export const CardsWrapper = styled.div`
-  --card-max-width: 500px;
-
   align-items: stretch;
   display: flex;
   flex-wrap: wrap;
@@ -15,21 +13,27 @@ export const CardsWrapper = styled.div`
     content: ' ';
     display: block;
     width: 100%;
-    max-width: var(--card-max-width);
+    max-width: var(--card-max-width-mb);
+
+    @media (min-width: 840px) {
+      max-width: var(--card-max-width-dk);
+    }
   }
 `;
 
 export const Card = styled.article`
-  --card-max-width: 500px;
-
   background-color: var(--color-card-bg);
   border-radius: 15px;
   border: 3px solid var(--color-stroke);
   display: flex;
   flex-direction: column;
-  max-width: var(--card-max-width);
+  max-width: var(--card-max-width-mb);
   padding: 20px;
   width: 100%;
+
+  @media (min-width: 840px) {
+    max-width: var(--card-max-width-dk);
+  }
 `;
 
 export const CardHeader = styled.div<{ isArticle?: boolean }>`

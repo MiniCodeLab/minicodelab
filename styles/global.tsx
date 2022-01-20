@@ -127,6 +127,8 @@ export const Variables = css`
     --code-block: rgb(45, 45, 45);
     --code-text: rgb(204, 153, 205);
     --code-radius: 4px;
+    --card-max-width-mb: 350px;
+    --card-max-width-dk: 500px;
   }
 `;
 
