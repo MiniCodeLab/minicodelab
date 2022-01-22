@@ -43,6 +43,16 @@ export type Props = {
 
 const CodeWrapper = styled.div`
   position: relative;
+
+  pre {
+    display: flex;
+
+    &:after {
+      content: ' ';
+      display: block;
+      min-width: 5vw;
+    }
+  }
 `;
 
 export default CodeBlock;
