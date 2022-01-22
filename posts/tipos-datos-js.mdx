@@ -1,0 +1,161 @@
+# **Guía Mini Code de Javascript - Tipos de datos**
+
+Todos los lenguajes de programación tienen estructuras de datos integradas, pero estas a menudo difieren de un lenguaje a otro. Vamos a intentar enumerar las estructuras de datos integradas disponibles en JavaScript y las propiedades que tienen. Estas se pueden utilizar para construir otras estructuras de datos.
+
+Explicado de otro modo, el tipo de dato define la información que vamos a guardar dentro de una variable, esto nos ayuda a identificar qué estructuras de datos nos podemos encontrar.
+
+JavaScript es un lenguaje dinámico o de tipado débil, ya que no es obligatorio indicar el tipo de una variable al definirlo. De hecho, una misma variable puede cambiar de tipo sin problema alguno durante el proceso de ejecución de nuestro código. Podemos realizar pruebas haciendo uso de la función **`typeof`**, la cual nos indicará el tipo de una variable en cada momento.
+
+```jsx
+let avenger = typeof 'Thor'; // string
+
+let avengerAge = typeof 32; // number
+
+let isAvenger = typeof true; // boolean
+```
+
+## **Datos dinámicos**
+
+JavaScript tiene tipos de datos dinámicos, lo que significa que la comprobación de tipo se realiza en tiempo de ejecución en lugar de tiempo de compilación. Con los lenguajes de tipo dinámico, se puede utilizar una variable del mismo nombre para contener diferentes tipos de datos.
+
+Por ejemplo, la variable **`mutant`** , definida como una variable por la palabra clave **`let`** , se puede asignar para contener diferentes tipos de datos o puede inicializarse pero no se define:
+
+```jsx
+let avenger;
+```
+
+Ahora podemos usar esta variable y asignarle un valor con el operador **`=`**
+
+```jsx
+let mutant; // mutant is undefined
+
+mutant = 'Ciclops'; // mutant is a string
+
+mutant = 25; // mutant is a number
+
+mutant = true; // mutant is a boolean
+```
+
+En la variable **`mutant`** podemos establecer cualquier tipo de dato disponible en Javascript. No es necesario que se declaren con un tipo de dato antes de utilizarla, y puede mutar el tipo de dato en cualquier momento.
+
+## **Valores primitivos**
+
+Javascript tiene seis tipos primitivos: Sin definir (**`undefined`**), Nulo (**`null`** ), Lógicos (**`boolean`** ), Numérico (**`number`** ), Cadena (**`string`** ), Símbolo (**`symbol`** ). Todos los demás tipos son objetos (Object): Array, Date, Promise, etc.
+
+## **Type String**
+
+El tipo **`String`** on cadenas de texto. Sencillamente un grupo de caracteres o palabras, entre comillas simples o dobles.
+
+```jsx
+let avengerDobleQuote = 'Thor';
+
+let avengerSingleQuote = 'Hulk';
+```
+
+## **Type Number**
+
+El tipo **`Number`** son números, tal y como indica su nombre.
+
+```jsx
+let avengerPower = 60.5;
+
+let avengerAge = 36;
+```
+
+## **Type Boolean**
+
+En programación existe un tipo de dato que identifica los valores binarios 0 y 1. Una forma intuitiva de trabajar con estos datos binarios son los booleanos. Un valor boolean solo puede tomar verdadero o falso.
+
+```jsx
+let isHulk = true;
+
+let isIronMan = false;
+```
+
+## **Type Null**
+
+El tipo **`Null`** tiene exactamente un valor: **`null`**.
+
+```jsx
+let typeNull = null;
+```
+
+## **Type Undefinded**
+
+Una variable a la que no se le ha asignado un valor tiene el valor **`undefined`**.
+
+```jsx
+let myHero;
+```
+
+## **Type Symbol**
+
+El símbolo es un valor único e inmutable y se puede utilizar como una clave de un objeto, más adelante veremos objetos con un ejemplo.
+
+```jsx
+let symOne = Symbol();
+
+let symTwo = Symbol('Nick Fury');
+```
+
+El código anterior creamos dos símbolos nuevos. Hay que destacar que **`Symbol("Nick Fury")`** no convierte la cadena "Nick Fury" en un símbolo, sino que crea un símbolo nuevo que tiene la misma descripción.
+
+Para comprobar que son únicos podemos hacer la siguiente comprobación, viendo que será **`false`**:
+
+```jsx
+Symbol('Spiderman') === Symbol('Spiderman');
+```
+
+## **Mezclando tipos de datos**
+
+Aunque cada aplicación que creemos contendrá varios tipos de datos, es importante tener en cuenta que generalmente realizaremos operaciones dentro del mismo tipo de datos. Es decir, estaremos realizando operaciones matemáticas con números, o rebelando cadenas.
+
+Por ejemplo, al usar el operador **`+`** con números y cadenas juntas, los números se tratarán como una cadena (por lo tanto se concatenarán), pero el orden de los tipos de datos influirá en la concatenación.
+
+Por lo tanto, si creamos una variable que realiza la siguiente concatenación, JavaScript interpretará cada elemento a continuación como una cadena:
+
+```jsx
+let avengerMix = 'IronMan' + 5 + 5;
+
+//IronMan55
+```
+
+Sin embargo, si entramos con números, los dos números se agregarán antes de que se interpreten como una cadena cuando el tiempo de ejecución del programa llegue a **`IronMan`** , por lo que el valor devuelto será la suma de los dos números concatenados con la cadena:
+
+```jsx
+let sumaAvenger = 5 + 3 + 'IronMan';
+
+//8IronMan
+```
+
+Debido a estos resultados inesperados, es probable que realice operaciones y métodos dentro de un tipo de datos en lugar de a través de ellos. JavaScript, no devuelve errores al mezclar tipos de datos, como hacen algunos otros lenguajes de programación.
+
+## **Comprobación de tipo**
+
+El operador **`typeof`** devuelve los siguientes resultados para estas variables:
+
+```jsx
+let createAvenger = new Function('Shang Chi');
+let avenger = 'AntMan';
+let avengerPower = 100;
+let avengerList = ['Hulk', 'Thor', 'Doctor Strange'];
+let thanosDate = new Date();
+
+typeof createAvenger; // devuelve "function"
+typeof avenger; // devuelve "string"
+typeof avengerPower; // devuelve "number"
+typeof avengerList; // devuelve "object"
+typeof thanosDate; // devuelve "object"
+typeof isAvengerDefined; // devuelve "undefined"
+
+typeof true; // devuelve "boolean"
+typeof null; // devuelve "object"
+```
+
+Si recordáis en la primera parte vimos cómo declarar una variable y su uso **✔️**. Ahora hemos profundizado en los tipos de datos que pueden almacenar, seguiremos más adelante con nuestra guía Mini Coders **🔮**.
+
+Os dejamos el Link a la primera parte:
+
+**https://www.minicodelab.dev/feed/variables**
+
+¡Nos vemos Mini Coders **🔥**!

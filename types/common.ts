@@ -15,6 +15,7 @@ export type PostCover = {
 export type Metadata = {
   author: string;
   cover: string;
+  date: string;
   description: string;
   title: string;
 };

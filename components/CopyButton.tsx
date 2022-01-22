@@ -36,10 +36,12 @@ export type Props = {
 };
 
 const StyledButton = styled.button`
-  background: var(--code-block);
+  background: transparent;
+  opacity: 0.5;
+  padding: 5px;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 0;
+  top: 0;
 
   img {
     filter: invert(0.75);
@@ -47,6 +49,7 @@ const StyledButton = styled.button`
 
   &:hover {
     cursor: pointer;
+    opacity: 1;
 
     img {
       filter: invert(1);
