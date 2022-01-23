@@ -28,12 +28,15 @@ const CalendarPage: React.FC<Props> = ({ calendar }) => {
 
             <CardMediaContent isArticle>
               <p>{event.description}</p>
-
-              <CardArticleLink>
-                <a href={event.link} target="_blank" rel="noreferrer noopener">
-                  <Button>Link</Button>
-                </a>
-              </CardArticleLink>
+              {event.link ? (
+                <CardArticleLink>
+                  <a href={event.link} target="_blank" rel="noreferrer noopener">
+                    <Button>Link</Button>
+                  </a>
+                </CardArticleLink>
+              ) : (
+                ''
+              )}
             </CardMediaContent>
           </Card>
         ))}
