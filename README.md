@@ -1,1 +1,1 @@
-# Mini Code Lab Web
+# Mini Code Lab

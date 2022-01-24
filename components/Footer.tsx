@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
           </a>
         </li>
         <li>
-          <a href="https://www.linkedin.com/in/mini-code-lab-studio-285595229/">
+          <a href="https://www.linkedin.com/in/minicodelab/">
             <Image src={linkedin} alt="logo linkedin" width={40} height={40} />
           </a>
         </li>
@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
           </a>
         </li>
         <li>
-          <a href="">
+          <a href="https://www.tiktok.com/@minicodelab">
             <Image src={tiktok} alt="logo tik-tok" width={40} height={40} />
           </a>
         </li>
