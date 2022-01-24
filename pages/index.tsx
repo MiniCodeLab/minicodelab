@@ -58,7 +58,7 @@ export const getStaticProps = async (): Promise<GetStaticPropsResult<Props>> => 
     props: {
       covers: await retrievePostsCovers()
     },
-    revalidate: 60 * 60 * 24
+    revalidate: 3600
   };
 };
 
