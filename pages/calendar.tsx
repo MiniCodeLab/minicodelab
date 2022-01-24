@@ -64,7 +64,7 @@ export const getStaticProps = async (): Promise<GetStaticPropsResult<Props>> => 
     props: {
       calendar
     },
-    revalidate: 60 * 60 * 24
+    revalidate: 3600
   };
 };
 
