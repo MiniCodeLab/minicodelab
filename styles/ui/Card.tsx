@@ -41,6 +41,7 @@ export const CardHeader = styled.div<{ isArticle?: boolean }>`
   flex-direction: ${({ isArticle }) => (isArticle ? 'row' : 'column')};
   margin-bottom: 20px;
   gap: 10px;
+  align-items: flex-start;
 `;
 
 export const CardMediaContent = styled.div<{ isArticle?: boolean }>`
