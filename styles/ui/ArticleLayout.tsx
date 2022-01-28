@@ -1,25 +1,44 @@
 import styled from '@emotion/styled';
 
 export const ArticleLayout = styled.div`
-  padding: 20px;
+  --base-padding: 10px;
+  --base-padding-dk: calc(var(--base-padding) * 2);
+
+  padding: var(--base-padding);
+
+  @media (min-width: 840px) {
+    padding: var(--base-padding-dk);
+  }
 
   h1 {
-    padding-bottom: 10px;
+    padding-bottom: var(--base-padding);
+
+    @media (min-width: 840px) {
+      padding-bottom: var(--base-padding-dk);
+    }
   }
 
   h2,
   h3 {
-    padding: 30px 0 10px;
+    padding: 30px 0 var(--base-padding);
+
+    @media (min-width: 840px) {
+      padding: 30px 0 var(--base-padding-dk);
+    }
   }
 
   p {
-    padding: 5px 0;
+    padding: 10px 0;
   }
 
   img {
     display: block;
-    margin: 20px auto;
+    margin: var(--base-padding) auto;
     max-width: 80%;
+
+    @media (min-width: 840px) {
+      margin: var(--base-padding-dk) auto;
+    }
   }
 
   ul {
@@ -27,17 +46,27 @@ export const ArticleLayout = styled.div`
     padding-left: calc(2 * var(--paragraph));
 
     > li {
-      padding: 5px 0;
+      padding: calc(var(--base-padding) / 2) 0;
+
+      @media (min-width: 840px) {
+        padding: var(--base-padding) 0;
+      }
     }
   }
 
   pre {
-    margin: 10px auto;
+    margin: var(--base-padding) auto;
     border-radius: var(--code-radius);
 
     @media (min-width: 840px) {
-      margin: 20px auto;
+      margin: var(--base-padding-dk) auto;
     }
+  }
+
+  hr {
+    background-color: #2d2d2d;
+    border: none;
+    height: 1px;
   }
 
   b,
