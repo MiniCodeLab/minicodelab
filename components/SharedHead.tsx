@@ -5,6 +5,8 @@ const SharedHead: React.FC<Props> = ({ title = '', icon = '/images/flask.png', c
     <Head>
       <title>{`Mini Code Lab /> ${title}`.trim()}</title>
       <link rel="icon" href={icon} />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta charSet="UTF-8" />
 
       {children}
     </Head>

@@ -1,0 +1,181 @@
+# MiniCodeLab
+
+# Taller Next.js - Conceptos básicos
+
+¡Hola Minicoders! Este ha sido nuestro primer taller en directo, y como lo prometido es deuda, aquí tenéis la documentación con respecto a todo lo que hemos visto 👏
+
+Vamos a ir punto por punto explicando de forma generalizada cada concepto visitado en video, si necesitáis algo más de contenido ya sabéis que está disponible en Youtube para poder repasarlo, ¡y no dudéis en contactarnos para que mejoremos en equipo!
+
+## ¿Qué es Next.js? ¿Por qué usarlo?
+
+Como hemos visto, **Next.js** (desde ahora Next) es un **framework** construido sobre **React.js (ya hablaremos de esto en el futuro 🔮)** que soporta directamente funcionalidades tan interesantes y útiles como Server Side Rendering, Static Site Generation, Incremental Static Regeneration, y muchos más puntos que veremos entre este y los próximos talleres. Suena bien, ¿verdad?
+
+Todo esto funciona gracias a un servidor en Node que corre detrás de nuestro código y que ha sido creado y optimizado de forma increíble por el equipo de **[Vercel](https://vercel.com/).**
+
+Gracias a la cantidad de funcionalidades que se incluyen **Out of the Box** con este framework, que trabaja sobre React, y el inmenso soporte por parte de sus creadores y la comunidad, se ha convertido en uno de los favoritos por las empresas hoy en día. Aunque como bien sabemos esto puede cambiar en el futuro, ¡el mundo del desarrollo se mueve a una velocidad increíble! 🏎
+
+Las ventajas de usarlo son bastante claras:
+
+- Está muy bien documentado y tiene un gran soporte.
+- Aporta muchas de las funcionalidades que cuestan mucho trabajo añadir a un proyecto de React desde cero.
+- El rendimiento y velocidad de tu contenido serán espectaculares.
+- Todo lo relacionado con Server Side Rendering y otros será muy sencillo de aplicar a tus proyectos.
+
+---
+
+Ahora que tenemos una idea más clara de todo esto, vamos a aprender conceptos básicos y a desarrollarlos mejor.
+
+## Create Next App
+
+Como toda aplicación web, un proyecto basado en Next puede desarrollarse desde cero, pero la herramienta que ofrece su equipo nos ahorra tiempo y esfuerzo configurando todo.
+
+Para crear un proyecto de Next llamado `minicode-next-app` desde cero, lanza el siguiente comando:
+
+```bash
+npx create-next-app minicode-next-app
+```
+
+Verás que tu terminal se llena de logs diciendo que todo está preparándose, cuando puedas volver a escribir en la terminal, ¡todo estará listo!
+
+## Enrutado y páginas
+
+El enrutado en cliente (y servidor) en un proyecto de **Next** funciona de forma muy diferente a un proyecto de **React**, donde habría que instalar `react-router-dom` y configurar el conjunto de rutas que queremos mostrar a nuestro usuarios.
+
+La forma en que Next organiza las rutas es la siguiente. En la raíz del proyecto encontraremos una carpeta `pages` en la que podremos crear archivos que soporten componentes de React, ya sea con la extensión `.js, .jsx, .ts o .tsx`.
+
+Cuando estos archivos exporten con un `export default` un componente válido de React, entonces crearemos una ruta con el nombre de este archivo, aquí un ejemplo:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1643366268/articles/next-pages-stucture.png"
+  alt="Estructura páginas Nextjs"
+/>
+
+En la imagen anterior, tendremos las siguientes rutas (vamos a suponer que estamos en `localhost:3000`):
+
+- `index.js` ⇒ Lo encontraremos en la ruta **localhost:3000** del navegador. Este archivo representa el punto de entrada a nuestro proyecto.
+- `streamer.js` ⇒ Lo encontraremos en la ruta **localhost:3000/streamer.** Como puedes ver, el nombre del archivo determina la ruta en la que lo encontraremos.
+
+También podemos encontrar carpetas con archivos dentro, como `streamer/followers.js` que nos permitirá crear la ruta **localhost:3000/streamer/followers.**
+
+¿Te has fijado en que hay una carpeta `streamer` con un archivo `[slug].js` dentro? Eso es una ruta dinámica y la puedes ver en nuestro video ▶. ¡Busca el minuto de la timeline donde hablemos de ello para encontrarlo!
+
+## Páginas especiales
+
+Te habrás dado cuenta también de que no hemos hablado de la carpeta `api` del proyecto, ¡la veremos en otro taller!
+
+Igualmente hemos hablado poco sobre `_app.js`, que consiste en una página especial que ¡permite modificar el resto de páginas de la carpeta `pages`! Una locura 🤯, podemos aplicar un Layout genérico, importar scripts, y configurar elementos globales desde aquí, aunque esto lo dejamos para otro artículo más específico.
+
+- Al igual que \_app, tenemos otras como \_document, \_error, 404.js y 500.js.
+
+## Server Side Rendering (SSR)
+
+Vamos a lo importante y lo que más valor aporta de este framework, el **Server Side Rendering**.
+
+Este concepto consiste en crear toda la página HTML en el lado del servidor, antes de enviarlo al usuario final, que recibirá un archivo HTML junto con el Javascript adicional que se necesite para el funcionamiento en el cliente.
+
+¿Qué conseguimos con esto? Una página muy rápida, y con menor carga para el usuario final. Para poder utilizarlo, solo tenemos que añadir a nuestras `pages` de Next.js el siguiente código:
+
+```jsx
+export const getServerSideProps = async () => {
+  return {
+    props: {
+      // Aquí tendremos los props que recibirán los Page Components
+    }
+  };
+};
+```
+
+¡Con esto conseguiremos que nuestra página ejecute esa función antes de ser construida y enviada al cliente!
+
+Podemos hacer peticiones a APIs externas, reducir la cantidad de props que enviamos a nuestra página, e incluso conectarnos a bases de datos. **Todo en el servidor y fuera del alcance de los usuarios finales.**
+
+## Static Site Generation (SSG)
+
+Como hemos visto con el Server Side Rendering, todo ocurre al nivel del servidor, y esto, aunque por un lado pueda ser increíble, puede generar problemas como **un largo tiempo de respuesta ⌚** a los usuarios finales si consumimos una API demasiado lenta o tenemos demasiada información.
+
+Para solucionar esto, tenemos una alternativa que siendo algo menos flexible, ofrece una velocidad de crucero que te soprenderá al ponerla a prueba.
+
+Llamamos **Static Site Generation** a la generación de página estáticas (puro HTML) que se crearán desde el servidor cuando lancemos `npm run build` en nuestro proyecto. Esto permite que creemos webs en la que todo está creado directamente en el momento de publicación, y como puedes imaginar, ¡será casi tan rápida como el mismísimo Flash!
+
+Para aplicarlo a una de nuestras `pages` tenedremos que añadir este código a nuestros archivos, quitando completamente el relacionado con Server Side Rendering previamente:
+
+```jsx
+export const getStaticProps = async () => {
+  return {
+    props: {
+      // Aquí tendremos los props que recibirán los Page Components
+    }
+  };
+};
+```
+
+## Incremental Static Regeneration (ISR)
+
+Como hemos visto con **Static Site Generation** podremos crear páginas rápidas en el tiempo de construirlas, pero como habrás podido imaginar, perdemos la flexibilidad de consultar una API o base de datos a tiempo real, por lo para actualizar nuestras páginas tendremos que llevar a cabo un despliegue cada vez. ¡Suena tedioso y lento a largo plazo!
+
+Pues estamos de suerte, porque el equipo de **Vercel** añadió a Next la posibilidad de actualizar estas páginas usando ISR. Para conseguirlo solo tenemos que añadir el tiempo en segundos que tardará la página en renovarse en el `return` que hacemos dentro de `getStaticProps`.
+
+```jsx
+export const getStaticProps = async () => {
+  return {
+    props: {},
+    revalidate: 3600 // Haremos una regeneración cada hora
+  };
+};
+```
+
+¡Con estemos tenemos todo! Velocidad y dinamismo en un solo sitio 🔥
+
+## Rutas dinámicas y SSG
+
+Nos falta un último super método que ofrece Next, y es que podemos generar estáticos para las rutas dinámicas de nuestra aplicación como `streamer/[slug].js`.
+
+Esto lo haremos con una combinación de dos funciones `getStaticPaths` y `getStaticProps`.
+
+- En el caso de `getStaticPaths` podremos devolver un array de rutas que se generarán para cada posible `[slug]` que recibamos y que usaremos para buscar el streamer en la base de datos, como podrían ser `minicodelab` o `ibai`.
+- En el caso de `getStaticProps` será prácticamente igual que hemos hecho hasta ahora, con la diferencia de que podremos obtener el valor `slug` de los argumentos recibidos.
+
+Aquí tenemos el código que hace esto funcionar:
+
+```jsx
+export const getStaticPaths = async () => {
+  // Buscamos todos los slugs de streamers en la DB
+  const streamerSlugs = await getStreamersFromAPI();
+  // Creamos un array de strings con las rutas que queremos:
+  // /streamer/minicodelab
+  // /streamer/ibai
+  const paths = streamerSlugs.map((slug) => `/streamer/${slug}`);
+
+  return {
+    paths,
+    fallback: false // Esto lo veremos en otro taller :)
+  };
+};
+
+export const getStaticProps = async ({ params }) => {
+  // Buscamos el streamer específico en la DB y lo mandamos al componente Page
+  const streamer = await getStreamerBySlug(params.slug);
+
+  return {
+    props: {
+      streamer
+    },
+    revalidate: 3600 // Haremos una regeneración cada hora
+  };
+};
+```
+
+Con esto conseguiremos generar tantas páginas como streamers tengamos en nuestra base de datos, y estas se renovaran cada hora si son visitadas por nuevos usuarios 🚀
+
+### A modo de resumen...
+
+Después de todo esto hemos aprendido para qué sirve Next.js y por qué es tan valioso como framework en la web moderna. Adicionalmente, sabemos crear rutas (¡también dinámicas) y cargar su información desde el server o de forma estática según necesitemos.
+
+Como ya te hemos comentado al principio, este artículo acompaña a nuestro video taller de introducción a Next que puedes encontrar en Youtube. ¡Ahí podrás terminar de resolver cualquier duda que te haya generado leer esto!
+
+Muchas gracias como siempre por tu apoyo, te esperamos en el próximo taller Minicoder! ♥
+
+## Recursos
+
+- **Video de youtube:** [https://www.youtube.com/watch?v=J-goNq63p84](https://www.youtube.com/watch?v=J-goNq63p84)
+- **Repositorio en Github:** [https://github.com/MiniCodeLab/taller-introduccion-nextjs](https://github.com/MiniCodeLab/taller-introduccion-nextjs)
