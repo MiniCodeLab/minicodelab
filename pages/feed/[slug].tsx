@@ -1,20 +1,29 @@
 import CodeBlock from 'components/CodeBlock';
 import Layout from 'components/Layout';
-import { getPostContent, getPostsPaths } from 'libs/posts';
+import { getPostContent, getPostMetadata, getPostsPaths } from 'libs/posts';
 import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArticleLayout } from 'styles/ui/ArticleLayout';
+import { Metadata } from 'types/common';
 
 const components = {
   code: CodeBlock
 };
 
-export default function TestPage({ source }) {
+export default function TestPage({ source, meta }: Props) {
   return (
     <>
-      <Layout>
+      <Layout
+        title={meta.title}
+        headChildren={
+          <>
+            <meta name="description" content={meta.description} />
+            <meta name="author" content={meta.author} />
+          </>
+        }
+      >
         <ArticleLayout>
           <MDXRemote {...source} components={components} />
         </ArticleLayout>
@@ -27,6 +36,7 @@ export default function TestPage({ source }) {
 
 type Props = {
   source: MDXRemoteSerializeResult<Record<string, unknown>>;
+  meta: Metadata;
 };
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
@@ -39,5 +49,10 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 export const getStaticProps = async ({
   params
 }: GetStaticPropsContext): Promise<GetStaticPropsResult<Props>> => {
-  return { props: { source: await getPostContent(params.slug as string) } };
+  return {
+    props: {
+      source: await getPostContent(params.slug as string),
+      meta: getPostMetadata(params.slug as string)
+    }
+  };
 };
