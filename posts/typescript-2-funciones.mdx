@@ -1,0 +1,76 @@
+# TypeScript [2] | Funciones
+
+El útimo elemento de nuestro código que nos queda por aprender a tipar con total seguridad son las funciones, ¡vamos a ello 🔥!
+
+Tipar funciones puede ser muy sencillo, ya que realmente involucra tipar los datos que recibe como argumentos uno por uno, y el dato de salida que tenemos en el `return`.
+
+```tsx
+const explainableSerie = (serie: string, isInexplicable: boolean): string => {
+  return isInexplicable ? `${serie} OKAI` : `${serie} BAHH MEPHISTO`;
+};
+
+console.log(explainableSerie('Wanda Vision', true));
+console.log(explainableSerie('Loki', false));
+```
+
+¿Qué ventajas obtenemos? Que cuando invocamos la función nos va indicar el tipo de los parámetros de entrada y el valor de retorno mientras la estamos invocando, y esto nos permitirá desarrollar más rápido y con mayor seguridad 💪.
+
+---
+
+Aquí también tenemos dos modificadores muy interesantes para los argumentos de función, podemos ponerlos opcionales y por defecto.
+
+Para hacer un **argumento opcional** nos bastaría con poner a la derecha del nombre la **`?`** tal y como hacemos con las interfaces y los tipos:
+
+```tsx
+const explainableSerie = (serie: string, isInexplicable?: boolean): string => {
+  return isInexplicable ? `${serie} OKAI` : `${serie} BAHH MEPHISTO`;
+};
+
+// No me obliga a pasar un segundo parámetro
+console.log(explainableSerie('Wanda Vision'));
+```
+
+Y también podemos asignar un valor por defecto en caso de que no se lo pasemos. Para ello usamos el **`=`** y damos el valor que obtendrá si no pasamos ese argumento al invocar la función:
+
+```tsx
+// No es necesario añadir boolean al parámetro por defecto, ¡puedes quitarlo si quieres!
+const explainableSerie = (serie: string, isInexplicable: boolean = true): string => {
+  return isInexplicable ? `${serie} OKAI` : `${serie} BAHH MEPHISTO`;
+};
+
+// No me obliga a pasar un segundo parámetro
+console.log(explainableSerie('Wanda Vision'));
+```
+
+Es importante saber que no podemos tener opcionales y valores por defecto sobre un mismo elemento a la vez. **Y eso es porque cuando ponemos un valor por defecto, Typescript ya lo está haciendo opcional por nosotros ❗.**
+
+---
+
+Una vez hemos visto cómo tipar una función, os estaréis preguntando si podemos extraerlo fuera y reutilizar su tipado en otras funciones, y la respuesta es que podemos hacerlo a través de los alias (**`type`**) como hemos visto en el artículo anterior:
+
+```tsx
+type ExplainableFunction = (serie: string, isInexplicable: boolean) => string;
+
+// A diferencia de lo que hemos visto antes, ahora tipamos la función directamente
+const explainableSerie: ExplainableFunction = (serie, isInexplicable = true) => {
+  return isInexplicable ? `${serie} OKAI` : `${serie} BAHH MEPHISTO`;
+};
+```
+
+La utilidad más evidente es poder reutilizar los tipos, por ejemplo podemos crear una interfaz con el valor del **`type`** y usarla cuando queramos en una clase u objeto más complejo 🤯:
+
+```tsx
+type ExplainableFunction = (serie: string, isInexplicable: boolean) => string;
+
+const explainableSerie: ExplainableFunction = (serie, isInexplicable = true) => {
+  return isInexplicable ? `${serie} OKAI` : `${serie} BAHH MEPHISTO`;
+};
+
+interface SerieValidator {
+  explainableSerie: ExplainableFunction;
+}
+```
+
+Con esto podríamos decir que **ya conoces TypeScript y eres capaz de aplicarlo a tus proyectos**, ¡ponte a prueba con lo aprendido hasta ahora!, pronto traeremos otro artículo explicando los tipos genéricos y sus aplicaciones a funciones muy reutilizables 🚀
+
+¡Gracias como siempre por aprender con nosotros 🦄, sigamos aprendiendo MiniCoder!

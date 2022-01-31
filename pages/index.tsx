@@ -13,13 +13,14 @@ import {
   CardTitle
 } from 'styles/ui/Card';
 import { PostCover } from 'types/common';
+import { getPostAuthor } from 'utils/common';
 
 const HomePage: React.FC<Props> = ({ covers }) => {
   return (
     <Layout>
       <CardsWrapper>
         {covers
-          .sort((a, b) => new Date(b.date).getDate() - new Date(a.date).getDate())
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
           .map((post) => (
             <Card key={post.slug}>
               <CardHeader isArticle>
@@ -29,7 +30,7 @@ const HomePage: React.FC<Props> = ({ covers }) => {
 
                 <CardTitle>
                   <h2>{post.title}</h2>
-                  <p>Creado por: {post.author}</p>
+                  <p>Creado por: {getPostAuthor(post.author)}</p>
                 </CardTitle>
               </CardHeader>
 

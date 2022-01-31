@@ -1,0 +1,240 @@
+# TypeScript [0] | Anotaciones
+
+¡Muy buenas MiniCoder! Este es el primero de una serie de artículos enfocados a aprender TypeScript de una forma rápida y eficaz.
+
+Como habrás imaginado, la razón por la que hacemos hincapié en TypeScript es porque lo consideramos la solución a algunos de los problemas de JavaScript, ya que gracias a sus capacidades de tipado nos permitirán desarrollar herramientas y aplicaciones robustas de forma segura, y mejorarán nuestro día a día como desarrolladores.
+
+En esta primera parte sobre como trabajar con TypeScript vamos a ver conceptos básicos como tipado de variables y funciones, que llamamos anotaciones.
+
+### Anotaciones
+
+Para anotar tipos con Typescript vamos a usar **`:`** como si el valor de una propiedad se tratase, es decir para anotar una variable tendremos que añadir su anotación de tipo. Vamos a verlo con unos cuantos ejemplos así nos familiarizamos también con algunos tipos.
+
+```tsx
+const name: string = 'Mini Code Lab';
+const age: number = 30;
+```
+
+¿Para qué nos sirven las anotaciones de tipo? Nos ayuda a generar código robusto. Si nosotros intentamos introducir un valor que no se corresponde al tipo indicado Typescript nos lo indicará como un error de tipo.
+
+```tsx
+const name: string = 5; // Error de tipo - no asignable
+```
+
+Vamos a repasar los tipos básicos que nos ofrece Typescript para generar nuestras anotaciones.
+
+```tsx
+// Boolean
+const isDeveloper: boolean = true;
+
+// Number
+const integer: number = 1;
+const float: number = 1.2;
+const exp: number = 1e23;
+
+// String
+const name: string = 'Mini Code Lab';
+```
+
+También podemos tipar arrays, es decir marcar el contenido que tendrá nuestra lista. Lo vemos en código:
+
+```tsx
+const favoriteFoods: string[] = ['🍕', '🌮', '🍱'];
+const favoriteNumbers: number[] = [1, 2, 3];
+const booleanList: boolean[] = [true, true, false];
+
+// Se pueden combinar entre si sin importar la posición:
+const foodAndNumbers: (string | number)[] = ['🍕', '🌮', 2, 3];
+```
+
+Existen también los genéricos, que trabajaremos en profundidad más adelante, pero vamos dejar una pequeña pincelada. Es otra manera de indicar el tipo de los valores de nuestras variables:
+
+```tsx
+const favoriteFoods: Array<string> = ['🍕', '🌮', '🍱'];
+```
+
+Pero qué sucede si mi Array tiene diferentes tipos en un orden específico, esos casos son conocidos como tupla. En la tupla tenemos que añadir los tipos que forma nuestro Array. Vamos con el código.
+
+```tsx
+const dataList: [number, string] = [34, 'Mini Code Lab']
+
+// No podemos tenerlos en otro orden:
+const dataList: [number, string] = ['Mini Code Lab', 34] ❌
+```
+
+---
+
+En Typescript contamos con un nuevo tipo que es el Enum, este funciona como un alias a valores de tipo numérico. Lo explicamos con código:
+
+```tsx
+enum AvengersName {
+  IronMan, // = 0
+  Hulk, // = 1
+  SpiderMan, // = 2
+  AntMan // = 3
+}
+
+// usamos el enum
+const name: AvengerName = AvengerName.IronMan;
+
+//Comprobamos el valor
+console.log(name); // 0
+```
+
+Estos valores del enum nos lo asigna automáticamente pero nosotros lo podemos alterar de la siguiente manera.
+
+```tsx
+enum AvengersName {
+  IronMan = 1,
+  Hulk = 2,
+  SpiderMan = 3,
+  AntMan = 4
+}
+
+// usamos el enum
+const name: AvengerName = AvengerName.IronMan;
+
+//Comprobamos el valor
+console.log(name); // 1
+```
+
+Y por último también podemos usar los Enum como alias para **`string`**. En este ejemplo tenemos los nombres de nuestros Avengers como clave y por otro lado como valor el nombre de cada uno de ellos.
+
+```tsx
+enum AvengersName {
+  IronMan = 'Tony Stark',
+  Hulk = 'Bruce Banner',
+  SpiderMan = 'Peter Parker',
+  AntMan = 'Scott Lang'
+}
+
+// usamos el enum
+const name: AvengerName = AvengerName.IronMan;
+
+//Comprobamos el valor
+console.log(name); // Tony Stark
+```
+
+Este caso de uso es muy común y nos permitirá tener la información estructurada y segura, similar al `Object Literal Pattern/Expression`.
+
+---
+
+Continuando con nuestros tipos primitivos tenemos a **`null`** y **`undefined`** , en este tipo solo podrás tener ese contenido:
+
+```tsx
+const uMiniCode: undefined = undefined;
+const nMiniCode: null = null;
+```
+
+En Typescript podemos usar el tipo **`null`** y **`undefined`** como comodín, es decir se les puede asignar a cualquier otro tipo, aunque no es lo más recomendable.
+
+```tsx
+const miniNumber: number = null;
+const miniName: string = undefined;
+```
+
+Para el tipado de Ojectos tenemos la palabra **`object`** , esto nos permite tipar nuestros objetos como object. Aunque no es buena práctica porque es excesivamente laxo, es decir acepta como válido cualquier tipo de objeto.
+
+Para ser más estricto en el tipado de objetos podemos usar las `interfaces` y `types` que veremos más adelante, o en su defecto, si no importa tanto la estructura exacta del objeto, el tipo `Record`:
+
+```tsx
+const miniCoders: object = {};
+```
+
+---
+
+Vamos con un par de utilidades que nos ofrece Typescript como son **`void`** y **`never`**, para entenderlo mejor usaremos las funciones así queda mucho más claro.
+
+```tsx
+// Esta función no devuelve nada en el return
+const sayHello = (): void => {
+  console.log('Hello Mini Coders');
+};
+
+// Esta función nunca conseguirá hacer un return
+const infiniteLoop = (): never => {
+  while (true) {}
+};
+```
+
+En la primera función no retornamos ningún tipo de valor y por lo tanto podemos indicar que no tiene retorno, es decir **`void`**. Si nosootros intentasemos retornar un valor Typescript se quejará.
+
+```tsx
+// Is not assignable ❌
+const sayHello = (): void => {
+  return 'Hello Mini Coders';
+};
+```
+
+El tipo **`never`** por el contrario representa los valores que nunca van a suceder u ocurrir. Como vemos estamos en un bucle infinito y por lo tanto el retorno nunca va a suceder. Si tuviese un `return` nos daría un error en el check del tipado.
+
+```tsx
+// Is not assignable ❌
+const infiniteLoop = (): never => {
+  while (true) {}
+  return 2;
+};
+```
+
+---
+
+Y por último, encontramos el tipo **`any`**, el cual también desaconsejamos porque representa cualquier tipo posible y esto provoca que no tenga sentido usar Typescript. Es realmente una mala práctica emplear este tipo y siempre debemos buscar una alternativa adecuada.
+
+```tsx
+const recoverData = () => {
+  /* Hacemos return de cualquier dato */
+};
+let myData: any = recoverData();
+
+// Podemos reasignar por el valor que queramos ❌
+myData = 'Mini Code Lab';
+myData = 5;
+```
+
+Si se da la situación en la que realmente no sabemos que puede devolver una función o el tipoo exacto de algo, podemos usar `unknown` para que TypeScript sea capaz de avisarnos si lo empleamos incorrectamente, a diferencia de `any` que podrá pasar cualquier validación:
+
+```tsx
+const returnUnknownValue = () => {
+  /* Devolvemos algo desconocido */
+};
+const data: unknown = returnUnknownValue();
+
+// Argument of type 'unknown' is not assignable to parameter of type 'string' ❌
+parseInt(data);
+```
+
+---
+
+Antes de pasar a conceptos más complejos tenemos que conocer el concepto **`Type Assertion`**.
+
+Imagina que necesitamos pasar el valor obtenido por la función del ejemplo anterior a otra función, como hemos con `parseInt`, pero falla al ser de tipo `unknown`. Esto podemos solucionarlo si tenemos la seguridad de que esta función de volverá un string, realizando `Type Assertion` con la palabra `as`:
+
+```tsx
+const data: unknown = returnUnknownValue();
+
+// Esto si pasará la validación de TypeScript
+parseInt(data as string);
+```
+
+Aquí tienes una alternativa para hacer exactamente los mismo con tipado genérico, que veremos más adelante:
+
+```tsx
+const data: unknown = returnUnknownValue();
+
+// Esto si pasará la validación de TypeScript
+parseInt(<string>data);
+```
+
+Para comprobar nuevamente lo que te acabamos de enseñar con este ejemplo, puedes ejecutar el siguiente fragmento de código en tu editor:
+
+```tsx
+const recoverData = () => {
+  return 'Mini Code Lab';
+};
+let myData: unknown = recoverData();
+
+// Indicamos a Typescript que será un string y lo trate como tal
+console.log((<string>myData).substr(1));
+```
+
+¡Pues con esto hemos dado nuestros primeros pasos en Typescript! Nos vemos en el siguiente artículo, en el que aprenderemos a trabajar con `interfaces` para tipar objetos correctamente 🚀
