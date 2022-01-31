@@ -1,0 +1,261 @@
+# TypeScript [1] | Interfaces y Types
+
+¡Hola minicoder! En el artículo anterior de TypeScript aprendimos a tipar nuestro código de manera sencilla, y como te comentamos al final de éste, hoy toca aprender `interfaces` y tipar objetos en condiciones 🤖
+
+### ¿Qué es una interface?
+
+La mejor forma por la cual podemos tipar objetos en Typescript son la interfaces. Podríamos decir que una interfaz es **un contrato firmado con el código que define las propiedades que un objeto debe tener**. Pero en lugar de tanta palabra vamos a verlo en código, ¡que nos entendemos mejor!
+
+```tsx
+interface Avenger {
+	name: string;
+	age: number;
+}
+
+// Anotamos el objeto con nuestra interface
+const thor: Avenger {
+	name: 'Thor Odinson',
+	age: 32
+}
+```
+
+Si nuestro objeto **carece de un valor de la interfaz o el tipo de una propiedad es diferente,** Typescript nos avisará de que existe un error en la asignación y no compilará nuestro código 🔨.
+
+Otro punto interesante de las interfaces es que se pueden anidar una vez definidas, es decir, podemos utilizar una interfaz dentro de otra sin problemas para tipar objetos complejos:
+
+```tsx
+interface Power {
+	name: string,
+	damage: number
+}
+
+interface Avenger {
+	name: string;
+	age: number;
+	powerData: Power;
+}
+
+// Como puedes ver aquí, hemos definido Avenger como una combinación de dos interfaces
+const thor: Avenger {
+	name: 'Thor Odinson',
+	age: 32,
+	powerData: {
+		name: 'God',
+		damage: 100
+	}
+}
+```
+
+---
+
+Existen dos modificadores muy interantes para las interfaces, estos son el **`optional`** y el **`read only`**. Veamos como funcionan con un snippet de código:
+
+```tsx
+interface Comic {
+  readonly title: string;
+  author?: string;
+}
+
+const daredevil: Comic = {
+  title: 'Born again'
+};
+
+const avengersComic: Comic = {
+  title: 'El guantelete del infinito',
+  author: 'Jim Starling'
+};
+```
+
+Si te fijas bien en la interfaz `Comic`, al usar **`?`** hemos conseguido hacer la propiedad **opcional** permitiéndonos añadir esa propiedad o no, de este modo nuestro contrato es más flexible.
+
+Con el modificador **`readonly`** le indicamos a TypeScript que esa propiedad es de lectura y no podemos modificar su valor, esto lo podemos usar para mantener propiedades tal y como estaban desde un inicio.
+
+```tsx
+// No se puede asignar es solo lectura ❌
+avengersComic.title = 'Civil War';
+```
+
+---
+
+Además de lo visto en las interfaces es importante hablar de su capacidad de extensión, es decir permite que unas se extiendan de otras a través de **`extends`**. Así podremos crear interfaces combinadas muy fácilmente, reutilizando nuestro código:
+
+```tsx
+interface Person {
+  name: string;
+}
+
+interface SuperHero {
+  power: number;
+}
+
+// Esta interface tendrá las propiedades de las extendidas
+interface MarvelHero extends Person, SuperHero {
+  creator: string;
+}
+
+const hulk: MarvelHero = {
+  name: 'Bruce Banner',
+  power: 120,
+  creator: 'Stan Lee'
+};
+```
+
+También podemos hacer que una clase extienda una interfaz para definir de una forma muy estructurada todas sus propiedades y métodos. Esto lo conseguiremos por medio de la palabra `implements`:
+
+```tsx
+interface VideoGame {
+  console: string;
+  title: string;
+  tags: [];
+}
+
+class VideogameClass implements VideoGame {
+  console: string;
+  title: string;
+  tags;
+
+  constructor() {
+    this.console = 'Switch';
+    this.title = 'Pokemon Legends';
+    this.tags = ['funny', 'creatures', 'battles'];
+  }
+}
+```
+
+Si no definimos una propiedad o método de la clase `VideoGameClass` tal y como hemos indicado en la interfaz, TypeScript mostrará un error ❌
+
+---
+
+### ¿Qué es un type?
+
+Podemos considerar los types como una forma de tipar no solo objetos, sino cualquier elemento del código que creamos. Su sintaxis cambia un poco con respecto a las interfaces, aunque se pueden extender y combinar de una forma parecida, y puedes guardar valores en su interior según el caso. ¡Véamoslos 👾!
+
+```tsx
+type Avenger = {
+  name: string;
+  age: number;
+};
+
+// Anotamos el objeto con nuestro type
+const thor: Avenger = {
+  name: 'Thor Odinson',
+  age: 32
+};
+```
+
+Si nos fijamos bien, es casi idéntico a una interfaz, con la diferencia de que hay que igualarlo y usar la palabra `type`.
+
+Vamos a ver ahora como podemos combinar types para crear objetos y arrays complejos:
+
+```tsx
+type Power = {
+  name: string;
+  damage: number;
+};
+
+type Avenger = {
+  name: string;
+  age: number;
+  powerData: Power;
+};
+
+const avengers: Avenger[] = [
+  {
+    name: 'Thor Odinson',
+    age: 32,
+    powerData: {
+      name: 'God of Thunder',
+      damage: 100
+    }
+  },
+  {
+    name: 'Captain Marvel',
+    age: 58,
+    powerData: {
+      name: 'Photon Energy',
+      damage: 100
+    }
+  }
+];
+```
+
+¡Wow! Hemos definido un array de objetos anidados con bastante facilidad, y con esto hemos conseguido que TypeScript nos avise si olvidamos cualquier propiedad de cualquiera de los elementos 👏
+
+---
+
+Para combinar `types` entre si, tenemos que usar algo distinto a la palabra `extends` que hemos utilizado con las `interfaces`. En este caso será el símbolo `&` y lo usaremos de la siguiente manera:
+
+```tsx
+type Person = {
+  name: string;
+};
+
+type SuperHero = {
+  power: number;
+};
+
+// Usaremos & para extender tras definir nuestro nuevo type
+type MarvelHero = {
+  creator: string;
+} & Person &
+  SuperHero;
+
+const hulk: MarvelHero = {
+  name: 'Bruce Banner',
+  power: 120,
+  creator: 'Stan Lee'
+};
+```
+
+En el caso de las clases, si implementamos un `type` en una clase tal y como hechos antes con la interfaz que creamos, se comportará del mismo modo a la hora de validar nuestro código, cumpliendo también con otra función de las `interfaces`.
+
+---
+
+Por último con respecto a los `types` vamos a ver su uso con algunos casos especiales que los hacen realmente útiles:
+
+- Si definimos un `type` con valores estáticos no podremos utilizar otro valor distinto en la constante que se anote con este tipo.
+
+```tsx
+type GameConsole = 'xbox' | 'playstation' | 'nintendo' | 'minicode';
+
+// Type '"sega"' is not assignable to type 'GameConsole' ❌
+const badConsole: GameConsole = 'sega';
+
+// ¡Esto funcionará a la perfección!
+const goodConsole: GameConsole = 'minicode';
+```
+
+- Si definimos un `type` que iguala a una anotación sencilla (no la de un objeto) podemos reutilizarlo más tarde al definir otras constantes, e incluso repetirlo.
+
+```tsx
+type ArrayOfStringsAndNumbers = (string | number)[];
+
+const arrayOfValues: ArrayOfStringsAndNumbers = ['hello', 0, 'world', 1];
+
+// Type 'boolean' is not assignable to type 'string | number' ❌
+const invalidArray: ArrayOfStringsAndNumbers = [false, true, null];
+```
+
+---
+
+### Entonces, ¿qué diferencia a los types y las interfaces?
+
+Pues realmente podríamos decir que se utilizan con la misma finalidad de forma general, pero hay que tener en cuenta que los `types` son bastante más versátiles a la hora de trabajar debido a los casos que hemos visto.
+
+Aunque parezca que la mejor solución es trabajar siempre con `types` y no con `interfaces`, debemos tener en cuenta una propiedad muy útil si creamos una librería instalable con TypeScript y queremos dar la posibilidad a los developers para extender nuestras `interfaces`. Y es que podemos declararlas varias veces y se combinarán entre si para crear una nueva interfaz, aquí un ejemplo:
+
+```tsx
+interface Team {
+  name: string;
+}
+
+interface Team {
+  score: number;
+}
+
+const teamResult: Team = { name: 'minicode', score: 10 };
+```
+
+Esto hace que el caso de uso ideal para las `interfaces` sea el de librerías e instalables, mientras que para los `types` es cualquier uso dentro de nuestro código y el de obtener una mayor versatilidad 🐉
+
+Con esto hemos terminado de aprender `interfaces` y `types`, ¡ahora sabrás diferenciarlos y saber cual usar en cada momento! Te esperamos en el próximo artículo donde explicaremos como tipar funciones correctamente, ¡gracias por tu tiempo MiniCoder ♥!
