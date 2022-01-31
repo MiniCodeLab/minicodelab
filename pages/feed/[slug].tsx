@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArticleLayout } from 'styles/ui/ArticleLayout';
 import { Metadata } from 'types/common';
+import { getPostAuthor } from 'utils/common';
 
 const components = {
   code: CodeBlock
@@ -20,7 +21,7 @@ export default function TestPage({ source, meta }: Props) {
         headChildren={
           <>
             <meta name="description" content={meta.description} />
-            <meta name="author" content={meta.author} />
+            <meta name="author" content={getPostAuthor(meta.author)} />
           </>
         }
       >

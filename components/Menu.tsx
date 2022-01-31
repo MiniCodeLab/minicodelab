@@ -10,7 +10,7 @@ const Menu: React.FC = () => {
     <nav>
       <div className="logo">
         <Link href="/" passHref>
-          <a>
+          <a title="Home">
             <Image alt="logo icon" height={33} priority src={longLogo} width={200} />
           </a>
         </Link>
@@ -19,14 +19,14 @@ const Menu: React.FC = () => {
       <ul>
         <li>
           <Link href="/calendar" passHref>
-            <a>
+            <a title="Calendario">
               <Image src={calendar} alt="Calendar icon" width={40} height={40} />
             </a>
           </Link>
         </li>
         <li>
           <Link href="/about" passHref>
-            <a>
+            <a title="Sobre MiniCodeLab">
               <Image src={about} alt="About icon" width={40} height={40} />
             </a>
           </Link>
