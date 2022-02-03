@@ -1,0 +1,639 @@
+### Taller | Javascript para React
+
+Antes de comenzar a trabajar con React tenemos que tener algunos conceptos de Javascript muy claros para así poder aprovechar todas las ventajas que nos ofrece eta increíble librería. Por ello, vamos a ir repasando poco a poco cada uno de ellos.
+
+Te recordamos que se viene bastante contenido dedicado a React con el que vamos a mejorar juntos, ¡así que revisa bien este artículo para arrancar con fuerzas!
+
+### Template Literals
+
+Los templates literal los tenemos disponibles desde ES6 y nos ofrece algunas utilidades usando `comillas invertidas` ( **_backticks_** ) que vamos a ver para entender lo útiles que pueden llegar a ser.
+
+Su utilidad más obvia es que nos permite generar cadenas implementado un **salto de línea** sin necesidad de sumar estos saltos, tal y como haríamos con suma de strings de forma usual.
+
+```tsx
+const miniCode = `Bienvenidos a Mini Code Lab,
+                     hoy explicaremos algunos conceptos de Js 
+                     para obtener el máximo partido de React.`;
+```
+
+También podemos usar la interpolación de variables, pues podemos acceder al valor asignado en ellas sin tener que concatenar el contenido (`**${variable}**`).
+
+```tsx
+const name = 'Mini Code Lab';
+console.log(`¡Hola! Somos ${name} y estos es un Template Literal`);
+```
+
+Entre las llaves podemos realizar operaciones aritméticas. Algo muy útil para no tener que declarar una nueva variable con el total.
+
+```tsx
+const numberA = 5;
+const numberB = 5;
+console.log(`La suma de los números ${numberA + numberB}`);
+```
+
+En algunos casos en los que tienes que manipular el DOM o pintar elementos dinámicos viene muy bien para generar tus propias plantillas y luego introducirlo por Javascript.
+
+```tsx
+const card = {
+  city: 'Madrid',
+  poblation: '6m',
+  latitude: '40.463667',
+  logitude: '-3.74922'
+};
+
+const htmlCard = `<div>
+        <h4>${card.city}</h4>
+        <p>Número de habitantes: ${card.poblation}</p>
+        <p>Ubicación: ${card.latitude} : ${card.logitude}</p>
+   </div>`;
+
+// Ahora lo añadimos al DOM
+document.body.innerHTML = htmlCard;
+```
+
+Los templates strings nos permiten iterar sobre elementos de tal modo que el pintado es mucho más sencillo. Vamos a verlo en código.
+
+```tsx
+const comicBook = {
+  title: 'The Amazing Spiderman',
+  authors: ['Steve Ditko', 'Stan Lee'],
+  pages: '16',
+  description: `Este Comic es el primero de Spiderman en solitario`,
+  price: '10000'
+};
+
+const comicCard = `
+	<div>
+		<h4>${comicBook.title}</h4>
+		<p>
+			autores: ${comicBook.authors.map((author) => ` <span>${author}</span>`).join(' y ')}
+		</p>
+	</div>`;
+
+// Ahora lo añadimos al DOM
+document.body.innerHTML = comicCard;
+```
+
+A este pequeño ejemplo también podemos añadir condicionales para pintar un valor u otro en función si tenemos un autor o varios.
+
+```tsx
+const comicBook = {
+  title: 'The Amazing Spiderman',
+  authors: ['Steve Ditko', 'Stan Lee'],
+  pages: '16',
+  description: `Este Comic es el primero de Spiderman en solitario`,
+  price: '10000'
+};
+
+const comicCard = `
+	<div>
+		<h4>${comicBook.title}</h4>
+		<p>
+	    ${comicBook.authors.length > 1 ? `autores` : `autor`}:
+      ${comicBook.authors.map((author) => `<span>${author}</span>`).join(' y ')}
+    </p>
+	</div>`;
+
+// Ahora lo añadimos al DOM
+document.body.innerHTML = comicCard;
+```
+
+Aquí tenemos un caso sencillo en el que con el condicional nos vale, pero ¿qué sucede si tenemos que hacer comprobaciones u operaciones complejas? Podemos usar funciones.
+
+```tsx
+const comicBook = {
+  title: 'The Amazing Spiderman',
+  authors: ['Steve Ditko', 'Stan Lee'],
+  pages: '16',
+  description: `Este Comic es el primero de Spiderman en solitario`,
+  price: '10000'
+};
+
+const getAuthorTitle = (n) => {
+  return n > 1 ? 'autores' : 'autor';
+};
+
+const comicCard = `
+	<div>
+		<h4>${comicBook.title}</h4>
+		<p>
+			${getAuthorTitle(comicBook.authors.length)}:
+		  ${comicBook.authors.map((author) => `<span>${author}</span>`).join(' y ')}
+		</p>
+	</div>`;
+
+// Ahora lo añadimos al DOM
+document.body.innerHTML = comicCard;
+```
+
+---
+
+### Shorthand **properties**
+
+Siempre que tengamos una variable que tenga el mismo nombre que una propiedad en un objeto, al construir el objeto, puedes omitir el nombre de la propiedad.
+
+Lo que esto significa es que el código que solía verse así:
+
+```tsx
+const oldUser = (name, lastName, image) => {
+  return {
+    name: name,
+    lastName: lastName,
+    image: image,
+    timestamp: Date.now()
+  };
+};
+
+console.log(oldUser('Bruce', 'Wayne', 'url'));
+```
+
+Ahora es mucho más sencillo y podemos ahorrar palabras en nuestro código ✅
+
+```jsx
+const newUser = (name, lastName, image) => {
+  return {
+    name,
+    lastName,
+    image,
+    timestamp: Date.now()
+  };
+};
+
+console.log(newUser('Clark', 'Kent', 'url'));
+```
+
+### Shorthand Method Names
+
+¿Y si una de esas propiedades fuera una función? **Una función que es una propiedad de un objeto o clase se llama método**. Con los nombres de métodos abreviados de ES6, puede omitir la palabra clave de función por completo.
+
+Lo que esto significa es que el código que solía verse así:
+
+```jsx
+const oldUserFunction = (name, lastName, image) => {
+  return {
+    name,
+    lastName,
+    image,
+    timestamp: Date.now(),
+    saveData: function () {
+      console.log('Guardando...');
+    }
+  };
+};
+
+const userOld = oldUserFunction('Bruce', 'Wayne', 'url');
+
+userOld.saveData();
+```
+
+Ahora puede verse así ✅
+
+```jsx
+const newUserFunction = (name, lastName, image) => {
+  return {
+    name,
+    lastName,
+    image,
+    timestamp: Date.now(),
+    saveData() {
+      console.log('Guardando...');
+    }
+  };
+};
+const userNew = newUserFunction('Clark', 'Kent', 'url');
+
+userNew.saveData();
+```
+
+---
+
+### Arrow Functions
+
+Una **expresión de función flecha** es una alternativa compacta a una `**expresión de función**` tradicional, pero es limitada y no se puede utilizar en todas las situaciones.
+
+Es una manera de generar **funciones** más **compacta**. Al ver la sintaxis, ya no hace falta escribir la palabra `**function**`, lo sustituimos por la flecha `**=>**`
+
+```jsx
+function getNameTraditional() {
+  return 'Mini Code Lab';
+}
+
+const getNameArrow = () => {
+  return 'Mini Code Lab';
+};
+
+const nameArrow = getNameArrow();
+
+console.log(nameArrow);
+```
+
+También **podemos devolver el return de forma implícita** si la función realiza una evaluación simple o simplemente devuelve un valor:
+
+```jsx
+// Ejemplo de Return Implícito (omitiendo el return)
+const getNameNoReturn = () => 'Mini Code Lab';
+
+const nameNoReturn = getNameNoReturn();
+
+console.log(nameNoReturn);
+```
+
+En el caso de querer devolver un `**Object**` inline, la sintaxis deberá ser la siguiente, de forma que quede envuelto en paréntesis y no se interprete como el contenido de la función y no su `return`:
+
+```jsx
+const myHero = () => ({ name: 'Logan', power: 100 });
+```
+
+Como ya sabéis, las funciones pueden recibir parámetros, estos serán los valores con los que trabajaremos dentro de nuestra función. Estos podemos definirlos en el paréntesis de la Arrow Function como hemos hecho en las funciones normales hasta ahora:
+
+```jsx
+const multiplication = (x) => x * 2;
+
+// Podemos omitir el paréntesis si es un solo argumento 🔥
+// const multiplication = x => x * 2;
+
+const result = multiplication(3);
+```
+
+En caso que queramos recibir más de un elemento por parámetro, siempre tendremos que envolverlo en los paréntesis:
+
+```jsx
+const multiplicationTwoParams = (a, b) => a * b;
+
+const resultTwoParams = multiplicationTwoParams(2, 2);
+```
+
+En las funciones podemos tener valores por defecto, de este modo sí recibimos un valor para dicho argumento usaremos el recibido pero de lo contrario, tendremos el valor por defecto que hemos definido junto con la función:
+
+```jsx
+const multiplicationDefaultParam = (a, b = 2) => a * b;
+
+const resultOne = multiplicationDefaultParam(2); // 4
+const resultTwo = multiplicationDefaultParam(2, 5); // 10
+```
+
+Podemos trabajar en operaciones más complejas como es el caso de funciones que generan funciones, lo que denominamos **Currying**. En su versión tradicional tendríamos lo siguiente:
+
+```jsx
+const multiplicationGenerator = function (a) {
+  return function (b) {
+    return b * a;
+  };
+};
+
+const result = multiplicationGenerator(5);
+const finalCount = result(10); // Devuelve 50
+```
+
+Gracias a las Arrows la sintaxis queda mucho más limpia:
+
+```jsx
+const multiplicationGenerator = (a) => (b) => a * b;
+
+const result = multiplicationGenerator(5);
+const finalCount = result(10); // Devuelve 50
+```
+
+Sin embargo, las *arrow functions* tienen algunas limitaciones. No vamos a tratar sobre ellas en este artículo pero os dejamos los puntos que menciona la documentación de MDN donde podéis revisarlo:
+
+- No tiene sus propios enlaces a `**this**` o `**super**` y no se debe usar como [métodos](https://developer.mozilla.org/es/docs/Glossary/Method) en la mayoría de los casos.
+- No tiene `**argumentos**` o palabras clave `new.target`.
+- No apta para los métodos `**call**`, `**apply**` y `**bind**`, que generalmente se basan en establecer un [ámbito o alcance](https://developer.mozilla.org/es/docs/Glossary/Scope).
+- No se puede utilizar como [constructor](https://developer.mozilla.org/es/docs/Glossary/Constructor).
+- No se puede utilizar `**yield**` dentro de su cuerpo.
+
+---
+
+### Spread Operator / Rest Parameters
+
+Una de las grandes ventajas que nos ofrece ES6 son los **Spread Operator, Rest Parameters y el concepto de Object Destructuring**. Vamos a ver cómo utilizar ambas funcionalidades.
+
+El **Spread Operator** corresponde a un operador el cual distribuye los elementos de un array u objeto para **asignarlos a alguna variable/constante/función**. También nos ayuda a concatenar, copiar y podemos enlazar métodos del array. Y en los objetos nos permite también copiar algunos valores y otros mantenerlos. Vamos a verlo en código.
+
+- **Usando el Spread Operator para copiar en nuevos objetos o arrays:**
+
+```jsx
+// Copiamos el objeto xMen en newXmen
+const xMen = { name: 'James', lastName: 'Logan' };
+const newXmen = { power: 100, ...xMen };
+
+// Copiamos la lista xMenList en newXmenList
+const xMenList = ['Ciclops', 'Beast', 'Angel', 'Marvel-girl'];
+const newXmenList = [...xMenList, 'Wolverine', 'NightCrawler', 'Storm'];
+```
+
+- **Usando el Spread Operator para combinar arrays:**
+
+```jsx
+const xmenList = ['Ciclops', 'Beast', 'Angel', 'Marvel-girl'];
+const newXmenList = ['Wolverine', 'NightCrawler', 'Storm'];
+
+// Antes se usaba el concat y ahora ...
+const myMutants = [...xmenList, ...newXmenList];
+
+// Se puede usar también para copiar un array
+const xmenCopy = [...xmenList];
+
+// se usa para jugar con tu array sin modificarlo
+const reversedXmenList = [...xmenList].reverse();
+
+// No se ha modificado
+console.log(xmenList);
+console.log(reversedXmenList);
+```
+
+- **Usando el Spread Operator para obtener los argumentos de una función:**
+
+```jsx
+function suma(a, b, c) {
+  return a + b + c;
+}
+
+const numbers = [1, 2, 3];
+suma(...numbers);
+
+// Tambien podemos hacerlo con strinsgs en arrays!
+const myTeam = 'RAYO';
+const characters = [...myTeam];
+// [ 'R', 'A', 'Y', 'O']
+```
+
+- **Usando Spread Operator para combinar objetos:**
+
+```jsx
+const obj1 = { firstName: 'Bruce', age: 32 };
+const obj2 = { lastName: 'Wayne', gender: 'M' };
+
+const newObj = { ...obj1, ...obj2, planet: 'Earth-22' };
+console.log(newObj);
+```
+
+Los **Rest Parameters**, al igual que el Spread Operator, son representados mediante tres puntos consecutivos, pero más allá de su similitud sintáctica su funcionalidad es unir distintos elementos de un array.
+
+```jsx
+const multiplication = (number, ...numberList) => {
+  console.log('number', number); // number será 2
+  console.log('numberList', numberList); // numberList será [1, 2, 3, 4]
+  return numberList.map((x) => console.log(x * number));
+};
+
+multiplication(2, 1, 2, 3, 4);
+```
+
+El O**bject** D**estructuring** me permite extraer de manera rápida ciertos valores de un objeto.
+
+```jsx
+const marvelCharacter = {
+  name: {
+    heroName: 'Doctor Strange',
+    humanName: 'Stephen Vincent Strange'
+  },
+  team: ['Avengers', 'Iluminati']
+};
+
+// Destructuring
+const { name, team } = marvelCharacter;
+
+// Podemos acceder a las propiedades sin el marvelCharacter -> ya asignado.
+console.log(name.heroName, name.humanName);
+console.log(team[0], team[1]);
+
+// Destructuring
+const { heroName, humanName } = marvelCharacter.name;
+
+console.log(heroName);
+console.log(humanName);
+```
+
+También podemos aplicar el **Object Destructuring** junto con **Rest Parameter** para quedarnos el resto de propiedades de un objeto que no hemos utilizado:
+
+```jsx
+const details = {
+  firstName: 'Clark',
+  lastName: 'Kent',
+  age: 28
+};
+
+// Saca el valor 28 y deja el resto de atributos
+const { age, ...restOfTheDetails } = details;
+
+console.log(age, restOfTheDetails); // 28, { firstName: 'Clark', lastName: 'Kent' }
+```
+
+---
+
+### Import / Export
+
+La declaración export se utiliza al crear módulos de JavaScript para exportar funciones, objetos o tipos de datos primitivos del módulo para que puedan ser utilizados por otros programas con la sentencia import.
+
+```jsx
+// En archivo utils.js
+export default multiplication = (numberA, numberB) =>  numberA * numberB;
+
+--------------
+
+// En archivo calculator.js
+import multiplication from './utils';
+
+const calculatorMulti = () => {
+	multiplication(2,2);
+}
+```
+
+Si tenemos mútliples export en un archivo, ten en cuenta que solo puede haber como máximo un `export default` que corresponderá al elemento principal de dicho módulo, siendo el resto `export` normales. Esto se importa de la siguiente forma:
+
+```jsx
+// En archivo utils.js
+const multiplication = (numberA, numberB) => numberA * numberB;
+export const sum = (numberA, numberB) => numberA + numberB;
+
+export default multiplication
+--------------
+
+// En archivo calculator.js
+import multiplication, { sum } from './utils';
+
+const calculatorMulti = () => {
+	multiplication(2, 2);
+	sum(1, 2);
+}
+```
+
+Como has podido observar, el `export default` se corresponde con el `import` general de un archivo, mientras que el resto de `export` tendremos que destructurarlos en el `import`.
+
+---
+
+### Ternarios
+
+El operador ternario está representado por un signo de interrogación de cierre `**?**`. A veces es llamado “ternario” porque el operador tiene tres operandos. Es el único operador de JavaScript que tiene esta cantidad de ellos. Vamos a ver su representación.
+
+```jsx
+let result = condition ? value1 : value2;
+```
+
+Se evalúa `**condition**`: si es verdadera entonces devuelve `**value1**` , de lo contrario `**value2**`.
+
+```jsx
+let accessAllowed = age > 18 ? true : false;
+```
+
+¿Qué sucede con múltiples **`?`** ? Una secuencia de operadores de signos de interrogación **`?`** puede devolver un valor que depende de más de una condición.
+
+```jsx
+let age = prompt('¿edad?', 18);
+
+let message =
+  age < 3
+    ? '¡Hola, bebé!'
+    : age < 18
+    ? '¡Hola!'
+    : age < 100
+    ? '¡Felicidades!'
+    : '¡Qué edad tan inusual!';
+
+alert(message);
+```
+
+¡Ojo! No te recomendamos en absoluto encadenar ternarios, esto puede acabar en generar código difícil de comprender y de debugar, ¡es mejor hacerlo en varios pasos y tener un código limpio y mantenible con el tiempo! 🥷
+
+---
+
+### Async / Await
+
+Los famosos `async/await` son muy cómodos en su uso, permitirán código limpio y organizado. Cuando queramos crear una función de este tipo, irá precedida por la palabra reservada `**async**`.
+
+De forma general lo combinaremos con `try/catch` para prevenir que nuestro código rompa por completo en caso de error. En el `**try**` llamaremos a la función asíncrona que queramos (pueden ser varias) con la palabra reservada `**await**` delante, y con esto haremos que la **función *espere* a que se ejecute** y el resultado de la misma está disponible en este caso en la variable `**result`:\*\*
+
+```jsx
+const myFunction = async () => {
+  try {
+    let result = await functionAsincrona();
+    // Sin el await, este console.log mostraría Promise {}
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+};
+```
+
+- Combinando `**async**`/`**await**` con una función basada en `**Promesas` .\*\*
+
+```jsx
+const addItem = (item, list) => {
+  const promise = new Promise((resolve, reject) => {
+    if (!list) {
+      reject('No existe el array');
+    }
+
+    setTimeout(function () {
+      list.push(item);
+      resolve(list);
+    }, 2000);
+  });
+
+  return promise;
+};
+
+// Aquí aplicamos async/await junto con try/catch para crear código secuencial
+const processFilm = async (film, filmography) => {
+  try {
+    const result = await addItem(film, filmography);
+    console.log(result);
+  } catch (error) {
+    console.error('error', error);
+  }
+};
+
+const filmography = ['Raising Arizona', 'Fargo', 'Barton Fink'];
+processFilm('The big Lewoski', filmography);
+processFilm('O Brother, Where Art Thou?', filmography);
+processFilm('The Ladykillers', filmography);
+```
+
+De esta manera estamos escribiendo código de manera secuencial pero JavaScript está (por debajo) ejecutando código asíncrono.
+
+Además podemos ver un pequeño ejemplo de **`async`** / **`await`** en peticiones a una API.
+
+```jsx
+async function showAvatar() {
+  // Leer nuestro JSON
+  const response = await fetch('/article/promise-chaining/user.json');
+  const user = await response.json();
+
+  // Leer usuario github
+  const githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+  const githubUser = await githubResponse.json();
+
+  // Muestra el avatar
+  const img = document.createElement('img');
+  img.src = githubUser.avatar_url;
+  img.className = 'promise-avatar-example';
+  document.body.append(img);
+
+  // Espera 3 segundos
+  await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+
+  img.remove();
+
+  return githubUser;
+}
+
+showAvatar();
+```
+
+---
+
+### Optional Chaining
+
+El operador de encadenamiento opcional proporciona una forma de simplificar el acceso a los valores a través de objetos conectados cuando es posible que una referencia o función sea `**undefined**` o `**null**`.
+
+```jsx
+const adventurer = {
+  name: 'MiniCoder',
+  inventory: {
+    weapon: {
+      name: 'keyboard',
+      attacks: [() => 'writing']
+    }
+  }
+};
+
+// No existe skills en nuestro adventurer, no accederá a .jump()
+adventurer.skills?.jump();
+
+// No existe la función add() en el inventory, no se invocará .add()
+adventurer.inventory.add?.('water');
+
+// si no existe el ataque en posición 4, no se ejecutará la función
+adventurer.attacks?.[4]();
+```
+
+Para más información sobre esto, un miembro del equipo escribió hace tiempo un README en Github donde tenéis más ejemplos en profundidad: [https://github.com/Ccastillo06/optional-chaining-example](https://github.com/Ccastillo06/optional-chaining-example)
+
+---
+
+### **Nullish Coalescing Operator '??'**
+
+El operador “**`nullish coalescing`**” se escribe con un doble signo de cierre de interrogación `**??**`.
+
+El operador “_nullish coalescing_” no es algo completamente nuevo. Es solamente una sintaxis agradable para obtener el primer valor “definido” de entre dos. Podemos reescribir `**result = a ?? b**` usando los operadores que ya conocemos:
+
+```jsx
+const result = a !== null && a !== undefined ? a : b;
+
+// Podemos definirlo como:
+const result = a ?? b;
+```
+
+Digamos que tenemos los datos de un usuario en las variables `**firstName**`,  `**lastName`**  y `**nickName\*\*`. Todos ellos podrían ser indefinidos si el usuario decide no ingresarlos. Queremos mostrar un nombre usando una de las tres variables, o mostrar “anónimo” si ninguna está definida. Usemos el operador `??` para ello:
+
+```jsx
+let firstName = null;
+let lastName = null;
+let nickName = 'Supercoder';
+
+// Muestra el primer valor definido:
+alert(firstName ?? lastName ?? nickName ?? 'Anonymous'); // Supercoder
+```
+
+Con esto tenemos los conocimientos de JavaScript más que necesarios para atacar React de una forma increíble, ¡prepárate para lo que viene y pon estos conceptos en prácticas MiniCoder ¡Vamos a crear unas aplicaciones increíbles 🔥!
