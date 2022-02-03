@@ -133,7 +133,7 @@ const miniNumber: number = null;
 const miniName: string = undefined;
 ```
 
-Para el tipado de Ojectos tenemos la palabra **`object`** , esto nos permite tipar nuestros objetos como object. Aunque no es buena práctica porque es excesivamente laxo, es decir acepta como válido cualquier tipo de objeto.
+Para el tipado de Objetos tenemos la palabra **`object`** , esto nos permite tipar nuestros objetos como object. Aunque no es buena práctica porque es excesivamente laxo, es decir acepta como válido cualquier tipo de objeto.
 
 Para ser más estricto en el tipado de objetos podemos usar las `interfaces` y `types` que veremos más adelante, o en su defecto, si no importa tanto la estructura exacta del objeto, el tipo `Record`:
 
@@ -157,7 +157,7 @@ const infiniteLoop = (): never => {
 };
 ```
 
-En la primera función no retornamos ningún tipo de valor y por lo tanto podemos indicar que no tiene retorno, es decir **`void`**. Si nosootros intentasemos retornar un valor Typescript se quejará.
+En la primera función no retornamos ningún tipo de valor y por lo tanto podemos indicar que no tiene retorno, es decir **`void`**. Si nosotros intentásemos retornar un valor Typescript se quejará.
 
 ```tsx
 // Is not assignable ❌
@@ -207,7 +207,7 @@ parseInt(data);
 
 Antes de pasar a conceptos más complejos tenemos que conocer el concepto **`Type Assertion`**.
 
-Imagina que necesitamos pasar el valor obtenido por la función del ejemplo anterior a otra función, como hemos con `parseInt`, pero falla al ser de tipo `unknown`. Esto podemos solucionarlo si tenemos la seguridad de que esta función de volverá un string, realizando `Type Assertion` con la palabra `as`:
+Imagina que necesitamos pasar el valor obtenido por la función del ejemplo anterior a otra función, como vemos con `parseInt`, pero falla al ser de tipo `unknown`. Esto podemos solucionarlo si tenemos la seguridad de que esta función devuelve un string, realizando `Type Assertion` con la palabra `as`:
 
 ```tsx
 const data: unknown = returnUnknownValue();

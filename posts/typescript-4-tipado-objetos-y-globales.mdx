@@ -1,0 +1,187 @@
+# TypeScript [4] | Tipado de objetos & Tipos Globales
+
+Este será el último artículo (por ahora) de TypeScript para iniciarnos en su uso diario e implementarlo en nuestros proyectos. ¡Aunque próximamente lo veremos en mayor profundidad en los talleres que se vienen! 🎉
+
+Estos últimos detalles que vamos a ver te ayudarán en algunos casos y mejorarán tu habilidad usando TypeScript en proyectos más complejos.
+
+### **Tipado de objetos**
+
+Con lo visto hasta ahora podemos confirmar que el tipado de un objeto en Typescript se puede hacer de la siguiente forma:
+
+```tsx
+type Person = {
+  name: string;
+  age: number;
+};
+
+const person: Person = { name: 'MiniCoder', age: 30 };
+```
+
+Esta forma es correcta y te recomendamos que la utilices a menudo, ya que vas a conseguir crear un código robusto y autodocumentado con muy poco esfuerzo.
+
+El problema que podemos encontrar tipando objetos de esta forma, es que cuando iteremos en arrays con contenido dinámico, como por ejemplo usando un `.reduce` para convertir un array a un objeto, será complicado tipar sobre la marcha.
+
+Para ello, tenemos `Record<key type, value type>` que nos permite definir un objeto clave/valor y sus tipos asociados, veamos el caso con nuestro tipo `Person`:
+
+```tsx
+type Person = Record<string, string | number>;
+
+const person: Person = { name: 'MiniCoder', age: 30 };
+```
+
+Con esto estamos diciendo que `person` puede ser un objeto que tenga claves de tipo `string` y valores de tipo `string` o `number` para dichas claves. Podemos observar con esto que crearemos tipos bastante dinámicos, pero con el riesgo de confundir calves, por lo que hay que usar `Record` con cierta precaución.
+
+Aquí te dejamos un ejemplo para que veas su utilidad en situaciones más complejas, donde no podremos tipar correctamente el acumulador `acc` a menos que lo identifiquemos como un `Record<string, string>`:
+
+```tsx
+const socialAccounts = [
+  {
+    type: 'twitter',
+    source: 'https://twitter.com/minicodelab/'
+  },
+  {
+    type: 'instagram',
+    source: 'https://www.instagram.com/minicodelab/'
+  },
+  {
+    type: 'linkedin',
+    source: 'https://www.linkedin.com/in/minicodelab/'
+  },
+  {
+    type: 'youtube',
+    source: 'https://www.youtube.com/channel/UCN1SyK4zRHbdIO6HptDoDOA'
+  },
+  {
+    type: 'twitch',
+    source: 'https://www.twitch.tv/minicodelab'
+  }
+];
+
+const socialAccountsLiteral: Record<string, string> = socialAccounts.reduce((acc, next) => {
+  return {
+    ...acc,
+    [next.type]: next.source
+  };
+}, {});
+
+console.log(socialAccountsLiteral);
+// Mostrará lo siguiente:
+// {
+//   twitter: "https://twitter.com/minicodelab/",
+//   instagram: "https://www.instagram.com/minicodelab/",
+//   linkedin: "https://www.linkedin.com/in/minicodelab/",
+//   youtube: "https://www.youtube.com/channel/UCN1SyK4zRHbdIO6HptDoDOA",
+//   twitch: "https://www.twitch.tv/minicodelab"
+// };
+```
+
+Otro caso de uso bastante extendido para los `Record` es el acceder a propiedades de un objeto que hemos definido previamente:
+
+```tsx
+const networks = {
+  twitter: 'https://twitter.com/minicodelab/',
+  instagram: 'https://www.instagram.com/minicodelab/',
+  linkedin: 'https://www.linkedin.com/in/minicodelab/',
+  youtube: 'https://www.youtube.com/channel/UCN1SyK4zRHbdIO6HptDoDOA',
+  twitch: 'https://www.twitch.tv/minicodelab'
+};
+
+// Suponemos que función getNetworkKey devuelve un string
+const networkKey: string = getNetworkKey();
+const value = networks[networkKey];
+```
+
+Aunque este código sea correcto, TypeScript considera que existe la posibilidad de recibir un `string` que no corresponda a ninguna clave del objeto `networks`, y por tanto el tipo de `value` es `any`.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1643901211/articles/ts1.png"
+  alt="TS capture"
+/>
+
+Para solucionar esto, podemos tipar `network` de forma más abstracta con `Record<string, string>` y solucionar este problema:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1643901211/articles/ts2.png"
+  alt="TS capture"
+/>
+
+¡Recuerda! no siempre es lo más correcto hacer este tipo de práctica y te recomendamos que todo sea lo más estricto posible al tipar tu código. Usa `Record` únicamente cuando sea la solución que consideres más adecuada y que corresponda a un correcto uso de TypeScript en tu código 🦄.
+
+---
+
+### Tipos globales
+
+Para terminar con TypeScript, te vamos a enseñar un último detalle que puede mejorar mucho tu calidad de trabajo como developer, lo que llamamos DX o Developer Experience 🚀
+
+Hasta ahora, solo podríamos usar `types` o `interfaces` entre archivos si hacemos lo siguiente:
+
+```tsx
+// En el archivo utils/types.ts
+export type Streaming = {
+  date: Date;
+  tags: string[];
+  title: string;
+  type: string;
+};
+```
+
+```tsx
+// En el archivo utils/index.ts importamos el tipo Streaming
+import { Streaming } from './types';
+
+const createStreamingToday = (name: string, tags: string[]): Streaming => {
+  const newStream = {
+    date: new Date(),
+    tags,
+    title: name,
+    type: 'live'
+  };
+
+  return newStream;
+};
+```
+
+Aunque esto sea totalmente correcto, imagina si tuviésemos que importar un mismo tipo muy común a lo largo de toda la aplicación, ¡acabaríamos repitiendo la misma línea de código para importar en todos lados sin parar! 🤯
+
+Para evitar la repetición en extremo y facilitar el compartir tipos muy comunes podemos crear **Tipos Globales.**
+
+### ¿Cómo defino tipos globales con TypeScript?
+
+Este proceso es muy sencillo una vez lo hemos configurado por primera vez en algún proyecto, ¡vamos con ello! ☕
+
+En el root de nuestro proyecto (puede ser otro lugar, pero te recomendamos que uses el root para mejor organización, o `src` en su defecto), vamos a crear una carpeta `types`.
+
+Dentro de esta carpeta, crearemos un archivo `common.d.ts` en el que crearemos los tipos que necesitamos tener de forma global en el editor, aunque recuerda este detalle, **¡no podemos tener ni `export` ni `import` en este archivo!**
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1643901210/articles/ts3.png"
+  alt="TS capture"
+/>
+
+Ahora, solo tenemos que ir a nuestro archivo `tsconfig.json` y añadir esta línea en el campo `include`:
+
+```json
+"include": ["**/*.ts", "**/*.tsx", "types/*.d.ts"]
+```
+
+Si tu campo `include` ya tenía valores previamente, solo tienes que añadirle `types/*.d.ts` para que funcione correctamente. Esto hará que la carpeta en la raíz del proyecto `types` exponga todos los archivos `*.d.ts` a la aplicación completa.
+
+Ahora vamos a abrir de nuevo el archivo `utils/index.ts` y **quitaremos el import** del tipo `Streamers`.
+
+```tsx
+// En el archivo utils/index.ts importamos el tipo Streaming
+export const createStreamingToday = (name: string, tags: string[]): Streaming => {
+  const newStream = {
+    date: new Date(),
+    tags,
+    title: name,
+    type: 'live'
+  };
+
+  return newStream;
+};
+```
+
+¡Con esto hemos terminado! A partir de ahora puedes crear más archivos y tipos que necesites de forma global sin problemas 🦄 Esto te vendrá genial para cuando necesites tipar una librería externa que carga su información en el `window` por ejemplo, a parte del caso que hemos visto.
+
+¡Esperamos que te haya sido útil y lo compartas en redes para seguir creciendo juntos, MiniCoder! ♥
