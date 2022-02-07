@@ -1,0 +1,358 @@
+# Conceptos base y fundamentos de React - Parte 2
+
+¡Por fin a ha llegado el momento que tanto esperábamos!, hoy creamos nuestro primer proyecto de React para iniciarnos a tope con esta tecnología. Vamos a trabajar en una pequeña aplicación que nos pinte un listado de personajes de React bada en Rick & Morty. Lets go! 🔥
+
+Antes de comenzar te dejamos la documentación de la API sobre la que vamos a trabajar, la veremos juntos en stream:
+
+[Documentation](https://rickandmortyapi.com/documentation/#get-all-characters)
+
+Arrancamos nuestro proyecto haciendo uso del CLI de React pero con la particularidad de añadir un template de TypeScript, ya que vamos a trabajar con ello de forma normal.
+
+```bash
+npx create-react-app@latest rm_list --template typescript
+```
+
+Una vez que tenemos nuestro proyecto creado, lo primero que vamos a hacer es mockear los datos simulando los de la API e iremos explicando alguna de las particularidades de React. Por ello en el fichero `**App.tsx**` creamos una variable con un array de objetos que simula los datos de la API.
+
+```tsx
+const charactersMock = [
+  {
+    id: 1,
+    name: 'Rick Sanchez',
+    status: 'Alive'
+  },
+  {
+    id: 2,
+    name: 'Morty Smith',
+    status: 'Alive'
+  }
+];
+
+const App = () => {
+  return <h1>Hello React!</h1>;
+};
+
+export default App;
+```
+
+Una vez tenemos nuestro mock podemos crear un state que se inicia con este conjunto de datos. Recordad que hablamos de los `state` por encima en la primera parte de estos posts **[TODO: añadir enlace cuando lo tengamos]**
+
+```tsx
+import React from 'react';
+
+const charactersMock = [
+  {
+    id: 1,
+    name: 'Rick Sanchez',
+    status: 'Alive'
+  },
+  {
+    id: 2,
+    name: 'Morty Smith',
+    status: 'Alive'
+  }
+];
+
+const App = () => {
+  const myState = React.useState(charactersMock);
+
+  const characters = myState[0];
+  const charactersSet = myState[1];
+
+  return <h1>Hello React!</h1>;
+};
+
+export default App;
+```
+
+**`myState`** es un array que en su primer valor tiene un “getter” con los datos que le hemos pasado, charactersMock, y como segundo es un “setter” que nos permite realizar cambios, por ello podemos hacer **destructuring** [TODO: enlace a JS para React ] y hacerlo así más sencillo de entender y usar.
+
+```tsx
+const [characterList, setCharacterList] = React.useState(charactersMock);
+```
+
+Ahora vamos a ver un poquito de la potencia de JSX realizando un map de nuestros characters para pintarlos en el DOM.
+
+```tsx
+return (
+  <div>
+    {characterList.map((character) => (
+      <p key={character.id}>{character.name}</p>
+    ))}
+  </div>
+);
+```
+
+Si ahora levantamos nuestro proyecto deberíamos ver algo así:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1644262144/articles/rickmorty.png"
+  alt="Ejemplo navegador"
+/>
+
+Pero si abrimos nuestra consola de Chrome veremos que tenemos el siguiente error:
+
+```bash
+react-jsx-dev-runtime.development.js:117 Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `App`. See https://reactjs.org/link/warning-keys for more information.
+    at p
+    at App (http://localhost:3000/static/js/bundle.js:40:80)
+```
+
+Esto simplemente nos indica que cada elemento del bucle que hemos generado tiene que tener una `**key**` propia para guardarlo como referencia, es decir podemos escoger una de las propiedades de nuestros objetos para convertirla en el id único que no pide React.
+
+Las `key` son una información adicional que podemos añadir a nuestros elementos de React para gestionar adecuadamente su ordenación en listas dinámicas sin crear bugs inesperados. ¡Nos encontraremos con esto en el futuro!
+
+```tsx
+{
+  characterList.map((character) => <p key={character.id}>{character.name}</p>);
+}
+```
+
+Vamos a pintar el resto de propiedades de nuestros elementos.
+
+```tsx
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+const charactersMock = [
+  {
+    id: 1,
+    name: 'Rick Sanchez',
+    status: 'Alive'
+  },
+  {
+    id: 2,
+    name: 'Morty Smith',
+    status: 'Alive'
+  }
+];
+
+const App = () => {
+  const [characterList, setCharacterList] = React.useState(charactersMock);
+  return (
+    <>
+      {characterList.map((character) => (
+        <div key={character.id}>
+          <h2>id: {character.id}</h2>
+          <h2>name: {character.name}</h2>
+          <h2>status: {character.status}</h2>
+        </div>
+      ))}
+    </>
+  );
+};
+
+export default App;
+```
+
+> Si os extraña en el `**return**` las etiquetas `**<> </>**` son denominadas React Fragments y nos sirve para agrupar contenido sin necesidad de una etiqueta `**HTML**`.
+
+¡Genial! Ya pintamos nuestros datos mock y vemos algunos personajes, pero la idea inicial era realizar una petición a la API de Rick & Morty y pintar esos datos, por ello vamos hacer uso de otro Hook como es el `**useEffect**` (veremos en profundidad más adelante) para lanzar nuestra petición.
+
+El `**useEffect**` lo que nos va permitir es tener disponible el ciclo de vida de nuestro componente para ejecutar funciones en distintos momentos.
+
+Este Hook se lanzará siempre cuando se haya creado el componente, es decir cuando está montado, de tal modo que nos permite pasar info al componente y React se encargará de re-renderizar con los datos obtenidos sin bloquear la vista inicial al cliente web.
+
+Adicionalmente, podemos invocarlo tantas veces como necesitemos utilizando un array de dependencias que veremos en detalle en próximos posts.
+
+```tsx
+//Se ejecuta solamente cuando se monte el componente
+React.useEffect(() => {}, []);
+
+// Se ejecuta cuando se monte el componente y siempre que haya re-render
+React.useEffect(() => {});
+
+// Se ejecuta cuando se monte el componente y
+// cada vez que cambia nuestros personajes en un re-render
+React.useEffect(() => {}, [characterList]);
+```
+
+Vamos a lanzar nuestra petición, si aún no sabéis cómo funciona un **fetch** o el uso de **async/ await** tenemos un post con todo lo que necesitas saber para trabajar con React.
+
+- [Javascript para React](https://www.minicodelab.dev/feed/taller-js-react)
+
+```tsx
+React.useEffect(() => {
+  (async () => {
+    let data = await fetch(`https://rickandmortyapi.com/api/character/`).then((res) => res.json());
+
+    setCharacterList(data.results);
+  })();
+}, []);
+```
+
+Antes de nada puede ser que os de un error con el tipado, aún no estamos tipando nada pero para solucionarlo simplemente debéis tipar vuestro state, de momento lo dejamos con `any`, aunque ya sabéis que no nos gustan, y luego creamos nuestro tipo.
+
+```tsx
+const [characterList, setCharacterList] = React.useState<any[]>([]);
+```
+
+Nuestro código en `App.tsx` sería.
+
+```tsx
+import React from 'react';
+import './App.css';
+
+const App = () => {
+  const [characterList, setCharacterList] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    (async () => {
+      let data = await fetch(`https://rickandmortyapi.com/api/character/`).then((res) =>
+        res.json()
+      );
+
+      setCharacterList(data.results);
+    })();
+  }, []);
+
+  return (
+    <>
+      {characterList.map((character) => (
+        <div key={character.id}>
+          <h2>name: {character.name}</h2>
+        </div>
+      ))}
+    </>
+  );
+};
+
+export default App;
+```
+
+Continuamos con un breve refactor y haciendo uso de todo el Typescript que hemos aprendido anteriormente.
+
+- **[Anotaciones](https://www.minicodelab.dev/feed/typescript-0-anotaciones)**
+- **[Interfaces y Types](https://www.minicodelab.dev/feed/typescript-1-interfaces-y-types)**
+- **[Funciones](https://www.minicodelab.dev/feed/typescript-2-funciones)**
+- **[Genéricos y Casteo de tipos](https://www.minicodelab.dev/feed/typescript-3-genericos-y-casteo)**
+- **[Tipado de objetos & Tipos Globales](https://www.minicodelab.dev/feed/typescript-4-tipado-objetos-y-globales)**
+
+### Refactoring y buenas prácticas
+
+Como hemos indicado, lo primero que vamos a hacer es usar la potencia de Typescript y para ello vamos a crear dentro de la carpeta `**src**` un fichero llamado `**types.ts**` y en este fichero añadiré los `types` que necesite.
+
+Vamos con el contenido de nuestro `**types.ts**`:
+
+```tsx
+export type Character = {
+  id: number;
+  name: string;
+  status: string;
+};
+```
+
+Ahora ya la podemos usar para tipar nuestra lista, en el fichero `**App.tsx**` :
+
+```tsx
+const [characterList, setCharacterList] = React.useState<Character[]>([]);
+```
+
+Finalmente vamos a llevarnos nuestros elementos a un componente llamado `**Card.tsx**` que recibirá un `**character**` y desde `**App**` simplemente llamamos a `**Card**`. Para ello dentro de `**src**` creamos el `**Card.tsx**` .
+
+```tsx
+import React from 'react';
+import { Character } from './types';
+
+export type Props = {
+  character: Character;
+};
+
+export const Card: React.FC<Props> = (props) => {
+  const { character } = props;
+
+  return (
+    <div>
+      <h2>id: {character.id}</h2>
+      <h3>name: {character.name}</h3>
+      <p>status: {character.status}</p>
+    </div>
+  );
+};
+
+export default Card;
+```
+
+Y ahora podemos usar este componente en nuestro `**App.tsx**` .
+
+```tsx
+import React from 'react';
+import './App.css';
+import { Card } from './Card';
+import { Character } from './types';
+
+const App = () => {
+  const [characterList, setCharacterList] = React.useState<Character[]>([]);
+
+  React.useEffect(() => {
+    (async () => {
+      let data = await fetch(`https://rickandmortyapi.com/api/character/`).then((res) =>
+        res.json()
+      );
+
+      setCharacterList(data.results);
+    })();
+  }, []);
+
+  return (
+    <>
+      {characterList.map((character) => (
+        <Card key={character.id} character={character} />
+      ))}
+    </>
+  );
+};
+
+export default App;
+```
+
+Pero aún podemos abstraerlo un poco más creando un componente `**CharacterList.tsx**` que tenga la funcionalidad que teníamos en `**App**` y así solo invocarlo desde `**App.tsx**` , de tal modo que nuestro componente `**CharacterList.tsx**` .
+
+```tsx
+import React from 'react';
+import { Card } from './Card';
+import { Character } from './types';
+
+export const CharacterList = () => {
+  const [characterList, setCharacterList] = React.useState<Character[]>([]);
+
+  React.useEffect(() => {
+    (async () => {
+      let data = await fetch(`https://rickandmortyapi.com/api/character/`).then((res) =>
+        res.json()
+      );
+
+      setCharacterList(data.results);
+    })();
+  }, []);
+
+  return (
+    <>
+      {characterList.map((character) => (
+        <Card key={character.id} character={character} />
+      ))}
+    </>
+  );
+};
+```
+
+Dejando solamente nuestro componente funcional invocado desde el `**App.tsx**`:
+
+```tsx
+import React from 'react';
+import './App.css';
+import { CharacterList } from './CharacterList';
+
+const App = () => {
+  return <CharacterList />;
+};
+
+export default App;
+```
+
+Estos son nuestros primeros pasos con una aplicación de React y podemos seguir haciendo pequeños componentes con cierta funcionalidad pero lo veremos más adelante.
+
+MiniCoder ahora toca poner en práctica todo lo aprendido, puedes usar otras APIs y mencionarnos para que nos pasemos por vuestros repos. ¡Recuerda que este documento es un añadido funcional al stream en directo que hemos hecho y que tendrás resubido en Youtube! Seguiremos más adelante con los Hooks **💪🏼**
