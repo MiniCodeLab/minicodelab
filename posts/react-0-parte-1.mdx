@@ -31,9 +31,9 @@ React se trabaja mejor con una estructura Funcional y Declarativa, y con introdu
 
 Vamos a ver estos conceptos desgranados y salpicados con fragmentos de código para entender mejor de qué estamos hablando 🦄.
 
-### Diferencias entre librería y Framework [TODO: usar imagenes propias]
+### Diferencias entre librería y Framework
 
-El primer tema aclarar es si `**React**` es una **Librería o un Framework**. Para ello vamos a aclarar la diferencia entre Librería y Framework.
+El primer tema aclarar es si **`React`** es una **Librería o un Framework**. Para ello vamos a aclarar la diferencia entre Librería y Framework.
 
 <img
   src="https://res.cloudinary.com/db38x6luj/image/upload/v1644261018/articles/libreriavsframework.png"
@@ -87,7 +87,7 @@ Una vez que tenemos esto claro podemos pasar a trabajar en React y explicar un p
 
 ### Componentes de React - JSX
 
-JSX es una extensión de **`JavaScript`** creada para la librería React que nos permite utilizar `**JS**` en nuestro `HTML` convirtiendo etiquetas en elementos reactivos. Su nombre significa **`JavaScript Syntax Extension`** y se le llama también `**JavaScript XML**`.
+JSX es una extensión de **`JavaScript`** creada para la librería React que nos permite utilizar **`JS`** en nuestro `HTML` convirtiendo etiquetas en elementos reactivos. Su nombre significa **`JavaScript Syntax Extension`** y se le llama también **`JavaScript XML`**.
 
 Esta extensión nos permite escribir un código más limpio, con pocos factores y sin tantas repeticiones. En estos dos ejemplos se puede ver la simplificación del uso de JSX a la hora de programar aplicaciones en React:
 
@@ -112,14 +112,14 @@ export const MiniCodeComponent = () => (
 )
 ```
 
-Pero **¿cómo funcionan las expresiones JSX?** En el siguiente ejemplo vamos a declarar una variable llamada `**hero`\*\* que utilizaremos mediante el uso de llaves.
+Pero **¿cómo funcionan las expresiones JSX?** En el siguiente ejemplo vamos a declarar una variable llamada **`hero`** que utilizaremos mediante el uso de llaves.
 
 ```jsx
 const hero = 'Spider-Man';
 const greetings = <h1>Yo soy {hero}</h1>;
 ```
 
-Dentro de las `**llaves**` de JSX se puede escribir cualquier expresión de JavaScript.
+Dentro de las **`llaves`** de JSX se puede escribir cualquier expresión de JavaScript.
 
 ```jsx
 const carWheels = <p>Cars have {2 + 2} wheels</p>;
@@ -127,7 +127,7 @@ const carWheels = <p>Cars have {2 + 2} wheels</p>;
 
 Hasta ahora hemos visto ejemplos sencillos que contienen una sola etiqueta de HTML, pero JSX nos permite insertar un bloque de mayor tamaño de HTML.
 
-Para esto hay que tener en cuenta que todo el código HTML que sobrepase un único elemento deberá ir anidado entre paréntesis que incluyan un elemento padre, como el `**div`\*\* en el siguiente ejemplo:
+Para esto hay que tener en cuenta que todo el código HTML que sobrepase un único elemento deberá ir anidado entre paréntesis que incluyan un elemento padre, como el **`div`** en el siguiente ejemplo:
 
 ```jsx
 const myHeader = (
@@ -139,7 +139,7 @@ const myHeader = (
 );
 ```
 
-Al ser HTML una parte fundamental de esta sintaxis también podremos añadirle `**clases**` a las etiquetas que contenga nuestro código para añadir estilos. La única diferencia en JSX es que utiliza el término `**className**` en lugar de `**class**`:
+Al ser HTML una parte fundamental de esta sintaxis también podremos añadirle **`clases`** a las etiquetas que contenga nuestro código para añadir estilos. La única diferencia en JSX es que utiliza el término **`className`** en lugar de **`class`**:
 
 ```jsx
 const myName = <h2 className="heroname">Luke Skywalker</h2>;
@@ -233,7 +233,7 @@ export const NameEdit = (props: Props) => {
 };
 ```
 
-Tenemos un componente `**NameEdit**` que recibe un nombre y tiene un input para que el usuario pueda cambiarlo, ¿cómo puedo actualizar el nombre si es solo de lectura? Pues podemos definir un parámetro de tipo function `**onChangeName**` que será un callback que invocaremos en el `**onChange**` del input cada vez que cambie su valor, esto burbujea hacia el padre y este es el que realmente cambiará el valor.
+Tenemos un componente **`NameEdit`** que recibe un nombre y tiene un input para que el usuario pueda cambiarlo, ¿cómo puedo actualizar el nombre si es solo de lectura? Pues podemos definir un parámetro de tipo function **`onChangeName`** que será un callback que invocaremos en el **`onChange`** del input cada vez que cambie su valor, esto burbujea hacia el padre y este es el que realmente cambiará el valor.
 
 Por lo tanto, tenemos que tener en cuenta dentro de la comunicación entre componentes que:
 
@@ -265,7 +265,7 @@ export const MyDeveloperComponent = (props) => {
 Vamos a diseccionar este componente:
 
 - Tenemos **una función** como la definición del componente, que una vez ejecutada devuelve un valor JSX y se destruye.
-- Un componente de tipo función siempre devuelve un fragmento de JSX. En nuestro caso el `**h4**` y el `**input**`.
+- Un componente de tipo función siempre devuelve un fragmento de JSX. En nuestro caso el **`h4`** y el **`input`**.
 - Aquí tenemos un título `h4` que contiene el nombre de la constante `developerName` y un `input` cuya funcionalidad es cambiar el valor de esta constante cuando escriben nuestro usuarios.
 - A esa constante que cambia de valor la denominamos `state` y la hemos creado mediante un hook.
 - Si se crea y destruye...¿Cómo tenemos persistencia? ¿Cómo emulamos las variables miembros de los componentes de clase? Esto lo veremos con los Hooks que ha desarrollado el equipo de React, aunque aquí has podido ver un ejemplo con `useState`.
@@ -288,9 +288,9 @@ export const HelloMiniCoder = () => {
 };
 ```
 
-Primero invocamos a la función `**useState**` que nos permite indicarle el valor inicial que queremos almacenar: `'Alberto'`.
+Primero invocamos a la función **`useState`** que nos permite indicarle el valor inicial que queremos almacenar: `'Alberto'`.
 
-Este `**useState**` devuelve un array con dos elementos `**name**` y `**setName**`, siendo `**name**` el valor recuperado del estado y `**setName**` una función que me permite modificar dicho estado (Lo podemos ver como un getter y un setter).
+Este **`useState`** devuelve un array con dos elementos **`name`** y **`setName`**, siendo **`name`** el valor recuperado del estado y **`setName`** una función que me permite modificar dicho estado (Lo podemos ver como un getter y un setter).
 
 Este es nuestro primer **Hook**, un concepto con el que nos tendremos que familiarizar más adelante. Pero tenemos que tener en cuenta:
 
@@ -331,11 +331,11 @@ export const MyDeveloperComponent = (props) => {
 
 Si observamos lo que hace este componente parecido al que hemos visto antes, cuya funcionalidad es renderizar el nombre de un developer, podemos sacar las siguientes conclusiones:
 
-- Tenemos un `**useState**` que devuelve un array del que destructuramos un valor (el nombre del developer) y una función (que nos ayuda a modificar nuestro estado).
-- En el `**useEffect**` estamos cambiado el nombre de Alberto por el de Cristian. Esto sucede tras montarse el componente en el DOM.
+- Tenemos un **`useState`** que devuelve un array del que destructuramos un valor (el nombre del developer) y una función (que nos ayuda a modificar nuestro estado).
+- En el **`useEffect`** estamos cambiado el nombre de Alberto por el de Cristian. Esto sucede tras montarse el componente en el DOM.
 - Si nos fijamos bien, pese cambiar el nombre seguiremos haciendo un log que dice Alberto dentro de la ejecución de la función de `useEffect`. Esto puede añadir complejidad a nuestros desarrollos si no lo comprendemos bien. Aunque debemos tener en cuenta que una aplicación suele ser asíncrona (por ejemplo, con llamadas a un servidor) por lo que la obtención de este dato no es inmediata.
 - React optimiza el renderizado de nuestra aplicación / componentes. Y con renderizado nos referimos al acto que lleva a React ejecutar las funciones internas y repintar un componente.
-- Podemos agrupar varios `**setState**` en un solo render. Siempre con cuidado y atomizando todo el contenido lo máximo dentro de nuestras capacidades.
+- Podemos agrupar varios **`setState`** en un solo render. Siempre con cuidado y atomizando todo el contenido lo máximo dentro de nuestras capacidades.
 
 ---
 
@@ -371,7 +371,7 @@ Tenemos dos opciones o vías para crear un proyecto de React:
 
 **Desventajas:**
 
-- El CLI funciona como algo mágico y si algún día necesitas meter mano a tu proyecto será complicado. Para ello acabaras haciendo un `**eject**` para sacar tu proyecto y añadir tu propia configuración
+- El CLI funciona como algo mágico y si algún día necesitas meter mano a tu proyecto será complicado. Para ello acabaras haciendo un **`eject`** para sacar tu proyecto y añadir tu propia configuración
 
 **Ventajas desde cero:**
 
@@ -441,14 +441,14 @@ Y ahora viene la gran pregunta, ¿Cómo funciona React?
 
 ### Funcionamiento de React
 
-El primer punto en el que nos vamos a detener es en la carpeta `**public**` y en concreto en el `**index.html**`, ya que este es nuestro fichero de entrada donde se inyectará o se añadirán nuestros componentes de React.
+El primer punto en el que nos vamos a detener es en la carpeta **`public`** y en concreto en el **`index.html`**, ya que este es nuestro fichero de entrada donde se inyectará o se añadirán nuestros componentes de React.
 
 <img
   src="https://res.cloudinary.com/db38x6luj/image/upload/v1644261018/articles/inicio.png"
   alt="index.html React"
 />
 
-Si ahora nos vamos a la carpeta `**src**` veremos que en el `**index.tsx**` tenemos a ReactDOM.render añadiendo nuestro componente de entrada `**<App />**` y usando el `**document.getElementById('root')**` lo enlaza con nuestro `**index.html**`:
+Si ahora nos vamos a la carpeta **`src`** veremos que en el `**index.tsx**` tenemos a ReactDOM.render añadiendo nuestro componente de entrada `**<App />**` y usando el `**document.getElementById('root')**` lo enlaza con nuestro `**index.html**`:
 
 <img
   src="https://res.cloudinary.com/db38x6luj/image/upload/v1644261017/articles/public.png"
