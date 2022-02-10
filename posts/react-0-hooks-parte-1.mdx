@@ -1,0 +1,686 @@
+# React desde 0 | Hooks - Parte 1
+
+Hola Mini Coders! Hoy vamos a trabajar con los Hooks de React que descubrimos en el último taller y artículos, **`useState`** y **`useEffect`**. En este nuevo artículo los iremos viendo en profundidad y como siempre usaremos fragmentos de código para acompañar cada uno de los ejemplos 🤘.
+
+En caso de que te perdieses los artículos anteriores o el taller de introducción a React, aquí te los dejamos:
+
+- Vídeo del taller: [https://www.youtube.com/watch?v=iXZYPN3Nilc](https://www.youtube.com/watch?v=iXZYPN3Nilc)
+- Conceptos básicos de React parte 1: [https://www.minicodelab.dev/feed/react-0-parte-1](https://www.minicodelab.dev/feed/react-0-parte-1)
+- Conceptos básicos de React parte 2: [https://www.minicodelab.dev/feed/react-0-parte-2](https://www.minicodelab.dev/feed/react-0-parte-1)
+
+Y ahora, vamos a profundizar en los hooks que hemos mencionado en la introducción, ¡prepárate que vienen curvas 🏎!
+
+---
+
+### Gestión de estados con useState
+
+Antes de comenzar para este ejemplo vamos a crear un proyecto de React con TS tal y como hemos hecho hasta ahora, le llamaremos **hooks**.
+
+```bash
+npx create-react-app@latest hooks --template typescript
+```
+
+Para entender el Hook de useState vamos a realizar un breve ejemplo de un **`h1`** que va cambiando en función de un **`input`**.
+
+Una vez hemos terminado de inicializar el proyecto, vamos a crear en nuestro **`src`**, un componente llamado **`MiniCodeState.tsx`**, es un componente de tipo función que devuelve elementos de tipo **React Element**, por lo que tendremos que tiparlo también, vamos con ello:
+
+```tsx
+export const MiniCodeState: React.FC = () => {
+  return <>MiniCodeState</>;
+};
+```
+
+Una vez tenemos nuestro componente vamos a crear un **estado** para nuestro componente que contenga un **`getter`** y un **`setter`** para pintar o modificar el valor de nuestro **estado:**
+
+```tsx
+const [myName, setMyName] = useState<string>('Ziggy Stardust');
+```
+
+Como ya mencionamos previamente, la constante **`myName`** sería nuestro **`getter`** y la **`setMyName`** nuestro **`setter`,** y el **valor por defecto** o inicial de nuestro estado es **Ziggy Stardust**. Ahora ya tenemos un estado con el que poder jugar e interactuar 🙉.
+
+Ahora vamos a definir un **`input`** que pueda modificar el valor de nuestro **state** cuando escribamos en éste:
+
+```tsx
+return (
+  <>
+    <h1>{myName}</h1>
+    <input type="text" value={myName} onChange={(e) => setMyName(e.target.value)} />
+  </>
+);
+```
+
+Vemos que como particularidad en el **`onChange`** invocamos al **`setter`** con el valor actual del **`input`**, gracias al **`onChange`** cambiará a tiempo real y nuestro **estado** será totalmente dinámico.
+
+Recuerda que cambiar el estado le pide a React un repintado o renderizado de nuestra app cuando sea posible, por lo que veremos el cambio de `myName` a tiempo real. De tal modo que nuestro componente queda:
+
+```tsx
+import { useState } from 'react';
+
+export const MiniCodeState: React.FC = () => {
+  const [myName, setMyName] = useState<string>('Ziggy Stardust');
+  return (
+    <>
+      <h4>{myName}</h4>
+      <input type="text" value={myName} onChange={(e) => setMyName(e.target.value)} />
+    </>
+  );
+};
+```
+
+Por último vamos a importarlo en el **`App.tsx`**, y arrancar el proyecto para comprobar si funciona nuestro state.
+
+```tsx
+import { MiniCodeState } from './components/MiniCodeState';
+
+const App = () => {
+  return <MiniCodeState />;
+};
+
+export default App;
+```
+
+Arrancamos !!!
+
+```bash
+npm start
+```
+
+Y el resultado que obtenemos.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1644486920/articles/react-desde-cero-hooks/useState.gif"
+  alt="useState"
+/>
+
+¿Qué es lo que hemos conseguido? Pues que cada vez que se lanza el evento **`onChange`** realizamos el **`set`** del valor del **state** y **React** está repintando los cambios que estamos enviando al input 👏.
+
+---
+
+### Datos más complejos en useState
+
+Vamos a continuar con nuestro proyecto de hooks, y ahora vamos a crear un componente que almacene en el **state** un dato más complejo como puede ser un objeto. Hay que tener en cuenta que cuando modificamos un atributo de un objeto debemos respetar el principio de inmutabilidad y no modificar el objeto original.
+
+Vamos a crear un nuevo archivo **`MiniCodeObjectState.tsx`**:
+
+```tsx
+export const MiniCodeObjectState: React.FC = () => {
+  return (
+    <>
+      <h4>MiniCodeObjectState</h4>
+    </>
+  );
+};
+```
+
+Lo siguiente es definir nuestra **`type`** del objeto con el que vamos a trabajar:
+
+```tsx
+type avengerInfo = {
+  name: string;
+  lastName: string;
+};
+```
+
+Y ahora creamos un **state** en base a dicha **`interface`**:
+
+```tsx
+const [avengerInfo, setAvengerInfo] = useState<avengerInfo>({
+  name: 'Thor',
+  lastName: 'Odinson'
+});
+```
+
+Por último necesitaremos un input que nos ayude a modificar nuestro estado y respetar el principio de inmutabilidad, esto quiere decir que no asignamos directamente el valor sino que lo haremos a través de nuestro **`setter**`, además tendremos que hacer uso de los **`spread operators`\*\* para recuperar todas las propiedades del objeto y modificar solamente la que deseamos. Vamos a por ello.
+
+```tsx
+return (
+  <>
+    <h4>
+      {avengerInfo.name} | {avengerInfo.lastName}
+    </h4>
+
+    <input
+      type="text"
+      value={avengerInfo.name}
+      onChange={(e) =>
+        setAvengerInfo({
+          ...avengerInfo,
+          name: e.target.value
+        })
+      }
+    />
+
+    <input
+      type="text"
+      value={avengerInfo.lastName}
+      onChange={(e) =>
+        setAvengerInfo({
+          ...avengerInfo,
+          lastName: e.target.value
+        })
+      }
+    />
+  </>
+);
+```
+
+De este modo ya tenemos nuestro componente funcionando, y queda así:
+
+```tsx
+import { useState } from 'react';
+
+type avengerInfo = {
+  name: string;
+  lastName: string;
+};
+
+export const MiniCodeObjectState: React.FC = () => {
+  const [avengerInfo, setAvengerInfo] = useState<avengerInfo>({
+    name: 'Thor',
+    lastName: 'Odinson'
+  });
+
+  return (
+    <>
+      <h4>
+        {avengerInfo.name} | {avengerInfo.lastName}
+      </h4>
+
+      <input
+        type="text"
+        value={avengerInfo.name}
+        onChange={(e) =>
+          setAvengerInfo({
+            ...avengerInfo,
+            name: e.target.value
+          })
+        }
+      />
+      <input
+        type="text"
+        value={avengerInfo.lastName}
+        onChange={(e) =>
+          setAvengerInfo({
+            ...avengerInfo,
+            lastName: e.target.value
+          })
+        }
+      />
+    </>
+  );
+};
+```
+
+Ahora lo importamos en el **`App.tsx`**, y lo probamos 😝:
+
+```tsx
+import './App.css';
+import { MiniCodeObjectState } from './components/MiniCodeObjectState';
+
+const App = () => {
+  return (
+    <div className="App">
+      <MiniCodeObjectState />
+    </div>
+  );
+};
+
+export default App;
+```
+
+Y el resultado obtenido es el siguiente:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1644486920/articles/react-desde-cero-hooks/useStateObject.gif"
+  alt="useStateObject"
+/>
+
+¡Ya tenemos varios valores controlados con un solo estado! 🔥 Tenemos que tener en cuenta que a ser posible, nuestros state deben ser lo más simples posibles dentro nuestras capacidades de atomización del contenido de la app. Así evitaremos estructuras de datos complejas y difíciles de controlar en el futuro.
+
+---
+
+### Cargando datos al montar el component con useEffect
+
+Este Hook nos permite "escuchar" o "engancharnos” a los eventos en el tiempo y poder ejecutar código de forma dinámica, vamos a comenzar por algo sencillo como ejecutar un código cuando el componente se monta en el DOM.
+
+Vamos crear un componente llamado **`MiniCodeEffectOnLoad.tsx`**:
+
+```tsx
+import { useState } from 'react';
+
+export const MiniCodeEffectOnLoad: React.FC = () => {
+  const [myName, setMyName] = useState<string>('David Bowie');
+
+  return (
+    <>
+      <h4>{myName}</h4>
+      <input type="text" value={myName} onChange={(e) => setMyName(e.target.value)} />
+    </>
+  );
+};
+```
+
+Hay muchas operaciones que realizamos justo cuando se carga el DOM del navegador como por ejemplo **cargar el perfil de un usuario con la información provista de una API**. También pueden ser operaciones que queremos ejecutar cuando cambie un valor o después de cada render que realiza React bajo nuestra demanda.
+
+Pero **¿qué sucede si esas operaciones que queremos realizar no son síncronas?** Pues que tendremos que **usar el hook useEffect** porque si lo realizamos en un componente funcional no obtendremos el resultado deseado, ya que estos se crean y se destruyen, y con este hook podremos gestionar los “side effects” de nuestras aplicaciones.
+
+Vamos a ver cómo funciona con dos ejemplos sencillos, el primero será cambiar un nombre cuando se pinta el componente, y luego haremos otro simulando una llamada asíncrona con un `setTimeout`. Vamos con la lógica de nuestro componente 🚀.
+
+En primer lugar queremos añadir un valor por defecto a nuestro state pero solamente cuando el componente se haya renderizado en el DOM y no de inicio, para ello usaremos **useEffect**:
+
+```tsx
+useEffect(() => {
+  setMyName('Ziggy Stardust');
+}, []);
+```
+
+Os recuerdo que el **`[]`** vacío hace referencia a que no hay ninguna condición para re-ejecutar este efecto, por lo que solo ocurrirá una vez en la vida de nuestro componente.
+
+De este modo nuestro componente queda **`MiniCodeEffectOnLoad.tsx`** queda.
+
+```tsx
+import { useState, useEffect } from 'react';
+
+export const MiniCodeEffectOnLoad: React.FC = () => {
+  const [myName, setMyName] = useState<string>('David Bowie');
+
+  useEffect(() => {
+    setMyName('Ziggy Stardust');
+  }, []);
+
+  return (
+    <>
+      <h4>{myName}</h4>
+      <input type="text" value={myName} onChange={(e) => setMyName(e.target.value)} />
+    </>
+  );
+};
+```
+
+**Vamos a ver como funciona un poco el useEffect**, es hook que tiene **dos parámetros:**
+
+- El primero es obligatorio siendo un código que se ejecuta cuando es llamado (suele ser una llamada a un servidor, un timeout...) en forma de callback, que no debe ser una función async/await, pero si que pueden serlo las funciones declaradas en su interior.
+- El segundo vamos a verlo con ejemplos a continuación, ya que consiste en un array de dependencias que queremos escuchar...
+
+El hook useEffect se ejecuta **siempre** en el primer render de nuestro componente, y a partir de aquí tendremos control sobre cuando relanzarlo. Para los que vengan de componentes de clase de React, se podría decir que esto se parece al método componentDidMount que se usaba antes de los componentes funcionales, aunque no son exactamente lo mismo.
+
+```tsx
+useEffect(() => {
+  setMyName('Ziggy Stardust');
+}, []);
+```
+
+Cuando añadimos un valor al array de dependencias, la función del useEffect se ejecutará también cada vez que cambia dicho valor, en este caso `myName`, y en el caso de nuestro componente del ejemplo anterior, cada vez que cambie el state.
+
+```tsx
+useEffect(() => {
+  setMyName('Ziggy Stardust');
+}, [myName]);
+```
+
+Este ejemplo representa código un poco inadecuado porque dentro del useEffect estamos modificando el state que ya hemos cambiado previamente, pero más adelante veremos ejemplos en los que tiene sentido hacer algo parecido.
+
+Si no pasamos el segundo parámetro a useEffect, se ejecutará también después de cada render y tendremos una ejecución continua en cualquier interacción de nuestra aplicación.
+
+```tsx
+React.useEffect(() => {
+  setMyName('Ziggy Stardust');
+});
+```
+
+Para cerrar este ejemplo vamos a simular una llamada asíncrona con un setTimeout y veremos cómo trabaja el useEffect.
+
+```tsx
+React.useEffect(() => {
+  // Imagina que esto fuese la respuesta de una API
+  setTimeout(() => {
+    setMyName('Ziggy Stardust');
+  }, 1500);
+}, []);
+```
+
+Nuestro resultado es el siguiente:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1644486920/articles/react-desde-cero-hooks/useEffectOnLoad.gif"
+  alt="useEffectOnLoad"
+/>
+
+Al recargar tarda 1,5s en ejecutar nuestro código del useEffect ... ⏰
+
+---
+
+### Lanzando side effects al desmontar el componente con useEffect
+
+En este ejemplo vamos a ver cómo liberar recursos cuando desmontamos un componente del DOM. Para ello vamos a crear un componente llamado **`MiniCodeEffectUnmount.tsx`**:
+
+```tsx
+export const MiniCodeEffectUnmount: React.FC = () => {
+  return <></>;
+};
+```
+
+Ahora vamos a crear un state para definir si queremos tener nuestro componente visible o invisible:
+
+```tsx
+const [visible, setVisible] = useState<boolean>(false);
+```
+
+Y en nuestro **`return`**, preguntaremos si es visible para mostrar el contenido:
+
+```tsx
+return <>{visible && <h4>I'm Iron Man</h4>}</>;
+```
+
+Vamos a dotarle de un poquito de funcionalidad, creamos un botón que cambie el estado para visualizar el contenido:
+
+```tsx
+return (
+  <>
+    {visible && <h4>I'm Iron Man</h4>}
+    <button onClick={() => setVisible(!visible)}>I'm inevitable</button>
+  </>
+);
+```
+
+Y si empezásemos a componetizar nuestra aplicación, haciendo el **`h4`** un componente:
+
+```tsx
+export const MessageComponent: React.FC = () => {
+  return <h4>I'm Iron Man</h4>;
+};
+```
+
+Y lo usamos en el componente padre tendremos el siguiente código:
+
+```tsx
+export const MiniCodeEffectUnmount: React.FC = () => {
+  const [visible, setVisible] = React.useState(false);
+
+  return (
+    <>
+      {visible && <MessageComponent />}
+      <button onClick={() => setVisible(!visible)}>I'm inevitable</button>
+    </>
+  );
+};
+```
+
+Ahora tenemos un componente hijo que se monta cuando cambia el estado, pero cómo podemos desmontar ese componente una vez volvemos a clickar el botón del state, podemos añadir un useEffect dentro de **`MessageComponent`** para lanzar side effects al desmontarlo. Aunque primero vamos a comprobar que se monta en el DOM correctamente:
+
+```tsx
+React.useEffect(() => {
+  console.log('Me monto en el DOM');
+}, []);
+```
+
+Y si vamos a nuestro navegador:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1644486920/articles/react-desde-cero-hooks/useEffectMount.gif"
+  alt="useEffectMount"
+/>
+
+Pero, ¿cómo podremos hacer que nos muestre por consola un mensaje cada vez que este componente se desmonte?, pues useEffect espera que devuelvas una función que se ejecutará cuando se desmonte el componente:
+
+```tsx
+React.useEffect(() => {
+  console.log('Me monto en el DOM');
+
+  return () => {
+    console.log('Me desmonto del DOM');
+  };
+}, []);
+```
+
+Comprobamos en nuestro navegador:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1644486920/articles/react-desde-cero-hooks/useEffectUnmount.gif"
+  alt="useEffectUnmount"
+/>
+
+¿Para qué nos puede servir esto? Cuando abres una conexión a un webSocket y quieres ocultarla cuando el usuario oculte el componente, de tal modo que cuando el componente se monta, abre el socket, y cuando se desmonta lo libera.
+
+Otro ejemplo es el de los “event listeners", como la escucha de un scroll, el movimiento del ratón, o cualquier otro evento de JavaScript. Para evitar múltiples adiciones del mismo listener al montar/desmontar el componente, tendrás que devolver en el useEffect el limpiado de estos listeners.
+
+---
+
+### Actualización del componente - Update Render
+
+Vamos a continuar viendo como se ejecuta un useEffect después de cada renderizado. Creamos un componente llamado **`MiniCodeEffectUpdate.ts`** y añadimos dos inputs en los que podamos cambiar el texto.
+
+```tsx
+import { useState, useEffect } from 'react';
+
+type user = {
+  name: string;
+  lastName: string;
+};
+
+export const MessageComponent: React.FC = () => {
+  const [myInfo, setMyInfo] = useState<user>({
+    name: 'Peter',
+    lastName: 'Parker'
+  });
+
+  useEffect(() => {
+    console.log('Llamado después de cada Render');
+
+    // ¿Ocurrirá solo al desmontar el componente? 🧑‍🔬
+    return () => console.log('Desmonto el componente');
+  });
+
+  return (
+    <div>
+      <h4>
+        {myInfo.name} {myInfo.lastName}
+      </h4>
+      <input
+        type="text"
+        value={myInfo.name}
+        onChange={(e) => setMyInfo({ ...myInfo, name: e.target.value })}
+      />
+      <input
+        type="text"
+        value={myInfo.lastName}
+        onChange={(e) => setMyInfo({ ...myInfo, lastName: e.target.value })}
+      />
+    </div>
+  );
+};
+
+export const MiniCodeEffectUpdate: React.FC = () => {
+  const [visible, setVisible] = useState<boolean>(false);
+
+  return (
+    <>
+      {visible && <MessageComponent />}
+      <button onClick={() => setVisible(!visible)}>Open SuperHero</button>
+    </>
+  );
+};
+```
+
+De este modo cada vez que se produzca un cambio en nuestro componente padre solicitamos realizar un nuevo render. Lo curioso es que nos limpia la funcionalidad antes de cada renderizado. Vamos a verlo en la consola de Chrome:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1644486920/articles/react-desde-cero-hooks/useEffectUpdate.gif"
+  alt="useEffectUpdate"
+/>
+
+Con esto podrás deducir que el return que hacemos en el useEffect, también llamada función `cleanUp` no solo actúa al desmontar el componente, sino que se ejecuta previamente a la nueva invocación de un useEffect 🤯  ¡De ahí que te diésemos el ejemplo de los sockets y los listeners antes!
+
+---
+
+### Peticiones a una API con useEffect
+
+Vamos a ver a través de un uso práctico todo lo aprendido. Supongamos un listado de búsqueda que recibimos del server y cada vez que introducimos un cambio en el input queremos que se vayan filtrando los resultados enviando una petición al server y pintando la nueva lista.
+
+Para ello vamos a crear un componente llamado **`MiniCodeFetchingInput.ts`**. Antes de desarrollar nuestro componente generamos nuestro **`type`**.
+
+```tsx
+type Pokemon = {
+  name: string;
+  image: string;
+};
+```
+
+Este componente tendrá dos states, uno para guardar el filtro actual y otro para recoger la colección de pokemon.
+
+```tsx
+const [filter, setFilter] = useState<string>('ditto');
+
+const [pokemonCollection, setPokemonCollection] = useState<Pokemon[]>([]);
+```
+
+Ahora continuamos definiendo un Input que haga de filtro y pintando el Pokemon cuando coincida con lo escrito en su interior.
+
+```tsx
+return (
+  <div>
+    <input value={filter} onChange={(e) => setFilter(e.target.value)} />
+
+    <ul>
+      {pokemonCollection.map((pokemon) => (
+        <li key={pokemon.name}>
+          <h1>{pokemon.name}</h1>
+          <img src={pokemon.image} alt={pokemon.name} />
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+```
+
+¡Pero para pintar al pokemon necesitamos traerlo pokemon de una API! ⚠️
+
+```tsx
+React.useEffect(() => {
+  const getPokemonFiltered = async () => {
+    const pokemonList = await fetch(`https://pokeapi.co/api/v2/pokemon/${filter}`);
+
+    const pokemonListToJson = await pokemonList.json();
+
+    return {
+      ...pokemonListToJson,
+      name: pokemonListToJson.name,
+      image: pokemonListToJson.sprites.front_shiny
+    };
+  };
+
+  getPokemonFiltered().then((pokemon) => setPokemonCollection([pokemon]));
+}, [filter]);
+```
+
+¡Listo! Ya podemos probar nuestro componente y ver el uso que podemos hacer de este, como tenemos a Ditto por defecto nos lo pintará hasta que exista otro Pokemon válido, lanzaremos tantas peticiones como veces cambie el state de nuestro filter.
+
+```tsx
+import { useState, useEffect } from 'react';
+
+type Pokemon = {
+  name: string;
+  image: string;
+};
+
+export const MiniCodeFetchingInput = () => {
+  const [filter, setFilter] = useState<string>('ditto');
+  const [pokemonCollection, setPokemonCollection] = useState<Pokemon[]>([]);
+
+  useEffect(() => {
+    const getPokemonFiltered = async () => {
+      const pokemonList = await fetch(`https://pokeapi.co/api/v2/pokemon/${filter}`);
+
+      const pokemonListToJson = await pokemonList.json();
+
+      return {
+        ...pokemonListToJson,
+        name: pokemonListToJson.name,
+        image: pokemonListToJson.sprites.front_shiny
+      };
+    };
+
+    getPokemonFiltered().then((pokemon) => setPokemonCollection([pokemon]));
+  }, [filter]);
+
+  return (
+    <>
+      <input value={filter} onChange={(e) => setFilter(e.target.value)} />
+
+      <ul>
+        {pokemonCollection.map((pokemon) => (
+          <li key={pokemon.name}>
+            <h1>{pokemon.name}</h1>
+            <img src={pokemon.image} alt={pokemon.name} />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
+```
+
+Y quedaría algo como esto:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1644486920/articles/react-desde-cero-hooks/apiCall.gif"
+  alt="apiCall"
+/>
+
+¿Te has fijado en que hacemos muchísimas peticiones? Vamos a añadir una pequeña mejora para esto, aunque podemos añadir un tiempo de espera usando una libería para manejar los tiempos de invocación en la petición con `use-debounce`, para ello instalamos en nuestro proyecto este hook personalizado:
+
+```bash
+npm i use-debounce
+```
+
+Y os dejamos el código por aquí
+
+```tsx
+import { useState, useEffect } from 'react';
+import { useDebounce } from 'use-debounce';
+
+type Pokemon = {
+  name: string;
+  image: string;
+};
+
+export const MiniCodeFetchingDebounce: React.FC = () => {
+  const [filter, setFilter] = useState<string>('ditto');
+  // Esto hace que la función espere 500ms antes de ser invocada
+  const [debounceFilter] = useDebounce<string | number>(filter, 500);
+  const [pokemonCollection, setPokemonCollection] = useState<Pokemon[]>([]);
+
+  useEffect(() => {
+    const getPokemonFiltered = async () => {
+      const pokemonList = await fetch(`https://pokeapi.co/api/v2/pokemon/${filter}`);
+
+      const pokemonListToJson = await pokemonList.json();
+
+      return {
+        ...pokemonListToJson,
+        name: pokemonListToJson.name,
+        image: pokemonListToJson.sprites.front_shiny
+      };
+    };
+
+    getPokemonFiltered().then((pokemon) => setPokemonCollection([pokemon]));
+  }, [debounceFilter]);
+
+  return (
+    <div>
+      <input value={filter} onChange={(e) => setFilter(e.target.value)} />
+
+      <ul>
+        {pokemonCollection.map((pokemon) => (
+          <li key={pokemon.name}>
+            <h1>{pokemon.name}</h1>
+            <img src={pokemon.image} alt={pokemon.name} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+```
+
+¡Genial MiniCoder 🎉! Con esto hemos visto la primera parte de hooks en React y sabemos manejar useState y useEffect. Ahora toca poner en práctica todo lo aprendido y seguir avanzando en los siguientes artículos.
