@@ -10,6 +10,11 @@ export const ArticleLayout = styled.div`
     padding: var(--base-padding-dk);
   }
 
+  a {
+    color: #00b77b;
+    text-decoration: underline;
+  }
+
   h1 {
     padding-bottom: var(--base-padding);
 
