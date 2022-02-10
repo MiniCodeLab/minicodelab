@@ -1,7 +1,7 @@
 {
-    "author": ["@aRiveraMerida", "@Ccastillo06"],
-    "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
-    "description": "Conceptos base y fundamentos de React [0.0] - Parte 1",
-    "title": "React desde 0 | Conceptos base y fundamentos de React" ,
-    "date": "03/07/2022 20:00:00"
+  "author": ["@aRiveraMerida", "@Ccastillo06"],
+  "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
+  "description": "Conceptos base y fundamentos de React - Parte 1",
+  "title": "React desde 0 | Conceptos base y fundamentos",
+  "date": "02/07/2022 20:00:00"
 }
