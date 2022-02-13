@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { ReferencesWrapper } from 'components/ReferencesStack';
+import { IframeWrapper } from 'components/YoutubeVideo';
 
 export const ArticleLayout = styled.div`
   --base-padding: 10px;
@@ -10,12 +12,7 @@ export const ArticleLayout = styled.div`
     padding: var(--base-padding-dk);
   }
 
-  a {
-    color: #00b77b;
-    text-decoration: underline;
-  }
-
-  h1 {
+  > h1 {
     padding-bottom: var(--base-padding);
 
     @media (min-width: 840px) {
@@ -23,8 +20,8 @@ export const ArticleLayout = styled.div`
     }
   }
 
-  h2,
-  h3 {
+  > h2,
+  > h3 {
     padding: 30px 0 var(--base-padding);
 
     @media (min-width: 840px) {
@@ -32,11 +29,11 @@ export const ArticleLayout = styled.div`
     }
   }
 
-  p {
+  > p {
     padding: 10px 0;
   }
 
-  img {
+  > img {
     display: block;
     margin: var(--base-padding) auto;
     max-width: 80%;
@@ -46,7 +43,7 @@ export const ArticleLayout = styled.div`
     }
   }
 
-  ul {
+  > ul {
     list-style: circle;
     padding-left: calc(2 * var(--paragraph));
 
@@ -68,7 +65,7 @@ export const ArticleLayout = styled.div`
     }
   }
 
-  hr {
+  > hr {
     background-color: #2d2d2d;
     border: none;
     height: 1px;
@@ -89,5 +86,13 @@ export const ArticleLayout = styled.div`
     @media (min-width: 840px) {
       font-size: 80%;
     }
+  }
+
+  ${ReferencesWrapper} {
+    margin: var(--spacing-m) 0;
+  }
+
+  ${IframeWrapper} {
+    margin: var(--spacing-m) auto;
   }
 `;

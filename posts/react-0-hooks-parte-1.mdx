@@ -4,11 +4,24 @@ Hola Mini Coders! Hoy vamos a trabajar con los Hooks de React que descubrimos en
 
 En caso de que te perdieses los artículos anteriores o el taller de introducción a React, aquí te los dejamos:
 
-- Vídeo del taller: [https://www.youtube.com/watch?v=iXZYPN3Nilc](https://www.youtube.com/watch?v=iXZYPN3Nilc)
-- Conceptos básicos de React parte 1: [https://www.minicodelab.dev/feed/react-0-parte-1](https://www.minicodelab.dev/feed/react-0-parte-1)
-- Conceptos básicos de React parte 2: [https://www.minicodelab.dev/feed/react-0-parte-2](https://www.minicodelab.dev/feed/react-0-parte-1)
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/react-0-parte-1',
+      title: 'Conceptos básicos de React parte 1'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-parte-2',
+      title: 'Conceptos básicos de React parte 2'
+    }
+  ]}
+/>
 
 Y ahora, vamos a profundizar en los hooks que hemos mencionado en la introducción, ¡prepárate que vienen curvas 🏎!
+
+<YoutubeVideo url="https://www.youtube.com/embed/iXZYPN3Nilc" />
 
 ---
 
@@ -130,7 +143,7 @@ const [avengerInfo, setAvengerInfo] = useState<avengerInfo>({
 });
 ```
 
-Por último necesitaremos un input que nos ayude a modificar nuestro estado y respetar el principio de inmutabilidad, esto quiere decir que no asignamos directamente el valor sino que lo haremos a través de nuestro **`setter**`, además tendremos que hacer uso de los **`spread operators`\*\* para recuperar todas las propiedades del objeto y modificar solamente la que deseamos. Vamos a por ello.
+Por último necesitaremos un input que nos ayude a modificar nuestro estado y respetar el principio de inmutabilidad, esto quiere decir que no asignamos directamente el valor sino que lo haremos a través de nuestro **`setter`**, además tendremos que hacer uso de los **`spread operators`** para recuperar todas las propiedades del objeto y modificar solamente la que deseamos. Vamos a por ello.
 
 ```tsx
 return (
