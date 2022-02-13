@@ -1,5 +1,7 @@
 import CodeBlock from 'components/CodeBlock';
 import Layout from 'components/Layout';
+import ReferencesStack from 'components/ReferencesStack';
+import YoutubeVideo from 'components/YoutubeVideo';
 import { getPostContent, getPostMetadata, getPostsPaths } from 'libs/posts';
 import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
@@ -10,7 +12,9 @@ import { Metadata } from 'types/common';
 import { getPostAuthor } from 'utils/common';
 
 const components = {
-  code: CodeBlock
+  code: CodeBlock,
+  ReferencesStack,
+  YoutubeVideo
 };
 
 export default function TestPage({ source, meta }: Props) {

@@ -115,7 +115,6 @@ export const Reset = css`
 
 export const Variables = css`
   :root {
-    --border-stroke: 3px;
     --border-radius: 8px;
     --title-h1: 1.75rem;
     --title-h2: 1.35rem;
@@ -129,6 +128,7 @@ export const Variables = css`
     --code-radius: 4px;
     --card-max-width-mb: 350px;
     --card-max-width-dk: 500px;
+    --spacing-m: 20px;
   }
 `;
 
@@ -158,14 +158,14 @@ export const Themes = css`
 export const AppStyles = css`
   html,
   body {
-    padding: 0;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-      Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     background: var(--color-bg);
     color: var(--color-text);
-    transition: background 0.25s ease-in-out;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+      Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background 0.25s ease-in-out;
   }
 
   a {
