@@ -1,0 +1,169 @@
+# **Guía MiniCode de Javascript | Operadores lógicos & aritméticos**
+
+Wow! MiniCoders poco a poco estamos pillando una velocidad brutal, antes de meternos en cositas complejas que llevará tiempo entender vamos a trabajar con los operadores lógicos y aritméticos. Algunos operadores ya hicimos referencia en post anteriores, como eran el **`=`** para la asignación y el **`+`** para sumar o concatenar.
+
+Os dejamos los enlaces a los post anteriores:
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/js-taller-variables',
+      title: 'Variables'
+    },
+    {
+      type: 'internal',
+      url: '/feed/js-taller-tipos-de-datos',
+      title: 'Tipos de datos'
+    }
+  ]}
+/>
+
+---
+
+### Operadores lógicos
+
+Los operadores lógicos suelen comparar valores booleanos, **`true`** o **`false`**, y devuelven también respuestas de tipo booleana. Vamos a ir viendo cada uno de los operadores exponiendo algunos ejemplos para entenderlo bien.
+
+---
+
+### Operador lógico **`||`**
+
+Este operador representa un **`OR`**, en castellano un **`O`**, porlo tanto comprueba que un valor o otro cumpla una condición retornando **`verdadero`** o **`falso`**.
+
+```jsx
+let banana = '🍌';
+
+let apple = '🍎';
+
+let box = '📦';
+
+let man = '👨';
+
+banana || apple son fruits -> true; // Ambas son frutas
+
+banana || box son fruits -> true; // Una u otra es fruta
+
+box || man son fruit -> false; // Ninguna es fruta
+```
+
+---
+
+### Operador lógico **`&&`**
+
+En este caso el **`&&`** representa un **`AND`**, en castellano **`Y`**, devolviendo un boolean.
+
+```jsx
+let banana = '🍌';
+
+let apple = '🍎';
+
+let box = '📦';
+
+let man = '👨';
+
+banana && apple son fruits -> true; // Ambas son frutas
+
+banana && box son fruits -> false; // solo banana es una fruta
+
+box && man son fruit -> false; // Ninguna es fruta
+```
+
+---
+
+### Operador lógico **`!`**
+
+El signo de exclamación **`!`** representa un **`NOT`**, en castellano **`NO`**. Se suele usar para negar el valor de una expresión o darle el valor opuesto.
+
+```jsx
+let imDeveloper = true;
+
+imDeveloper = !imDeveloper; // El contrario de imDeveloper es false
+
+imDeveloper = !imDeveloper; // El contrario de imDeveloper es true
+
+!true; // El contrario de true es false
+
+!false; // El contrario de false es true
+```
+
+---
+
+### Operadores aritméticos
+
+Son los operadores más sencillos de entender porque los usamos desde bien pequeños, nos permiten realizar operaciones matemáticas en caso de los **`number`**.
+
+```jsx
+let numa = 5;
+let numb = 2;
+
+numa + numb; // 7
+numa - numb; // 3
+numa * numb; // 10
+numa / numb; // 2.5
+
+let num1 = ++numa; // 6
+let num2 = --numb; // 1
+```
+
+También podemos usar ++ como valor incremental o - - como valor de reducción.
+
+```jsx
+let numa = 5;
+let numb = 2;
+
+let num1 = ++numa; // 6
+let num2 = --numb; // 1
+```
+
+Algunos operadores pueden usarse con otros tipos como con los **`strings`**, os acordáis de la concatenación pues ese sería un buen uso.
+
+```jsx
+let name = 'Alberto';
+let surname = 'Stark';
+
+let fullNameNoWhiteSpace = name + surname; // AlbertoStark
+
+let fullNameWhiteSpace = name + ' ' + surname; // Alberto Stark
+```
+
+---
+
+Antes de comenzar con nuestro reto nos gustaría explicar el **`console.log()`** , es una función auto-ejecutada que nos permite comprobar si nuestras variables tienen el valor deseado.
+
+```jsx
+let name = 'Alberto';
+
+console.log(name); // Alberto
+
+let imDeveloper = true;
+
+let imStudent = false;
+
+console.log(imDeveloper && imStudent); // false
+```
+
+Para poder ejecutarla en nuestro IDE tenemos que instalar Node, por ello os dejaremos una guía de instalación para poder seguir los pasos de esta guía.
+
+---
+
+### Reto: Operadores
+
+Este es el último reto que haréis en cuestión de minutos, disfrutar ahora mientras podéis. Antes de pasar a cositas más complejas vamos a poner en práctica todo lo aprendido MiniCoders.
+
+<ReferencesStack
+  links={[
+    {
+      type: 'external',
+      url: 'https://github.com/MiniCodeLab/taller-js-desde-0/tree/main/operadores',
+      title: 'Repositorio MiniCodeLab'
+    },
+    {
+      type: 'external',
+      url: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Expressions_and_Operators',
+      title: 'MDN: Operadores'
+    }
+  ]}
+/>
+
+MiniCoders ya arrancamos **🔥**!
