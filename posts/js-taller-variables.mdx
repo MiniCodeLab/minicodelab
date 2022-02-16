@@ -1,0 +1,188 @@
+# **Guía MiniCode de Javascript | Variables**
+
+Por algún sitio teníamos que comenzar nuestra guía de Javascript y no hay un mejor punto de partida que las `**variables**`. Las hemos escogido como punto de partida porque en la mayoría de aplicaciones, por no decir todas, vas a necesitar trabajar con cierta información y esta suelen almacenarse en **`variables`**.
+
+---
+
+### ¿Qué es una variable?
+
+Muchos os preguntaréis qué es esto de las **`variables`** . A nosotros nos gusta decir que la **`variable`** es el nombre de una "caja" en la que podemos guardar nuestra información, pueden contener cualquier dato o información.
+
+Esta información debe ser accesible desde cualquier punto de nuestra aplicación, para no olvidar o tener que aprender toda la información que manejamos. Podemos usar las variables que guardan dicha información y cuando las llamamos nos devuelven el valor almacenado.
+
+Los valores que podemos almacenar en nuestras variables pueden ser de diferentes tipos, desde un texto, un número, un listado.... pero en esto profundizaremos más adelante. Ahora veamos un ejemplo.
+
+```tsx
+Caja 📦 => Elemento a guardar 🥁
+
+Mensaje: Me gusta tocar el 📦  = Me gusta tocar el 🥁
+
+Caja 📦 => Elemento a guardar 🎸
+
+Mensaje: Me gusta tocar la 📦  = Me gusta tocar la 🎸
+```
+
+Como podéis ver en nuestra 📦 hemos guardado un 🥁, por lo tanto cuando usemos la 📦 su valor será 🥁 . Después hicimos lo mismo con la 🎸, esto nos indica que podemos tener tantas variables como queramos en nuestro proyecto.
+
+---
+
+### **Declarando una variable**
+
+Vamos a ponernos con un poquito de código, ya que antes de trastear con nuestras **`variables`** tenemos que aprender a declararlas en **`Javascript`.**
+
+> **`var`** o **`let`** → En scripts antiguos, antes de ES6, puedes encontrar la inicialización de las **`variables`** con var. En nuestro caso, let es lo más parecido, pese tener diferencias importantes que veremos en otro post.
+
+---
+
+Ahora podemos crear nuestra primera **`variable`** y para ello usamos la palabra reservada **`let`**. Después el nombre de nuestra **`variable`**.
+
+```jsx
+let banana;
+```
+
+De este modo tenemos una caja pero aún no tiene ningún contenido, podéis suponer que si la hemos llamado banana lo que tendremos será 🍌 . Por ello vamos a asignarle un valor con el operador **`=`** .
+
+```jsx
+// Inicializamos la variable
+let banana;
+
+//Asignamos valor
+banana = 🍌;
+```
+
+Podemos ser aún más concisos a la hora de declarar una **`variable`** y hacerlo en una única línea.
+
+```jsx
+//Inicializamos y asignamos valor
+let banana = '🍌';
+```
+
+Pero como hemos hablado antes, en un proyecto basado en Javascript queremos poder usar varias **`variables`,** y se puede hacer del siguiente modo.
+
+```jsx
+let banana = '🍌',
+  orange = '🍊',
+  kiwi = '🥝';
+```
+
+Desde MiniCode nos gusta más declarar cada **`variable`** en un línea independiente, porque te ayuda a ver todos las **`variables`** declaradas a golpe de vista.
+
+```jsx
+let banana = '🍌';
+let orange = '🍊';
+let kiwi = '🥝';
+```
+
+Un aspecto importante es que las **`variables`** solo se pueden declarar una única vez con el mismo nombre, es decir, no puedo tener dos **`variables`** con el mismo nombre.
+
+```jsx
+let fruit = '🍉';
+
+// ❌ : javascript no te permite volver a usar este nombre
+let fruit = '🍌';
+```
+
+---
+
+### Cambiar el valor de una variable
+
+El valor de nuestras **`variables`** pueden cambiar, y donde tenían un 🍌  pasa a ser una 🍊 y así tantas veces como quieras. Es decir, el valor dado a nuestra **`variable`** puede ser modificado.
+
+```jsx
+// Inicializo y asigno
+let fruit = '🍌';
+
+// Cambio el valor
+fruit = '🍉';
+```
+
+Como podéis ver el valor de nuestra **`variable`** fruit es 🍉 , porque lo he modificado y la lectura de mi fichero es desde arriba ⬆️ hacia abajo ⬇️ [Lo trataremos más adelante en las particularidades de **`Javascript`**].
+
+---
+
+### Asignar el valor de una variable a otra variable
+
+Desde **`Javascript`** podemos asignarle el valor dado en una **`variable`** a otra, de tal modo que ambas tengan el mismo contenido.
+
+```jsx
+// Declaro variable y asigno valor
+let myFavoriteFruit = '🍉 ';
+
+// Declaro variable y asgino el valor almacenado en myFavoriteFruit
+let imEatingThisFruit = myFavoriteFruit;
+```
+
+Por lo tanto el valor que obtendremos cada vez que llamemos a **`imEatingThisFruit`** es 🍉 , que es el valor que tenía **`myFavoriteFruit` .**
+
+---
+
+### Nombre de las variables
+
+Cuando estamos empezando no damos importancia a este aspecto y usamos nombres como `**uno**`, `**data**`, `**box**` ... es un error muy habitual en el que no debemos caer porque el nombre de nuestra **`variable`** tiene que hacer referencia al contenido que tendrá dentro cuando asignemos un valor.
+
+Para ello os vamos a dejar algunos tips que os sirva con el nombrado de vuestras varaibles:
+
+- No usar un número como primer carácter.
+- El nombre de la variable solo debe contener letras, dígitos y los símbolos $ y \_.
+- Intenta ser verboso, **`Javascript`** no penaliza un nombre largo.
+- Usa camelCase para el nombrado compuesto, es decir **`let myFavoriteFruit`**.
+- Ten cuidado con las palabras reservadas como **`let`**, **`const`** o **`return`**.
+
+Vamos a ver algunos ejemplos de nombres de variables válidos.
+
+```jsx
+// Indica que vamos a guardar el nombre de una fruta
+let fruit;
+
+// Indica que vamos a guardar el nuestro numero preferido
+let favoriteNumber;
+
+// Indica que vamos a guardar el nuestro segundo preferido
+let favoriteNumber2;
+```
+
+También os dejamos algunos nombres que no son válidos.
+
+```jsx
+// ❌ :No puede empezar en un dígito
+let 1fruit;
+
+// ❌ :No se pueden usar '-'
+let favote-number;
+```
+
+Y como hablamos antes algunos nombres reservados en Javascript.
+
+```jsx
+// ❌ : No puedes nombrar a tu variable 'let'
+let let = ;
+
+// ❌ : No puedes nombrar a tu variable 'return'
+let return = ;
+
+```
+
+---
+
+### Reto: Variables
+
+Es hora de poner en práctica todo lo aprendido y por ello os proponemos una serie de retos para practicar con las variables. Os dejamos el link del repositorio de GitHub y lo podéis forkear para realizar los ejercicios.
+
+<ReferencesStack
+  links={[
+    {
+      type: 'external',
+      url: 'https://github.com/MiniCodeLab/taller-js-desde-0/tree/main/variables',
+      title: 'Repositorio MiniCodeLab'
+    },
+    {
+      type: 'external',
+      url: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Grammar_and_types#declaraciones',
+      title: 'MDN: Variables'
+    }
+  ]}
+/>
+
+Comenzamos nuestra aventura de conocer poco a poco Javascript y sus particularidades, próximamente profundizaremos en el lenguaje.
+
+¡Os toca a vosotros Mini Coders **🔥**!
