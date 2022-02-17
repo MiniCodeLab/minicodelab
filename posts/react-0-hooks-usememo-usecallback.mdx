@@ -1,0 +1,301 @@
+# React desde 0 | Hooks [useMemo, useCallback]
+
+¡Muy buenas MiniCoder! Como ya hemos aprendido en los últimos artículos y talleres, la gran mayoría del desarrollo en React a día de hoy conlleva el uso de **Hooks** para obtener una reactividad sin igual en nuestras aplicaciones.
+
+De todos los hooks que React trae de base, ya conoces casi todos los hooks. Te dejamos aquí los links a los artículos anteriores hasta este punto:
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-1',
+      title: 'Conceptos básicos de React parte 1'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-2',
+      title: 'Conceptos básicos de React parte 2'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-usestate-useeffect',
+      title: 'Hooks useState y useEffect'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-useref',
+      title: 'Hooks useState y useEffect'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-useref',
+      title: 'Hook useRef explicado al completo'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-react-memo',
+      title: 'React.memo en profundidad'
+    }
+  ]}
+/>
+
+Ahora nos toca profundizar trabajando con dos nuevos Hooks que tienen un uso más específico, conocidos como `useMemo` y `useCallback`.
+
+---
+
+### Memorizando cálculos complejos con useMemo
+
+El primero de los hooks que vamos a ver en este artículo es `useMemo`. Este hook se emplea principalmente para memorizar operaciones que son muy costosas de procesar, de forma que no se recalculen en sucesivos renders de nuestros componentes. Aunque gracias a esta capacidad de memorización, pueden usarse con el fin de tomar referencias a objetos y arrays y que puedan ser comparados directamente entre otras cosas... Veamos un par de ejemplos para explicarlo con mayor claridad 🏃
+
+**<u>Memorizando un cálculo pesado para ordenar y mapear contenido</u>**
+
+Vamos a crear un componente que renderice una serie de posts que tenemos desordenados, sin título y con un formato de fecha no adecuado para mostrarlo a un usuario.
+
+Para que se vea correctamente este contenido, vamos a tener que ordenar por fecha, añadir un título a cada post, y formatear la fecha adecuadamente. Aquí te dejamos un componente que hace esto mismo:
+
+```tsx
+const posts = [
+  {
+    slug: 'vue-desde-0',
+    date: 'Fri Oct 06 2023 10:45:00 GMT+0200 (Central European Summer Time)'
+  },
+  {
+    slug: 'react-desde-0',
+    date: 'Thu Feb 17 2022 18:15:00 GMT+0100 (Central European Standard Time)'
+  },
+  {
+    slug: 'angular-desde-0',
+    date: 'Tue Aug 23 2022 13:21:00 GMT+0200 (Central European Summer Time)'
+  }
+];
+
+export const MiniCodePosts: React.FC = () => {
+  // Menuda locura de cálculos! 🤯
+  const orderedPostsWithTitle = posts
+    .map((post) => ({
+      ...post,
+      date: new Date(post.date),
+      title: post.slug.split('-').join(' ').toUpperCase()
+    }))
+    .sort((a, b) => a.date.getTime() - b.date.getTime())
+    .map((post) => ({
+      ...post,
+      date: new Intl.DateTimeFormat('es-ES').format(post.date)
+    }));
+
+  return (
+    <div className="MiniCodePosts">
+      <h1>Talleres destacados 😍</h1>
+
+      <ul>
+        {orderedPostsWithTitle.map((post) => (
+          <li key={post.slug}>
+            <h3>{post.title}</h3> {post.date}
+            <hr />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default MiniCodePosts;
+```
+
+Como puedes observar aquí, **en caso de que el componente padre provoque un render de este componente, vamos a recalcular de nuevo todo el array que estamos mostrando...** ¡Esto puede ser una locura si la lista de posts es muy larga o se compone de componentes complejos!
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093969/articles/react-desde-cero-hooks/vistamemo1.png"
+  alt="useMemo-vistamemo1"
+/>
+
+Para prevenir esto, podemos utilizar el hook useMemo y memorizar los resultados. **Este hook se componente mediante dos argumentos, el primero es un callback, como con `usEffect` pero que en este caso debe devolver un valor a memorizar, y el segundo es un array de dependencias que permitirán controlar cuando se relanza el hook.** ¡Vamos a ponerlo en práctica!
+
+Refactorizamos un poco el componente y haremos que los props se los envíe como props su componente padre... Con esto podremos ver que aunque el componente que lo contiene se rerendice X veces, los posts no se calcularán a menos que el prop `posts` cambie:
+
+```tsx
+import { useMemo } from 'react';
+
+type Post = {
+  slug: string;
+  date: string;
+};
+
+const MiniCodePosts: React.FC<{ posts: Post[] }> = ({ posts }) => {
+  const orderedPostsWithTitle = useMemo(() => {
+    // Pruébalo por tu cuenta y verás que no se repite este log!
+    console.log('Generating posts...');
+
+    return posts
+      .map((post) => ({
+        ...post,
+        date: new Date(post.date),
+        title: post.slug.split('-').join(' ').toUpperCase()
+      }))
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .map((post) => ({
+        ...post,
+        date: new Intl.DateTimeFormat('es-ES').format(post.date)
+      }));
+  }, [posts]);
+
+  return (
+    <div className="MiniCodePosts">
+      <h1>Talleres destacados 😍</h1>
+
+      <ul>
+        {orderedPostsWithTitle.map((post) => (
+          <li key={post.slug}>
+            <h3>{post.title}</h3> {post.date}
+            <hr />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default MiniCodePosts;
+```
+
+¡Brutal! Ya sabemos como almacenar el resultado de operaciones complejas y costosas con grandes cantidades de datos, ¿vemos otro ejemplo? 🔥
+
+**<u>Controlando useEffect con el resultado de useMemo</u>**
+
+Vamos a ver una última aplicación de este Hook. Imagina que quieres tener un `useEffect` que solamente será lanzado cuando cambie la constante que hemos calculado tras las operaciones anteriores... Vamos a simplificar un poco el ejemplo anterior para ver directamente con unos logs como se comportaría esto con la ayuda de `useMemo`:
+
+```tsx
+import { useEffect, useMemo } from 'react';
+
+type Post = {
+  slug: string;
+  date: string;
+};
+
+const MiniCodePosts: React.FC<{ posts: Post[] }> = ({ posts }) => {
+  // Este calcula la constante en cada render!
+  const postsWithId = posts.map((post) => ({
+    ...post,
+    slug: post.slug.toUpperCase()
+  }));
+
+  // Y es este caso solo se recalcula cuando posts cambia 😎
+  const postsWithIdMemoized = useMemo(() => {
+    return posts.map((post) => ({
+      ...post,
+      slug: post.slug.toUpperCase()
+    }));
+  }, [posts]);
+
+  // Vamos a verlo en marcha con algunos logs
+  useEffect(() => {
+    console.log('Esto solo se lanza cuando cambia postsWithIdMemoized!');
+  }, [postsWithIdMemoized]);
+
+  useEffect(() => {
+    console.log('Esto solo se lanza aunque no cambie postsWithId!');
+  }, [postsWithId]);
+
+  return (
+    <div className="MiniCodePosts">
+      <h1>Talleres destacados 😍</h1>
+      {/* Resto del render... */}
+    </div>
+  );
+};
+
+export default MiniCodePosts;
+```
+
+Si lo pones en práctica podrás observar que los logs, por mucho que se rerenderice el componente padre, aparecerán únicamente para el cambio en cada render que realiza `postsWithId`.
+
+Esto está causado porque React utiliza el `**shallowCompare`** para comparar los elementos del array de dependencias, y **un nuevo array nunca es igual a otro nuevo array\*\*, ya que no apuntan al mismo elemento original en memoria. Gracias a `useMemo` podemos tener entre renders el mismísimo array original al no haberse recalculado... ¡Imagina la cantidad de optimizaciones que podemos conseguir gracias a esto!
+
+---
+
+### Memorizando referencias a funciones con useCallback
+
+Este Hook junto con `useMemo` está enfocado a la optimización y persistencia de datos correctamente entre renders de nuestras aplicaciones.
+
+Con `useCallback` tendremos un comportamiento muy similar a `useMemo` pero totalmente aplicado a funciones, aquí un ejemplo:
+
+```tsx
+const memoizedCallback = useCallback(() => {
+  doSomething(a, b);
+}, [a, b]);
+```
+
+En este caso, la función `memoizedCallback` solamente se redeclarará si cambian `a` o `b` que están en el array de dependencias.
+
+Vamos a verlo en profundidad con un ejemplo muy sencillo que nos ayude a comprender el useCallback. Vamos a definir un componente que recibe una función por props para limpiar o eliminar los datos de un usuario.
+
+```tsx
+type Props = {
+  deleteUser: () => void;
+};
+
+const DeleteUser: React.FC<Props> = memo(({ deleteUser }) => {
+  console.log('Me renderizo una vez');
+
+  return <button onClick={deleteUser}>Delete User</button>;
+});
+```
+
+Y ahora un componente padre que tiene un **`useState`** de User y un **`useCallback`** que es nuestra función que pasamos al hijo para que la ejecute cuando clickemos sobre el botón de eliminar usuario.
+
+```tsx
+export const MiniCodeUseCallback = () => {
+  const [user, setUser] = useState<User>({
+    name: 'Alberto',
+    lastName: 'Rivera'
+  });
+
+  const deleteUserCallback = useCallback(() => {
+    setUser({ name: '', lastName: '' });
+  }, []);
+
+  return (
+    <>
+      <h3>
+        {user.name} | {user.lastName}
+      </h3>
+      <input value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} />
+      <input
+        value={user.lastName}
+        onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+      />
+
+      <DeleteUser deleteUser={deleteUserCallback}>Reset name</DeleteUser>
+    </>
+  );
+};
+```
+
+¿Qué está sucediendo? Vamos a verlo paso por paso para entenderlo definitivamente:
+
+- Tenemos una función `deleteUserCallback` que está englobada por un `useCallback` que se la pasamos al hijo, esta función se ha calculado una única vez ya que se le pasa como segundo parámetro tenemos un array vacío.
+
+- Al componente hijo le pasamos dicha función como prop `deleteUser`, y este componente hijo está englobado en un `React.memo`. Esto comparará los props en cada intento de render para asegurar que no se renderiza de nuevo innecesariamente.
+
+- En el componente hijo cuando clickamos sobre el botón, este invoca a la referencia que tenemos a través de los props de dicha función para ejecutarla.
+
+- Esta función cambia el estado del componente padre, y aun así vemos que el componente hijo no se renderiza nuevamente. Esto ocurre gracias a la combinación de `useCallback` para guardar una referencia única a una función, y `memo` como herramienta que compara dichas referencias antes de rerenderizar.
+
+El resultado visual sería el siguiente:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useCallback.gif"
+  alt="useCallback"
+/>
+
+¡Recuerda! Si no utilizamos `useCallback`, en cada render la función `deleteUser` haría referencia a una nueva función, y el `shallowCompare` no nos permitiría prevenir renders innecesarios 🤓
+
+---
+
+### Conclusión
+
+Podrías pensar que por lo tanto es buena idea envolver en `useCallback` a cualquier función que definamos y no queramos redeclarar nuevamente, para “mejorar la performance de nuestra aplicación desde el principio”. A esto, **te recomendamos un claro NO**, y la razón es la misma por la cual utilizar `useMemo` en cualquier sitio puede causar problemas al largo plazo.
+
+Por muy ”performant“ que sea **memoizar** resultados, su cálculo inicial será más pesado para nuestra aplicación, al igual que serán dificilmente controlables a gran escala si tenemos muchos arrays de dependencias en cada componente. Lo más recomendable en estos casos sería **esperar a tener un problema de rendimiento en nuestra app, y entonces buscar soluciones a través de `useMemo` y `useCallback` si se da la situación correcta en que aplicarlos.**
+
+En el próximo artículo y taller, veremos como crear Hooks Customizados haciendo gala y combinación de todos lo que hemos aprendido. ¡Vamos a tope MiniCoder, y gracias nuevamente por apoyarnos y aprender con nosotros 🥳!

@@ -1,0 +1,198 @@
+# **Guía MiniCode de Javascript | Tipos de datos**
+
+Hey MiniCoders! seguimos con nuestra guía de **`javascript`**¿Os acordáis de las **`variables`**? pues en ellas hasta ahora estábamos guardando únicamente **`emojis`** o **`texto`** pero se pueden guardar diferentes **`tipos de datos`** .
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/js-taller-variables',
+      title: 'Variables'
+    }
+  ]}
+/>
+
+---
+
+### ¿Qué son los tipos de datos?
+
+En la mayoría de los lenguajes de programación se trabaja con estructuras de datos, es decir un número es un **`tipo de dato`**, un texto es un **`tipo de dato`** ... Vamos a intentar poco a poco entender las estructuras de datos que nos da **`javascript`**.
+
+Explicado de otro modo, el tipo de dato define la información que vamos a guardar dentro de una variable, esto nos ayuda a identificar qué estructuras de datos nos podemos encontrar.
+
+Pese a que **`javascript`** es un lenguaje dinámico o de tipado débil, esto quiere decir que no tenemos que indicar el tipo que vamos a asignar a nuestra **`variable`**, tenemos que conocer todos los tipos y algunos métodos que tienen asociados.
+
+---
+
+### ¿Cómo saber el tipo del valor asignado?
+
+Antes de ver todos los tipos y explicarlos de uno en uno os vamos a enseñar una función que os ayudará a conocer el tipo asignado en una **`variable`**. Es la función  **`typeof`**, la cual nos indicará el tipo de una variable en cada momento.
+
+```jsx
+let name = typeof 'Alberto'; // string
+
+let age = typeof 34; // number
+
+let isDeveloper = typeof true; // boolean
+```
+
+---
+
+### ¿Se puede asignar un valor de diferente tipo al inicial?
+
+En **`javascript`** los **`tipos de datos`** son dinámicos, lo que significa que la comprobación del tipado se realiza en tiempo de ejecución, es decir javascript no necesita conocer con anterioridad el tipo de dato que será asignado.
+
+Dicho de otro modo se puede utilizar una **`variable`** para contener diferentes tipos de datos. Vamos a verlo con un ejemplo práctico.
+
+```jsx
+let example; // Value undefined
+example = '🍌'; // Value 🍌
+example = 2; // Value 2
+example = '🍎'; // Value 🍎
+example = true; // Value true
+```
+
+Os recordamos que para asignar el valor usamos el operador **`=`** , esto no permite decir qué valor vamos a guardar en nuestra variable.
+
+En la variable **`example`** podemos establecer cualquier tipo de dato disponible en Javascript. No es necesario que se declaren con un tipo de dato antes de utilizarla, y puede mutar el tipo de dato en cualquier momento.
+
+---
+
+### Tipos de datos: Valores primitivos
+
+Javascript tiene seis tipos primitivos: Sin definir **`undefined`**, Nulo **`null`** , Lógicos **`boolean`** , Numérico **`number`** , Cadena **`string`**  y Símbolo **`symbol`** . Todos los demás tipos son objetos **`Object`**: Array, Date, Promise, etc.
+
+Vamos a explicar cada uno de ellos y poner algunos ejemplos de cómo usarlos, ya que cada uno nos sirve para estructurar información diferente.
+
+---
+
+### **Tipo string**
+
+El tipo **`String`** son cadenas de texto. Sencillamente un grupo de caracteres o palabras, entre comillas simples o dobles.
+
+```jsx
+let name = 'Alberto';
+
+let surName = 'Banner';
+```
+
+El tipo string tiene asociados diferentes métodos que nos da **`javascript`** , es decir funciones que nos permiten interactuar con nuestra cadena.
+
+```jsx
+let name = 'Alberto';
+
+// Devuelve el elemento en la posición 1 empezando desde 0 [l]
+name.charAt(1);
+
+// Devuelve el elemento en mayúsculas
+name.toUpperCase();
+
+// Devuelve el elemento en minúsculas
+name.toLowerCase();
+
+// Elimina los espacios si los hubiese en nuestra cadena
+name.trim();
+```
+
+Según avancemos en nuestra guía haremos uso de muchos métodos, pero aún no conocéis las funciones o métodos de clase por lo que si no os aclaráis no hay que preocuparse porque llegaremos.
+
+---
+
+### **Tipo Number**
+
+El tipo **`Number`** son números, tal y como indica su nombre. Cuando añadimos o asignamos un valor numérico a una **`variable`** es de tipo number.
+
+```jsx
+let age = 34;
+
+let weight = 76.5;
+```
+
+---
+
+### **Tipo Boolean**
+
+En la programación existe un **`tipo de dato`** que identifica valores binarios, es decir **`0`** y **`1`**. Una manera muy sencilla de trabajar con estos datos binarios son los **`boolean` .**
+
+Un **`boolean`** nos retorna **`1`** o **`0`** , siendo el **`1 = true`** y el **`0 = false.`** Por lo tanto le podemos asignar los valores de **`true`** y **`false`** porque así nosotros que no somos máquinas lo leemos mejor.
+
+```jsx
+let isDeveloper = true;
+
+let isDriver = false;
+```
+
+---
+
+### Tipo Null
+
+El tipo **`null`** tiene exactamente un valor **`null`**, es decir que nuestro valor asignado será de tipo nulo. Tenemos que tener cuidado usando este tipo porque en ocasiones puede romper nuestro código.
+
+```jsx
+let valueReturnNull = null;
+```
+
+---
+
+### Tipo Undefined
+
+Este se da cuando declaramos una variable y no le asignamos valor o cuando le asignamos directamente el valor undefined.
+
+```jsx
+let fruit; // Value undefined
+
+fruit = undefined; // Value undefined
+
+fruit = '🍌'; // Value 🍌
+```
+
+---
+
+### Tipo Symbol
+
+Este es el valor más complejo a la hora de empezar porque es un valor único e inmutable, esto quiere decir que no hay dos Symbol iguales.
+
+```jsx
+Symbol('one') === 'one'; // false
+```
+
+Se suelen como una clave de un objeto, ya que tiene que ser única, pero es algo que veremos más adelante porque aún ni sabemos qué es eso de objetos.
+
+---
+
+Antes de finalizar vamos a jugar un poco con los tipos de datos y así poder ver algunas particularidades, si estáis empezando no queremos que vuelen cabezas 💥 pero suele molar alguno de estos ejemplos.
+
+```jsx
+let banana = '🍌' + 5 + 5; // '🍌55'
+
+let quantityBanana = 5 + 5 + '🍌'; // '10🍌'
+```
+
+El operador **`+`** lo que hace es sumar cuando son tipos numéricos o **`number`** y concatenar cuando son cadenas o **`strings`** . Entonces, **¿Qué está pasando aquí?**
+
+Pues que Javascript no tiene un fuerte tipado, por lo tanto como el primer valor que interactúa es un **`string`** entiende que los **`5`** que continuan también lo son y por lo tanto lo **`concatena`**, pero por el contrario en el ejemplo dos primero **`suma`** y luego **`concatena`**.
+
+No os preocupéis porque aún nos estamos adentrando en las particularidades del lenguaje, pronto lo dominaréis y este tipo de casos no os sorprenderán.
+
+---
+
+### Reto: Tipos de dato
+
+Es hora de poner en práctica todo lo aprendido y por ello os proponemos una serie de retos para practicar con los **`tipos de datos`**. Os dejamos el link del repositorio de GitHub y lo podéis forkear para realizar los ejercicios.
+
+<ReferencesStack
+  links={[
+    {
+      type: 'external',
+      url: 'https://github.com/MiniCodeLab/taller-js-desde-0/tree/main/tipos-de-datos',
+      title: 'Repositorio MiniCodeLab'
+    },
+    {
+      type: 'external',
+      url: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Data_structures',
+      title: 'MDN: Tipos de datos'
+    }
+  ]}
+/>
+
+Continuamos nuestra aventura de conocer poco a poco Javascript y seguiremos más adelante con nuestra guía Mini Coders **🔮**.
