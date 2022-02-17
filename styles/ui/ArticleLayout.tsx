@@ -76,6 +76,12 @@ export const ArticleLayout = styled.div`
     font-weight: bold;
   }
 
+  u {
+    color: inherit;
+    display: block;
+    margin-top: var(--spacing-m);
+  }
+
   code:not(pre > code) {
     background-color: var(--code-block);
     border-radius: var(--code-radius);
