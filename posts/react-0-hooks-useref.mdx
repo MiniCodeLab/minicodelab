@@ -1,0 +1,297 @@
+# React desde 0 | Hooks [useRef]
+
+¡Muy buenas MiniCoder! Como ya hemos aprendido en los últimos artículos y talleres, la gran mayoría del desarrollo en React a día de hoy conlleva el uso de **Hooks** para obtener una reactividad sin igual en nuestras aplicaciones.
+
+De todos los hooks que React trae de base, ya conoces los hooks useState y useEffect. Te dejamos aquí los links a los artículos anteriores hasta este punto:
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-1',
+      title: 'Conceptos básicos de React parte 1'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-2',
+      title: 'Conceptos básicos de React parte 2'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-usestate-useeffect',
+      title: 'Hooks useState y useEffect'
+    }
+  ]}
+/>
+
+Ahora nos toca profundizar trabajando con un nuevo Hook que tiene un uso más específico, conocido como `useRef`.
+
+---
+
+### useRef: Referencias a elementos, funciones y variables
+
+Este Hook es muy interesante porque es un hook que nos permite almacenar una referencia a casi cualquier cosa con la que necesitemos interactuar 🙉. Vamos a ver algunos ejemplos para entenderlo mejor.
+
+Podemos manipular directamente el DOM almacenando una referencia a un elemento `HTML`, ya que no usa el virtual DOM cuando trabajamos con estos elementos a través de `useRef`. Para crear una referencia a un elemento de **`HTML`**, dicho elemento debe tener la propiedad **`ref`** con el valor de la variable de referencia.
+
+Además el hook **`useRef`** siempre nos devuelve un objeto mutable con una única propiedad llamada **`current`**, a la que accederemos a través de `refVariable.current`. ¡Aunque esto lo veremos mejor en código 💻!
+
+**<u>Renderizamos el valor imperativamente</u>**
+
+Vamos a crear un componente muy sencillo que tenga un input y lo enlazaremos a una referencia e imprimiremos el valor. Esto provocacará un nuevo renderizado solo cuando invoquemos a `printValue` en lugar de hacerlo a cada cambio del input.
+
+```tsx
+import { useRef, useState } from 'react';
+
+export const MiniCodeUseRef = () => {
+  const textInput = useRef<HTMLInputElement>(null);
+  const [name, setName] = useState<string>('Alberto');
+
+  const printValue = () => {
+    const inputValue = textInput.current?.value;
+    if (inputValue) setName(inputValue);
+
+    console.log('Imprime nombre:', inputValue);
+  };
+
+  return (
+    <div>
+      <h1>Hola soy {name}</h1>
+      <input type="text" placeholder="name" ref={textInput} />
+      <button onClick={printValue}>Mostrar</button>
+    </div>
+  );
+};
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+**<u>Autofocus en un campo input al montar el componente</u>**
+
+Podemos tener otro ejemplo en un formulario, le damos focus a un input cuando se renderice el componente por primera vez. Para ello dentro del **`useEffect`** realizaremos **`focus`** al input, y este useEffect ocurrirá solamente cuando el componente se monte.
+
+```tsx
+import { useRef, useEffect } from 'react';
+
+export const MiniCodeRefFocus = () => {
+  const focusInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (focusInputRef.current) focusInputRef.current.focus();
+  }, []);
+
+  return (
+    <div>
+      <form>
+        <div>
+          <label htmlFor="user">Usuario</label>
+          <input type="text" id="user" placeholder="User" ref={focusInputRef} />
+        </div>
+        <div>
+          <label htmlFor="pass">Constraseña</label>
+          <input type="password" id="pass" placeholder="Pass" />
+        </div>
+      </form>
+    </div>
+  );
+};
+```
+
+De tal modo que podemos ver que cuando se monta nuestro componente se hace auto focus al input al que hemos hecho referencia. Puedes probar recargando la página y verás que siempre te posiciona sobre el input de usuario:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093969/articles/react-desde-cero-hooks/useRefFocus.gif"
+  alt="useRef-Focus"
+/>
+
+**<u>Calculadora de sueldo neto</u>**
+
+Ahora podemos ver un ejemplo más complejo con una calculadora de sueldo neto. Vamos a utilizar `useRef` para recoger los valores de los inputs sin provocar un rerender cuando cambiemos el valor de los campos al no modificar ningún estado:
+
+```tsx
+import { useRef } from 'react';
+
+export const MiniCodeTaxCalculator: React.FC = () => {
+  const grossIncomeRef = useRef<HTMLInputElement>(null);
+  const taxPercentRef = useRef<HTMLInputElement>(null);
+
+  const getNetIncome = (): void => {
+    const grossIncome = grossIncomeRef.current?.valueAsNumber as number;
+    const taxPercent = taxPercentRef.current?.valueAsNumber as number;
+
+    const total = grossIncome - grossIncome * (taxPercent / 100);
+    console.log('The net total is:', total);
+  };
+
+  return (
+    <div className="App">
+      <h1>Calculadora sueldo neto</h1>
+
+      <label htmlFor="gross-income">Sueldo bruto</label>
+      <input
+        id="gross-income"
+        name="gross-income"
+        type="number"
+        defaultValue="0"
+        min="0"
+        ref={grossIncomeRef}
+      />
+
+      <br />
+
+      <label htmlFor="tax">Porcentaje de impuestos</label>
+      <input
+        id="tax"
+        name="tax"
+        type="number"
+        defaultValue="10"
+        min="0"
+        max="100"
+        ref={taxPercentRef}
+      />
+
+      <br />
+
+      <button onClick={getNetIncome}>Obtener sueldo neto</button>
+    </div>
+  );
+};
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093969/articles/react-desde-cero-hooks/sueldoneto.gif"
+  alt="sueldo-neto"
+/>
+
+**<u>Cambiar estilos directamente</u>**
+
+Además de esto podemos jugar con clases y estilos, vamos a añadir una clase de CSS a un elemento que ya se encuentra en el DOM.
+
+```tsx
+import { useRef } from 'react';
+import '../App.css';
+
+export const MiniCodeUseRefCss = () => {
+  const colorRef = useRef<HTMLDivElement>(null);
+
+  const changeColor = () => {
+    if (colorRef.current) colorRef.current.className = 'box-modify';
+  };
+
+  return (
+    <>
+      <div className="box" ref={colorRef}>
+        I´m in a Box
+      </div>
+      <button onClick={changeColor}>Modify color</button>
+    </>
+  );
+};
+```
+
+Y en el fichero de App.css añadimos los estilos que queramos
+
+```css
+.box {
+  background-color: skyblue;
+}
+
+.box-modify {
+  background-color: coral;
+}
+```
+
+Ahora cuando hagamos click en el botón cambiará una clase por otra sin necesidad de almacenar nada en el estado interno del componente 🦄
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093969/articles/react-desde-cero-hooks/useRefCss.gif"
+  alt="useRef-css"
+/>
+
+Con esto hemos entendido sintácticamente el funcionamiento de `useRef` pero **¿cómo podemos usarlo en un ejemplo más cercano a lo que ocurren en una aplicación real?**
+
+Vamos con un último ejemplo en el que queremos conocer el tamaño de un contenedor y guardar su valor de referencia en el primer renderizado de la aplicación.
+
+```tsx
+import { useEffect, useRef } from 'react';
+
+export const MiniCodeUseRefWindow = () => {
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (divRef.current) {
+      console.log(`hookRef div width: ${divRef.current.clientWidth}`);
+      console.log(`hookRef div height: ${divRef.current.clientHeight}`);
+    }
+  }, []);
+
+  return <div ref={divRef} style={{ width: '100%', height: '100px', backgroundColor: 'coral' }} />;
+};
+```
+
+Y por consola vemos que recuperamos el valor del div:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093968/articles/react-desde-cero-hooks/divcompleto.png"
+  alt="useRef-divcompleto"
+/>
+
+Como se ve en la imagen, esto nos sirve para conocer las dimensiones de algún elemento en el primer render. Podemos usar esto para lanzar cargas de datos alternativas según tenga un tamaño u otro un elemento del DOM.
+
+Por ejemplo, podemos cargar una imagen de pikachu alternativamente usando esta medida. Si la `width` del `div` es menor de 700 pixels, pintaremos la imagen del pikachu actual, y si es mayor de 700 pixels, la del primer pikachu ⚡️.
+
+```tsx
+import { useEffect, useRef } from 'react';
+
+const MiniCodeUseRefWindow: React.FC = () => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (divRef.current) {
+      console.log(`hookRef div width: ${divRef.current.clientWidth}`);
+      console.log(`hookRef div height: ${divRef.current.clientHeight}`);
+      const divWidth = divRef.current.clientWidth;
+
+      if (imgRef.current) {
+        const imageUrl =
+          divWidth < 700
+            ? 'https://megadexter.com/uploads/dex/pkmn/official/pikachu.png'
+            : 'https://cloudfront-us-east-1.images.arcpublishing.com/sdpnoticias/ZTJEY7FNDROU5IKDBNVKPIBMGU.jpg';
+
+        imgRef.current.src = imageUrl;
+        imgRef.current.style.display = 'block';
+      }
+    }
+  }, []);
+
+  return (
+    <>
+      <div ref={divRef} style={{ width: '100%', height: '100px', backgroundColor: 'coral' }} />
+
+      <img ref={imgRef} src="" alt="pikachu" style={{ display: 'none', width: 200 }} />
+    </>
+  );
+};
+```
+
+Esto es lo que podremos ver en este caso cada vez que recarguemos la página con un ancho mayor de 700 pixels:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093968/articles/react-desde-cero-hooks/pikachuold.png"
+  alt="useRef-pikachuold"
+/>
+
+Y esto es lo que veremos con un ancho inferior a los 700 que hemos puesto como límite:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093968/articles/react-desde-cero-hooks/pikachunuevo.png"
+  alt="useRef-pikachunuevo"
+/>
+
+Esperamos que con esto tengas bastantes ejemplo sobre useRef, ¡pero no te pierdas el vídeo del taller ya que haremos algún ejemplo más con intervalos para que veas aun mejor el potencial de `useRef`! 🦸‍♂️
+
+En el próximo taller aprenderemos a mejorar la performance de nuevos componentes usando nuevos hooks y herramientas de React enfocadas a memorizar procesos, ¡prepárate que toca seguir creciendo juntos!

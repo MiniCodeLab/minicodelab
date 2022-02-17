@@ -1,0 +1,170 @@
+# React desde 0 | React memo
+
+¡Muy buenas MiniCoder! Como ya hemos aprendido en los últimos artículos y talleres, la gran mayoría del desarrollo en React a día de hoy conlleva conocer en detalle como funciona el sistema de renderizado y como contorlar nuestros componentes.
+
+Hasta el momento hemos conseguido entender correctamente cuándo y cómo ocurren los renders, pero ahora toca aprender a controlarlos al completo 🔥
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-1',
+      title: 'Conceptos básicos de React parte 1'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-2',
+      title: 'Conceptos básicos de React parte 2'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-usestate-useeffect',
+      title: 'Hooks useState y useEffect'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-useref',
+      title: 'Hook useRef explicado al completo'
+    }
+  ]}
+/>
+
+Vamos a profundizar en este control de renderizado utilizando una herramienta increíble llamada **`React.memo`**.
+
+---
+
+## Previniendo rerenders gracias a React.memo
+
+Ya te habrás encontrado en bastantes ocasiones la necesidad de no renderizar de nuevo un componente aunque cambie el estado del componente padre, ¡pero sigue ocurriendo y no tienes forma de evitarlo! 😱
+
+Este comportamiento podremos obtenerlo a través de **`React.memo`**, una funcionalidad de React que permite a nuestros componentes realizar un **`shallowCompare`** de sus props. Esto quiere decir que para cada prop recibida, **nuestro componente comprobará si las anteriores y las nuevas (`nextProps`) son exactamente iguales,** y en caso de no serlo, permitirá un rerender del componente.
+
+Esto puede generar problemas con objetos, arrays y funciones generadas a nivel del componente padre sin estar gestionadas a través de un estado, ya que para cada render estas se recalcularán y perderemos la referencia al elemento del render anterior, haciendo inútil un **`shallowCompare`**.
+
+Vamos a ver un ejemplo de ello para ponerlo en práctica creando una vista donde dar puntuación a nuestras películas.
+
+Creamos el componente `Movie.tsx` en el que pintaremos el título y puntuación de la peli:
+
+```tsx
+type Props = {
+  title: string;
+  poster: string;
+};
+
+const Movie: React.FC<Props> = ({ title, poster }) => {
+  console.log('Renderizando Movie...');
+
+  return (
+    <div>
+      <h3>{title}</h3>
+      <img src={poster} alt={title} width={200} />
+    </div>
+  );
+};
+
+export default Movie;
+```
+
+Ahora crearemos otro componente `Review.tsx` donde almacenar una reseña y su puntuación, que será dinámica:
+
+```tsx
+type Props = {
+  title: string;
+  score: number;
+};
+
+const Review: React.FC<Props> = ({ title, score }) => {
+  console.log('Renderizando Review...');
+
+  return (
+    <div>
+      <p>
+        {title} - {score}
+      </p>
+    </div>
+  );
+};
+
+export default Review;
+```
+
+Y por último, el componente padre tendrá un state que cambiará la puntuación según introduzcamos valores en un input:
+
+```tsx
+import { useState } from 'react';
+import Movie from './MovieComponent';
+import Review from './ReviewComponent';
+import './styles.css';
+
+export default function App() {
+  const [score, setScore] = useState(0);
+
+  return (
+    <div className="App">
+      <Movie
+        title="Guardianes de la Galaxia"
+        poster="https://m.media-amazon.com/images/I/61-ndDQWTdL._AC_.jpg"
+      />
+
+      <hr />
+
+      <label>Cambia tu puntuación:</label>
+      <br />
+      <input type="number" value={score} onChange={(e) => setScore(e.target.valueAsNumber)} />
+
+      <Review
+        title="La he disfrutado muchísimo, siempre es un placer ver a los guardianes en acción"
+        score={score}
+      />
+    </div>
+  );
+}
+```
+
+Esto lo veremos de la siguiente forma, fíjate en que los console.log de cada componente aparecen cada vez que cambia el estado del componente padre:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093968/articles/react-desde-cero-hooks/guardiansnomemo.gif"
+  alt="reactmemo-guardiansnomemo"
+/>
+
+¿Pero es esto lo que buscamos? Seguro que piensas que idealmente no querríamos renderizar nuevamente el componente `Movie` cada vez que cambia el estado, ya que este componente no depende del valor `score`.
+
+Esto es posible gracias a `React.Memo` ya que los props son fácilmente comparables entre renders, evitando renderizados de más, ¡vamos a verlo en acción!
+
+```tsx
+import React from 'react';
+
+type Props = {
+  title: string;
+  poster: string;
+};
+
+const Movie: React.FC<Props> = React.memo(({ title, poster }) => {
+  console.log('Renderizando Movie...');
+
+  return (
+    <div>
+      <h3>{title}</h3>
+      <img src={poster} alt={title} width={200} />
+    </div>
+  );
+});
+
+export default Movie;
+```
+
+Hemos añadido React.memo como envoltura de nuestro componente, ahora solamente tenemos que ver que ocurre cuando cambiamos el valor del input:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093968/articles/react-desde-cero-hooks/guardianswithmemo.gif"
+  alt="reactmemo-guardianswithmemo"
+/>
+
+¡Y ya lo tenemos, acabamos de optimizar nuestra aplicación!
+
+A pesar de lo ventajoso que esto resulta, te recomendamos no abusar del uso de `React.memo` ya que envolver componentes con esta utilidad provocará una comprobación constante de los props, y es posible que inclinemos la balanza hacia el lado equivocado debido a un exceso de comprobaciones que ralentizarán la aplicación ⚖️.
+
+Pues tal y como hemos visto, ya sabes optimizar tus componentes para prevenir un exceso de renders que afecten negativamente a tu aplicación, ¡aunque hay que usarlo con cabeza y únicamente cuando tengamos problemas de rendimiento primero!
+
+Nos vemos en el próximo artículo para aprender `useMemo` y `useCallback` como verdaderos cracks 🔥
