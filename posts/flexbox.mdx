@@ -1,0 +1,634 @@
+# **Guía MiniCode de Flexbox **
+
+Hola 👋 MiniCoders, hoy estamos aquí para hablar de Flexbox. Este es el denominado **modelo de cajas flexible**, lleva años arraigado en la comunidad de desarrollo y hoy en día se usa en muchos proyectos que podéis ver en producción. Es uno de los métodos más utilizados para **distribuir elementos** y nos da unas herramientas que alcanzan mayor precisión.
+
+---
+
+### Particularidad de Flexbox
+
+A diferencia de otros métodos, Flexbox nos permite trabajar **controlando** a la vez **columnas** y **filas,** esto sucede gracias a la **distribución** de elementos en **dos ejes.** Podemos **convertir** en **flexible** cualquier elemento aplicándole la propiedad **`display: flex`** .
+
+```tsx
+<div>
+  <p>Alberto</p>
+  <p>Antonio</p>
+  <p>Cristian</p>
+  <p>Álvaro</p>
+</div>
+```
+
+```css
+div {
+  display: flex;
+}
+
+p {
+  color: #00b779;
+  padding: 5px;
+  border: 1px solid #00b779;
+  background-color: #7f5af0;
+}
+```
+
+De tal modo nuestros elementos se verían distribuidos dentro del eje x ocupando el espacio dado a los elementos.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645181754/articles/flex_skrrue.png"
+  alt="flex"
+/>
+
+Los navegadores actuales ya nos permiten interactuar con las propiedades de flex. Cuando estamos aprendiendo nos puede ayudar como punto de partida para jugar con toda su versatilidad.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645180573/articles/flex-direction.gif"
+  alt="flex-chrome"
+/>
+
+---
+
+### Eje central - Main Axis
+
+El eje central es el que podemos controlar mediante la propiedad `**flex-direction**`. En este eje se **distribuye** nuestro contenido en **fila** o en **columna**, pudiendo invertir el sentido de ellas.
+
+Para trabajar con filas o rows, tenemos que indicar **`flex-direction: row` | `display: flex` .**
+
+```tsx
+<div class="main-axis-container">
+  <div class="item-main-axis"></div>
+  <div class="item-main-axis"></div>
+  <div class="item-main-axis"></div>
+  <div class="item-main-axis"></div>
+</div>
+```
+
+```css
+display: flex;
+  flex-direction: row;
+  background-color: #00b779;
+}
+
+.item-main-axis {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  background-color: #7f5af0;
+  border: 3px solid black;
+}
+```
+
+Ahora en nuestro navegador nuestros bloques se representan en fila dentro del eje principal.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645181849/articles/direction.png"
+  alt="flex-direction"
+/>
+
+Si queremos que nuestros elementos sean columnas tan solo tenemos que cambiar la dirección **`flex-direction: column` .**
+
+```css
+.main-axis-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #00b779;
+}
+
+.item-main-axis {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  background-color: #7f5af0;
+  border: 3px solid black;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645181924/articles/column.png"
+  alt="flex-column"
+/>
+
+Los valores que podemos aplicarle a `**flex-direction**` son: `**row**`, `**row-reverse**`, `**column**` y `**column-reverse**`. Por lo tanto, y tal como hemos dicho, en este eje controlaremos la distribución en fila o en columna. Por defecto, si no indicamos lo contrario, nuestro `**flex-direction**` tendrá el valor `**row**`.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+---
+
+### Eje cruzado - Cross Axis
+
+El Cross Axis es el interno a nuestro eje principal, por lo tanto se ajustará al ancho y largo de nuestra fila o columna definida por `**flex-direction**`. Es decir, podremos **controlar la alineación y justificación** del contenido que tenemos dentro de estas filas y columnas. Estos parámetros se pueden controlar con las herramientas `**align-items**`, `**align-content**` y `**justify-content**`.
+
+Como podéis ver en el ejemplo, hemos alineado el contenido de nuestra fila al centro y repartido los elementos “a lo largo” del contenedor gracias a `**align-items: center**` y `**justify-content: space-around**`.
+
+```css
+.main-axis-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+---
+
+### justify-content: Start y End
+
+Además de la posición debemos de tener en cuenta la horizontalidad de nuestro contenido, es decir, saber dónde empieza y dónde acaba nuestro elemento en el documento.
+
+```css
+.main-axis-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.item-main-axis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  background-color: #7f5af0;
+  border: 3px solid black;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.main-axis-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.item-main-axis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  background-color: #7f5af0;
+  border: 3px solid black;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+A la hora de internacionalizar una aplicación tendremos que tener en cuenta de que no todo es de izquierda a derecha, por lo que podremos justificar teniendo en cuenta el start o el end gracias a `**justify-content**`. Por ejemplo, un texto en árabe estaría justificado a la derecha de nuestra “fila” con un `**justify-content: flex-end**`.
+
+---
+
+### Propiedades del contenedor
+
+Tal y como hemos visto al inicio del artículo, la propiedad display nos permite convertir mediante el atributo `**flex**` un contenedor en flexible, en este caso el contenedor sería la zona verde de la imagen, mientras que los elementos del mismo serían los cuadrados morados.
+
+`**display: flex**`
+
+```css
+.box {
+  display: flex;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+---
+
+### Propiedades del contenedor [elemento padre] -flex-direction
+
+Esta propiedad establece el eje central y la dirección de los elementos dentro de un contenedor, por lo que podemos especificar si queremos distribuirlos en fila o en columna definiendo una dirección específica.
+
+**`flex-direction: row`**
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  display: flex;
+  flex-direction: row;
+}
+```
+
+**`flex-direction: row`**
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+```
+
+**`flex-direction: column`**
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  display: flex;
+  flex-direction: column;
+}
+```
+
+**`flex-direction: column-reverse`**
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  display: flex;
+  flex-direction: column-reverse;
+}
+```
+
+---
+
+### Propiedades del contenedor [elemento padre] -flex-wrap
+
+Gracias a esta propiedad, los items que no quepan en el ancho de una línea (que es el comportamiento por defecto de las flexbox) lo harán en la siguiente.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  flex-wrap: nowrap | wrap | wrap-reverse;
+}
+```
+
+---
+
+### Propiedades del contenedor [elemento padre] -flex-flow
+
+Esto es un atajo de las dos propiedades anteriores, con la cual podemos definir tanto la dirección (`row` o `column`) y si necesitamos `wrap` en nuestro contenedor.
+
+```css
+.container {
+  flex-flow: row wrap;
+}
+```
+
+---
+
+### Propiedades del contenedor [elemento padre] -justify-content
+
+Esta propiedad conforma la alineación de los items a lo largo del eje principal e indica como se tienen que distribuir los elementos a lo largo del espacio de dicho eje.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  justify-content: flex-start;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  justify-content: flex-end;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  justify-content: center;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  justify-content: space-between;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  justify-content: space-around;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  justify-content: space-evenly;
+}
+```
+
+---
+
+### Propiedades del contenedor [elemento padre] -align-items
+
+Esto define el alineamiento de los items a lo largo del eje cruzado, es decir, la manera en la que se distribuyen los items a lo largo y ancho del eje interno de nuestro eje principal.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  align-items: flex-start;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  align-items: flex-end;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  align-items: center;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  align-items: stretch;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+```css
+.container {
+  align-items: baseline;
+}
+```
+
+---
+
+### Propiedades del contenedor [elemento padre] -align-content
+
+Es el equivalente a align-items pero con multi-lineas, es decir, align-items distribuye los items a través del eje cruzado y align-content los distribuye de igual manera en líneas diferentes generadas, por ejemplo, por un flex-wrap.
+
+```css
+.container {
+  align-content: flex-start | flex-end | center | space-between | space-around | space-evenly |
+    stretch | start | end | baseline;
+}
+```
+
+---
+
+### Propiedades del item [elemento hijo] -order
+
+Esta propiedad controla el orden en el que aparecen los items a través del contenedor, por defecto es 0.
+
+```tsx
+<div class="box">
+  <div class="box-item">
+    <a href="#">1</a>
+  </div>
+  <div class="box-item">
+    <a href="#">2</a>
+  </div>
+  <div class="box-item">
+    <a href="#">3</a>
+  </div>
+  <div class="box-item">
+    <a href="#">4</a>
+  </div>
+  <div class="box-item">
+    <a href="#">5</a>
+  </div>
+</div>
+```
+
+```css
+.box {
+  display: flex;
+  flex-direction: row;
+}
+
+.box-item {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  background-color: #7f5af0;
+  border: 3px solid black;
+  align-items: center;
+  justify-content: center;
+}
+.box :nth-child(1) {
+  order: 2;
+}
+.box :nth-child(2) {
+  order: 3;
+}
+.box :nth-child(3) {
+  order: 1;
+}
+.box :nth-child(4) {
+  order: 3;
+}
+.box :nth-child(5) {
+  order: 1;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+---
+
+### Propiedades del item [elemento hijo] -flex-grow
+
+Esta propiedad permite al item “crecer” o estirarse lo indicado hasta ocupar su parte proporcional en el contenedor. Es decir, si le indicamos a un item que su flex-grow sea 2 ocupará el doble que su espacio normal a lo largo del contenedor.
+
+```tsx
+<div class="grow-container">
+  <div class="box box-grow">1</div>
+  <div class="box box-grow-doble">2</div>
+  <div class="box box-grow">1</div>
+  <div class="box box-grow-doble">2</div>
+  <div class="box box-grow">1</div>
+</div>
+```
+
+```css
+.grow-container {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
+  align-items: stretch;
+}
+
+.box {
+  height: 50px;
+  margin: 10px;
+  border: 3px solid black;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-grow {
+  flex-grow: 1;
+  background-color: #7f5af0;
+}
+
+.box-grow-doble {
+  flex-grow: 2;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+---
+
+### Propiedades del item [elemento hijo] -flex-shrink
+
+Define la capacidad de un item de encogerse si fuera necesario. El valor por defecto es 1, es decir, el comportamiento normal de un elemento.
+
+```tsx
+<div class="shrink-container">
+  <div class="box ">1</div>
+  <div class="box box-shrink">2</div>
+  <div class="box ">1</div>
+  <div class="box box-shrink">2</div>
+  <div class="box ">1</div>
+</div>
+```
+
+```css
+.shrink-container {
+  display: flex;
+  width: 350px;
+  height: 100px;
+}
+
+.box {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 100px;
+  border: 3px solid black;
+}
+
+.box-shrink {
+  flex-shrink: 3;
+  background-color: #7f5af0;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+---
+
+### Propiedades del item [elemento hijo] -align-self
+
+Esta propiedad permite que los elementos individuales sobre-escriban el `**align-items**` por defecto que tienen los contenedores. Dicho de otra manera, esta propiedad individual tiene más importancia que la definida por el contenedor.
+
+```css
+.item {
+  align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}
+```
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1645093970/articles/react-desde-cero-hooks/useRefOne.gif"
+  alt="useref-1"
+/>
+
+---
+
+MiniCoders os dejamos un repo con algunos ejemplos de flex que os pueden ayudar y poder entender mejor todo lo explicado hasta ahora.
+
+<ReferencesStack
+  links={[
+    {
+      type: 'external',
+      url: 'https://github.com/MiniCodeLab/Flexbox',
+      title: 'Repositorio MiniCodeLab'
+    }
+  ]}
+/>
+
+Nos vemos pronto 🔜 !
