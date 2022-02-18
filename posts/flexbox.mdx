@@ -48,7 +48,7 @@ Los navegadores actuales ya nos permiten interactuar con las propiedades de flex
 
 ### Eje central - Main Axis
 
-El eje central es el que podemos controlar mediante la propiedad `**flex-direction**`. En este eje se **distribuye** nuestro contenido en **fila** o en **columna**, pudiendo invertir el sentido de ellas.
+El eje central es el que podemos controlar mediante la propiedad **`flex-direction`**. En este eje se **distribuye** nuestro contenido en **fila** o en **columna**, pudiendo invertir el sentido de ellas.
 
 Para trabajar con filas o rows, tenemos que indicar **`flex-direction: row` | `display: flex` .**
 
@@ -106,7 +106,7 @@ Si queremos que nuestros elementos sean columnas tan solo tenemos que cambiar la
   alt="flex-column"
 />
 
-Los valores que podemos aplicarle a `**flex-direction**` son: `**row**`, `**row-reverse**`, `**column**` y `**column-reverse**`. Por lo tanto, y tal como hemos dicho, en este eje controlaremos la distribución en fila o en columna. Por defecto, si no indicamos lo contrario, nuestro `**flex-direction**` tendrá el valor `**row**`.
+Los valores que podemos aplicarle a **`flex-direction`** son: **`row`**, **`row-reverse`**, **`column`** y **`column-reverse`**. Por lo tanto, y tal como hemos dicho, en este eje controlaremos la distribución en fila o en columna. Por defecto, si no indicamos lo contrario, nuestro **`flex-direction`** tendrá el valor **`row`**.
 
 <img
   src="https://res.cloudinary.com/db38x6luj/image/upload/v1645203889/articles/flex-direction_uol6ww.gif"
@@ -117,9 +117,9 @@ Los valores que podemos aplicarle a `**flex-direction**` son: `**row**`, `**row-
 
 ### Eje cruzado - Cross Axis
 
-El Cross Axis es el interno a nuestro eje principal, por lo tanto se ajustará al ancho y largo de nuestra fila o columna definida por `**flex-direction**`. Es decir, podremos **controlar la alineación y justificación** del contenido que tenemos dentro de estas filas y columnas. Estos parámetros se pueden controlar con las herramientas `**align-items**`, `**align-content**` y `**justify-content**`.
+El Cross Axis es el interno a nuestro eje principal, por lo tanto se ajustará al ancho y largo de nuestra fila o columna definida por **`flex-direction`**. Es decir, podremos **controlar la alineación y justificación** del contenido que tenemos dentro de estas filas y columnas. Estos parámetros se pueden controlar con las herramientas **`align-items`**, **`align-content`** y **`justify-content`**.
 
-Como podéis ver en el ejemplo, hemos alineado el contenido de nuestra fila al centro y repartido los elementos “a lo largo” del contenedor gracias a `**align-items: center**` y `**justify-content: space-around**`.
+Como podéis ver en el ejemplo, hemos alineado el contenido de nuestra fila al centro y repartido los elementos “a lo largo” del contenedor gracias a **`align-items: center`** y **`justify-content: space-around`**.
 
 ```css
 .main-axis-container {
@@ -191,13 +191,13 @@ Además de la posición debemos de tener en cuenta la horizontalidad de nuestro 
   alt="start-end"
 />
 
-A la hora de internacionalizar una aplicación tendremos que tener en cuenta de que no todo es de izquierda a derecha, por lo que podremos justificar teniendo en cuenta el start o el end gracias a `**justify-content**`. Por ejemplo, un texto en árabe estaría justificado a la derecha de nuestra “fila” con un `**justify-content: flex-end**`.
+A la hora de internacionalizar una aplicación tendremos que tener en cuenta de que no todo es de izquierda a derecha, por lo que podremos justificar teniendo en cuenta el start o el end gracias a **`justify-content`**. Por ejemplo, un texto en árabe estaría justificado a la derecha de nuestra “fila” con un **`justify-content: flex-end`**.
 
 ---
 
 ### Propiedades del contenedor
 
-Tal y como hemos visto al inicio del artículo, la propiedad display nos permite convertir mediante el atributo `**flex**` un contenedor en flexible, en este caso el contenedor sería la zona verde de la imagen, mientras que los elementos del mismo serían los cuadrados morados.
+Tal y como hemos visto al inicio del artículo, la propiedad display nos permite convertir mediante el atributo **`flex`** un contenedor en flexible, en este caso el contenedor sería la zona verde de la imagen, mientras que los elementos del mismo serían los cuadrados morados.
 
 `**display: flex**`
 
@@ -604,7 +604,7 @@ Define la capacidad de un item de encogerse si fuera necesario. El valor por def
 
 ### Propiedades del item [elemento hijo] -align-self
 
-Esta propiedad permite que los elementos individuales sobre-escriban el `**align-items**` por defecto que tienen los contenedores. Dicho de otra manera, esta propiedad individual tiene más importancia que la definida por el contenedor.
+Esta propiedad permite que los elementos individuales sobre-escriban el **`align-items`** por defecto que tienen los contenedores. Dicho de otra manera, esta propiedad individual tiene más importancia que la definida por el contenedor.
 
 ```css
 .item {
