@@ -1,0 +1,110 @@
+# **Guía MiniCode de Javascript | Objetos y Arrays**
+
+Mini Coders seguimos con nuestra guía de Javascript, hoy vamos a ver cómo funcionan los objetos y los arrays. Es una manera diferente de guardar información en una variable, pero no os preocupéis porque vamos a ir paso a paso.
+
+Os dejamos los enlaces a los post anteriores:
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/js-taller-variables',
+      title: 'Variables'
+    },
+    {
+      type: 'internal',
+      url: '/feed/js-taller-tipos-de-datos',
+      title: 'Tipos de datos'
+    },
+    {
+      type: 'internal',
+      url: '/feed/js-taller-operadores',
+      title: 'Operadores'
+    }
+  ]}
+/>
+
+---
+
+### Objetos
+
+Los objetos en Javascript se pueden asemejar con los objetos de la vida real. Con ello queremos decir que los objetos se pueden entender como elementos tangibles de nuestro día a día.
+
+Un objeto es una entidad independiente con diferentes propiedades y tipos. Compáralo con un juguete, por ejemplo. Una juguete es un objeto con propiedades. Una juguete tiene un color, un diseño, un peso, un material del que está hecho, etc. Del mismo modo, los objetos de JavaScript pueden tener propiedades que definan sus características.
+
+---
+
+### Objetos y propiedades
+
+Un objeto de JavaScript tiene propiedades asociadas a él. Una propiedad de un objeto se puede explicar como una variable adjunta al objeto. Las propiedades de un objeto básicamente son lo mismo que las variables comunes de JavaScript, excepto por el nexo con el objeto.
+
+```jsx
+var myAvenger = new Object();
+myAvenger.name = 'Captain America';
+myAvenger.power = 80;
+myAvenger.creator = 'Stan Lee';
+```
+
+El ejemplo anterior también se podría escribir usando un iniciador de objeto, que es una lista delimitada por comas de cero o más pares de nombres de propiedad y valores asociados de un objeto, encerrados entre llaves ({}):
+
+```jsx
+let myAvenger = {
+  name: 'Captain America',
+  power: 80,
+  creator: 'Stan Lee'
+};
+```
+
+Las propiedades no asignadas de un objeto son **`undefined`** .
+
+```jsx
+myAvenger.alias; // undefined
+```
+
+También puedes acceder o establecer las propiedades de los objetos en JavaScript mediante la notación de corchetes **`[]`.**
+
+```jsx
+myAvenger['name'] = 'Captain America';
+```
+
+Podemos acceder a estos también usando el valor de una variable, la definimos con el nombre y luego la usamos, ahora no os parecerá útil pero en un futuro volveremos a este punto.
+
+```jsx
+let name = 'name';
+myAvenger[name] = 'Captain America';
+
+let power = 'power';
+myAvenger[power] = 80;
+```
+
+---
+
+### Arrays
+
+La manera de representar un listado de elementos en programación, se denomina Array. Un array está compuesto por varios ítems, entre corchetes `[ ]`.
+
+```jsx
+let listYears = [1972, 1984, 1988, 1992, 1997, 2021, 2022];
+let listNames = ['Captain America', 'Spiderman', 'IronMan'];
+let listSuperHeroes = [
+  { id: 1, name: 'Tony Stark' },
+  { id: 4, name: 'Peter Parker' }
+];
+```
+
+---
+
+### Declarar y a**cceder a los elementos de un Array**
+
+Pensemos en el array como una lista de elementos, cada uno con su posición **(empezando por la 0)**. Para acceder a la primera posición del array, basta con poner entre corchetes el número 0.
+
+```jsx
+let avengers = ['Hulk', 'SpiderMan', 'AntMan'];
+
+let avenger = avengers[0]; // Probad a cambiar este numero ;)
+console.log(avenger); // Devuelve "Hulk"
+```
+
+---
+
+Seguimos avanzando MiniCoders, ahora toca trabajar y poner en práctica todo lo aprendido.
