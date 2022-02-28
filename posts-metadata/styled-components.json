@@ -1,8 +1,7 @@
 {
-    "author": "@aRiveraMerida",
-    "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/css.png",
-    "description": "Guía MiniCode de Styled Components | Parte 1",
-    "title": "Guía MiniCode de Styled Components",
-    "date": "02/28/2022 18:00:00"
-  }
-  
+  "author": ["@aRiveraMerida", "@Ccastillo06"],
+  "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/css.png",
+  "description": "Guía MiniCode de Styled Components | Parte 1",
+  "title": "Guía MiniCode de Styled Components",
+  "date": "02/28/2022 18:00:00"
+}
