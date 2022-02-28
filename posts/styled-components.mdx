@@ -1,0 +1,306 @@
+# Guía MiniCode: Introducción Styled Components
+
+Hola MiniCoders! Tal y como habéis pedido vamos a lanzar una serie de post sobre styled-components. Si alguno habéis caído por aquí y no sabéis qué son los Styled Components, os haremos una breve introducción para que los conozcáis y varios ejemplos de uso.
+
+Por lo pronto os contaremos que a día de hoy las librerías más usadas para trabajar con **`styled components`** son **`styled-components`** y **`emotion`** . Y vamos a tener tres posts, el primero hablando de **`styled-components`**, el segundo hablando de **`emotion`** y el tercero explicando tanto la diferencia entre una librería y otra, como las ventajas de uso.
+
+---
+
+### ¿Qué es `Styled-Component` ?
+
+Es una librería que nos permite dar estilos a nuestros componentes de React, la particularidad es que nos crea un componente en el cual definimos sus estilos y podemos usarlos en varios puntos wrappeando o envolviendo nuestros componentes funcionales.
+
+Estos componentes podemos condicionarlos a las propiedades o lógica que queramos, provocando un gran dinamismo a la hora de definir los elementos visuales de nuestra aplicación de React. Además nos deja crear clases automáticas para cada uno de los componentes, de este modo no se pisan nuestros estilos.
+
+En caso de necesitar clases en vez de componentes esta librería te da la opción de gestionar tu estilos a través de su método tradicional, lo vamos a ver aunque la gracia es trabajar con componentes.
+
+---
+
+### Proyecto React con `Styled-Component`
+
+Creamos un proyecto de React y añadimos la librería de **`styled-components`**.
+
+```bash
+npx create-react-app styled-components
+
+cd styled-components
+
+npm i styled-components
+```
+
+Si estáis trabajando con VsCode es interesante añadir el paquete de **`vscode-styled-components`** aunque es totalmente opcional, solo nos facilita la visualización con colores.
+
+---
+
+### Primer componente con `Styled-Component`
+
+Al igual que generamos una carpeta de los componentes funcionales, normalmente bajo el nombre de **`components`**, es bueno generar otra para los componentes de estilos. Existen varias formar de organizar un proyecto aunque desde MiniCode nos gusta tener una carpeta **`ui`** en la que los guardamos.
+
+Ok, vamos a crear un componente muy sencillo. Queremos tener un componente de estilo para los botones.
+
+```tsx
+import styled from 'styled-components';
+
+const ButtonStyled = styled.button`
+  background-color: skyblue;
+  color: white;
+  font-size: 20px;
+  border: 0;
+`;
+```
+
+Pero qué sucede si tengo tres colores para nuestros botones? pues como es un componente de React le podemos indicar mediante las props qué estilo debe aplicar.
+
+```jsx
+import styled from 'styled-components';
+
+const ButtonStyled = styled.button`
+  background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
+  color: white;
+  font-size: 20px;
+  border: 0;
+`;
+```
+
+Ahora podemos usar nuestro **`styled component`** o componente de estilo en cualquier parte de nuestra aplicación.
+
+```tsx
+<ButtonStyled backgroundColor="coral">SEND</ButtonStyled>
+```
+
+---
+
+### `Styled-Component` para los textos
+
+Vamos a ver algún ejemplo más antes de avanzar en el uso de la librería, por ello vamos a crear un componente de estilo para los textos de nuestra aplicación. Creamos un componente con **`styled components`** para usarlo en otro punto de nuestra aplicación.
+
+```jsx
+import React from 'react';
+import styled from 'styled-components';
+
+const TextStyled = styled.text`
+  background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
+  color: red;
+  font-size: 10px;
+  border: 0;
+`;
+
+const TextComponent = ({ children, backgroundColor }) => {
+  return <TextStyled backgroundColor={backgroundColor}>{children}</TextStyled>;
+};
+
+export default TextComponent;
+```
+
+Una vez lo tenemos en nuestra carpeta de componentes de estilo , en nuestro caso **`ui`**, podemos usarlo en el punto que queramos.
+
+```jsx
+import './App.css';
+import TextComponent from './components/ui/TextComponent';
+
+function App() {
+  return (
+    <div className="App">
+      <TextComponent backgroundColor="default">Hola MiniCoders</TextComponent>
+    </div>
+  );
+}
+
+export default App;
+```
+
+Genial MiniCoders! poco a poco vamos viendo cómo funcionan y el uso que podemos llegar a dar a este tipo de componentes en nuestra aplicación, no? Seguimos ✔️
+
+---
+
+### Elegir estilos en `Styled-Component`
+
+En los styled components podemos indicar que se disparen unos estilos u otros en base a la propiedad que le estamos pasando. Vamos a crear un sencillo ejemplo para ver otra de las bondades.
+
+```jsx
+import React from 'react';
+import styled, { css } from 'styled-components';
+
+const TitleStyled = styled.h1`
+  color: red;
+  font-size: 10px;
+  border: 0;
+  ${({ primary }) =>
+    primary &&
+    css`
+      background-color: indianred;
+      border: 1px solid skyblue;
+      font: 20px;
+    `}
+  &:hover {
+    background-color: mediumseagreen;
+  }
+`;
+
+const TitleComponent = ({ children, primary }) => {
+  return <TitleStyled primary={primary}>{children}</TitleStyled>;
+};
+
+export default TitleComponent;
+```
+
+De este modo podemos invocar a nuestro componente e indicarle la propiedad **`primary`** para usar los estilos definidos.
+
+```jsx
+import './App.css';
+import TitleComponent from './components/ui/TitleComponent';
+
+function App() {
+  return (
+    <div className="App">
+      <TitleComponent primary>MiniCodeLab</TitleComponent>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### `Styled-Component` como Layouting
+
+Como ya os habéis imaginado la versatilidad que podemos alcanzar con estos componentes es increíble, por ello os vamos a dejar un ejemplo de cómo usarlos a modo de layouting, y lo sencillo que puede llegar a ser.
+
+Creamos un **`styled component`** que se comportará como un div y le indicamos el posicionamiento de elementos. Es decir será un contenedor o un **`div`** con unos estilos predefinidos.
+
+```jsx
+import React from 'react';
+import styled from 'styled-components';
+
+const StyleDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DivFlexComponent = ({ children }) => {
+  return <StyleDiv>{children}</StyleDiv>;
+};
+
+export default DivFlexComponent;
+```
+
+Y ahora tenemos un **`div`** contenedor con flex en el que poder wrappear o envolver todos los elementos que queramos, en nuestro caso serán todos los componentes generados con anterioridad.
+
+```jsx
+import './App.css';
+import styled from 'styled-components';
+import TextComponent from './components/ui/TextComponent';
+import TitleComponent from './components/ui/TitleComponent';
+import DivFlexComponent from './components/ui/DivFlexComponent';
+
+const ButtonStyled = styled.button`
+  background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
+  color: white;
+  font-size: 20px;
+  border: 0;
+`;
+
+function App() {
+  return (
+    <div className="App">
+      <DivFlexComponent>
+        <TitleComponent primary>Mi Título</TitleComponent>
+        <ButtonStyled backgroundColor="coral">SEND</ButtonStyled>
+        <TextComponent backgroundColor="default">Mi texto</TextComponent>
+      </DivFlexComponent>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### Mejorando nuestro `Styled-Component` Layout
+
+Vamos a configurar nuestro "layout" en base algunas propiedades que le indicamos desde el componente en el que le estamos usando de este modo veremos la facilidad de uso de este tipo de componentes.
+
+```jsx
+import React from 'react';
+import styled from 'styled-components';
+
+const StyleDiv = styled.div`
+  display: flex;
+  flex-direction: ${(props) => (props.direction === 'row' ? 'row' : 'column')};
+  justify-content: center;
+  align-items: center;
+`;
+
+const DivFlexComponent = ({ children, direction }) => {
+  return <StyleDiv direction={direction}>{children}</StyleDiv>;
+};
+
+export default DivFlexComponent;
+```
+
+Ahora vamos a ver qué podemos hacer usando este componente dentro de nuestro **`App`**, recordad que son ejemplos sencillos que os proponemos para que descubráis las virtudes de los **`styled components`**.
+
+```jsx
+import './App.css';
+import styled from 'styled-components';
+import TextComponent from './components/ui/TextComponent';
+import TitleComponent from './components/ui/TitleComponent';
+import DivFlexComponent from './components/ui/DivFlexComponent';
+
+const ButtonStyled = styled.button`
+  background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
+  color: white;
+  font-size: 20px;
+  border: 0;
+`;
+
+function App() {
+  return (
+    <div className="App">
+      <DivFlexComponent direction={'column'}>
+        <TitleComponent primary>Mi Título</TitleComponent>
+        <ButtonStyled backgroundColor="coral">SEND</ButtonStyled>
+        <TextComponent backgroundColor="default">Mi texto</TextComponent>
+      </DivFlexComponent>
+      <DivFlexComponent direction={'row'}>
+        <TitleComponent primary>Mi Título</TitleComponent>
+        <ButtonStyled backgroundColor="coral">SEND</ButtonStyled>
+        <TextComponent backgroundColor="default">Mi texto</TextComponent>
+      </DivFlexComponent>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### Media queries `Styled-Component`
+
+En caso de necesitar alguna media para que tus componentes se comporten a nivel visual como te lo pide el diseño podemos definir nuestros styled en base a una variable que haga saltar nuestro componente.
+
+```jsx
+const desktopStartWidth = 996;
+
+const desktop = `@media (min-width: ${desktopStartWidth}px)`;
+const mobile = `@media (max-width: ${desktopStartWidth}px)`;
+
+const square = styled.div`
+  ... ${mobile} {
+    width: 100%;
+  }
+`;
+```
+
+---
+
+### Conclusión
+
+Hemos visto algunos ejemplos prácticos con la librería de styled-components pero no hemos profundizado en las ventajas de uso. Por ello recordar que el primer y segundo post están enfocados a ejemplos prácticos y uso de librerías, si quieres aprender sobre las ventajas y diferencia entre librerías debes esperar a nuestro tercer post.
+
+Un saludo 👋 MiniCoders!
