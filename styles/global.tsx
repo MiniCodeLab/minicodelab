@@ -1,5 +1,8 @@
 import { css, Global } from '@emotion/react';
 
+export const tabletUp = '@media (min-width: 840px)';
+export const desktopUp = '@media (min-width: 1048px)';
+
 export const Reset = css`
   html,
   body,
@@ -99,6 +102,7 @@ export const Reset = css`
     color: inherit;
     font: inherit;
   }
+
   button:hover {
     cursor: pointer;
   }
@@ -111,6 +115,10 @@ export const Reset = css`
   input {
     -webkit-appearance: none;
   }
+
+  b {
+    font-weight: bold;
+  }
 `;
 
 export const Variables = css`
@@ -120,13 +128,14 @@ export const Variables = css`
     --title-h2: 1.35rem;
     --title-h3: 1rem;
     --paragraph: 1rem;
-    --text-to-mobile: 1.5;
-    --button-text: 0.7rem;
+    --text-to-mobile: 1.25;
+    --button-text: 0.8rem;
     --box-shadow: rgba(0, 0, 0, 0.486) 0px 5px 15px;
     --code-block: rgb(45, 45, 45);
     --code-text: rgb(204, 153, 205);
     --code-radius: 4px;
     --card-max-width-mb: 350px;
+    --card-max-width-tb: 400px;
     --card-max-width-dk: 500px;
     --spacing-m: 20px;
   }
@@ -168,12 +177,9 @@ export const AppStyles = css`
     transition: background 0.25s ease-in-out;
   }
 
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  * {
+  *,
+  *:before,
+  *:after {
     box-sizing: border-box;
   }
 
@@ -187,8 +193,15 @@ export const AppStyles = css`
     font-weight: bold;
   }
 
+  h1,
+  h2,
+  h3 {
+    padding: var(--spacing-m) 0;
+  }
+
   h1 {
     font-size: var(--title-h1);
+    padding-top: 0;
   }
 
   h2 {
@@ -199,17 +212,22 @@ export const AppStyles = css`
     font-size: var(--title-h3);
   }
 
+  a {
+    color: var(--color-paragraph);
+    text-decoration: underline;
+  }
+
   p,
+  a,
   li {
     color: var(--color-paragraph);
     font-size: var(--paragraph);
     line-height: 120%;
+    padding: calc(var(--spacing-m) / 2) 0;
   }
 
-  *,
-  *:before,
-  *:after {
-    box-sizing: border-box;
+  button {
+    font-size: var(--button-text);
   }
 
   .post-button {
@@ -240,21 +258,25 @@ export const AppStyles = css`
   /* END - GLOBAL STYLES */
 
   /* MEDIA DESKTOP */
-  @media (min-width: 840px) {
+  ${tabletUp} {
     h1 {
       font-size: calc(var(--title-h1) * (var(--text-to-mobile)));
     }
+
     h2 {
       font-size: calc(var(--title-h2) * (var(--text-to-mobile)));
     }
+
     h3 {
       font-size: calc(var(--title-h3) * (var(--text-to-mobile)));
     }
+
     p,
+    a,
     li {
-      color: var(--color-paragraph);
       font-size: calc(var(--paragraph) * (var(--text-to-mobile)));
     }
+
     button {
       font-size: calc(var(--button-text) * (var(--text-to-mobile)));
     }
