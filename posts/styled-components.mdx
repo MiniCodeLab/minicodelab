@@ -1,91 +1,115 @@
 # Guía MiniCode: Introducción Styled Components
 
-Hola MiniCoders! Tal y como habéis pedido vamos a lanzar una serie de post sobre styled-components. Si alguno habéis caído por aquí y no sabéis qué son los Styled Components, os haremos una breve introducción para que los conozcáis y varios ejemplos de uso.
+¡Hola MiniCoders! Tal y como nos has pedido en estos últimos talleres, vamos a lanzar una serie de posts sobre el patrón `styled` en React. Si has caído por aquí y no sabes qué son los Styled Components, te haremos una breve introducción para que los conozcas y tengas varios ejemplos de uso.
 
-Por lo pronto os contaremos que a día de hoy las librerías más usadas para trabajar con **`styled components`** son **`styled-components`** y **`emotion`** . Y vamos a tener tres posts, el primero hablando de **`styled-components`**, el segundo hablando de **`emotion`** y el tercero explicando tanto la diferencia entre una librería y otra, como las ventajas de uso.
+Por lo pronto te contamos que a día de hoy, dos de las librerías más usadas para trabajar en **React** con el patrón **`styled`** son **`styled-components`** y **`emotion`** . Y vamos a publicar tres posts, el primero hablando de **`styled-components`**, que será este mismo, el segundo hablando de **`emotion`** y el tercero explicando tanto la diferencia entre una librería y otra, como las ventajas de uso.
 
 ---
 
-### ¿Qué es `Styled-Component` ?
+### ¿Qué es `Styled-Component`?
 
-Es una librería que nos permite dar estilos a nuestros componentes de React, la particularidad es que nos crea un componente en el cual definimos sus estilos y podemos usarlos en varios puntos wrappeando o envolviendo nuestros componentes funcionales.
+Es una librería que nos permite dar estilos a nuestros componentes de React utilizando sintaxis CSS. La particularidad es que nos permite crear un componente en el cual definimos estilos y podemos usarlos en varios puntos wrappeando o envolviendo otros componentes de React.
 
-Estos componentes podemos condicionarlos a las propiedades o lógica que queramos, provocando un gran dinamismo a la hora de definir los elementos visuales de nuestra aplicación de React. Además nos deja crear clases automáticas para cada uno de los componentes, de este modo no se pisan nuestros estilos.
+Estos componentes podemos condicionarlos a las propiedades o lógica que queramos utilizando `props` o funciones en ellos, provocando un gran dinamismo a la hora de definir los elementos visuales de nuestra aplicación de React. Además crea clases automáticas para cada uno de los componentes que definimos y usamos, de este modo no se pisan con nuestros otros estilos.
 
-En caso de necesitar clases en vez de componentes esta librería te da la opción de gestionar tu estilos a través de su método tradicional, lo vamos a ver aunque la gracia es trabajar con componentes.
+En caso de necesitar clases en vez de componentes esta librería te da la opción de gestionar tu estilos a través de su método tradicional, lo vamos a ver aunque a estas alturas deberíamos trabajar con componentes funcionales.
 
 ---
 
 ### Proyecto React con `Styled-Component`
 
-Creamos un proyecto de React y añadimos la librería de **`styled-components`**.
+Creamos un proyecto de React y añadimos la librería **`styled-components`** desde npm.
 
 ```bash
-npx create-react-app styled-components
+npx create-react-app styled-components --template typescript
 
 cd styled-components
 
 npm i styled-components
 ```
 
-Si estáis trabajando con VsCode es interesante añadir el paquete de **`vscode-styled-components`** aunque es totalmente opcional, solo nos facilita la visualización con colores.
+Si estáis trabajando con VSCode es interesante añadir el paquete de **`vscode-styled-components`** aunque es totalmente opcional, solo nos facilita la visualización con colores.
 
 ---
 
 ### Primer componente con `Styled-Component`
 
-Al igual que generamos una carpeta de los componentes funcionales, normalmente bajo el nombre de **`components`**, es bueno generar otra para los componentes de estilos. Existen varias formar de organizar un proyecto aunque desde MiniCode nos gusta tener una carpeta **`ui`** en la que los guardamos.
+Al igual que generamos una carpeta de los componentes funcionales, normalmente bajo el nombre de **`components`**, es bueno generar otra para los componentes de estilos que se compartan en nuestra aplicación. Existen varias formar de organizar un proyecto aunque desde MiniCode nos gusta tener una carpeta **`ui`** en la que los guardamos organizados.
 
-Ok, vamos a crear un componente muy sencillo. Queremos tener un componente de estilo para los botones.
+¡Ok! Vamos a crear un componente muy sencillo para comenzar, queremos tener un componente de estilo para los botones.
 
 ```tsx
 import styled from 'styled-components';
 
 const ButtonStyled = styled.button`
   background-color: skyblue;
+  border: 0;
   color: white;
   font-size: 20px;
-  border: 0;
 `;
 ```
 
-Pero qué sucede si tengo tres colores para nuestros botones? pues como es un componente de React le podemos indicar mediante las props qué estilo debe aplicar.
+Este **`Styled Component`** podemos utilizarlo como un componente normal en cualquier parte de nuestra aplicación:
+
+```tsx
+<ButtonStyled>SEND</ButtonStyled>
+```
+
+¿Pero qué sucede si tengo tres colores para nuestros botones? Pues como en realidad esto es un componente de React le podemos indicar mediante las props qué estilo debe aplicar, utilizando código JS.
 
 ```jsx
 import styled from 'styled-components';
 
 const ButtonStyled = styled.button`
   background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
+  border: 0;
   color: white;
   font-size: 20px;
-  border: 0;
 `;
 ```
 
-Ahora podemos usar nuestro **`styled component`** o componente de estilo en cualquier parte de nuestra aplicación.
+¡Ahora podemos usar nuestro **`styled component`** de forma dinámica combinando su capacidad de añadir CSS con el uso de props! 🎨
 
 ```tsx
 <ButtonStyled backgroundColor="coral">SEND</ButtonStyled>
+```
+
+¿Te has fijado en que nos hemos olvidado del tipado? Como nos hemos acostumbrado a trabajar con TypeScript deberíamos hacer gala de esto. Vamos a definir los props que reciben los **`Styled Components`** definiendo su tipo directamente al crearlos:
+
+```tsx
+import styled from 'styled-components';
+
+const ButtonStyled = styled.button<{ backgroundColor: string }>`
+  background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
+  border: 0;
+  color: white;
+  font-size: 20px;
+`;
 ```
 
 ---
 
 ### `Styled-Component` para los textos
 
-Vamos a ver algún ejemplo más antes de avanzar en el uso de la librería, por ello vamos a crear un componente de estilo para los textos de nuestra aplicación. Creamos un componente con **`styled components`** para usarlo en otro punto de nuestra aplicación.
+Vamos a ver algún ejemplo más antes de avanzar en el uso de la librería, por ello vamos a crear un componente de estilo para los textos de nuestra app. Para ello creamos un componente con **`styled-components`** que compartiremos y usaremos como un componente de React.
 
-```jsx
+```tsx
 import React from 'react';
 import styled from 'styled-components';
 
-const TextStyled = styled.text`
+const TextStyled = styled.text<{ backgroundColor: string }>`
   background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
   color: red;
   font-size: 10px;
-  border: 0;
 `;
 
-const TextComponent = ({ children, backgroundColor }) => {
+const TextComponent = ({
+  backgroundColor,
+  children
+}: {
+  backgroundColor: string;
+  children: React.ReactNode;
+}) => {
   return <TextStyled backgroundColor={backgroundColor}>{children}</TextStyled>;
 };
 
@@ -109,35 +133,43 @@ function App() {
 export default App;
 ```
 
-Genial MiniCoders! poco a poco vamos viendo cómo funcionan y el uso que podemos llegar a dar a este tipo de componentes en nuestra aplicación, no? Seguimos ✔️
+¡Genial MiniCoder! Poco a poco vamos viendo cómo funcionan y el uso que podemos llegar a dar a este tipo de componentes en nuestra aplicación, seguimos ✅.
 
 ---
 
 ### Elegir estilos en `Styled-Component`
 
-En los styled components podemos indicar que se disparen unos estilos u otros en base a la propiedad que le estamos pasando. Vamos a crear un sencillo ejemplo para ver otra de las bondades.
+En los styled components podemos indicar que se carguen unos estilos u otros en base a la propiedad que le estamos pasando. Vamos a crear un sencillo ejemplo para ver otra de las bondades de esta librería.
 
-```jsx
+```tsx
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const TitleStyled = styled.h1`
+// Fíjate en que hemos definido el prop primary opcional...
+const TitleStyled = styled.h2<{ primary?: boolean }>`
   color: red;
-  font-size: 10px;
-  border: 0;
+  font-size: 32px;
+
   ${({ primary }) =>
     primary &&
     css`
       background-color: indianred;
       border: 1px solid skyblue;
-      font: 20px;
+      font-size: 20px;
     `}
+
   &:hover {
     background-color: mediumseagreen;
   }
 `;
 
-const TitleComponent = ({ children, primary }) => {
+const TitleComponent = ({
+  children,
+  primary
+}: {
+  children: React.ReactNode;
+  primary?: boolean;
+}) => {
   return <TitleStyled primary={primary}>{children}</TitleStyled>;
 };
 
@@ -146,14 +178,15 @@ export default TitleComponent;
 
 De este modo podemos invocar a nuestro componente e indicarle la propiedad **`primary`** para usar los estilos definidos.
 
-```jsx
+```tsx
 import './App.css';
 import TitleComponent from './components/ui/TitleComponent';
 
 function App() {
   return (
     <div className="App">
-      <TitleComponent primary>MiniCodeLab</TitleComponent>
+      <TitleComponent primary>MiniCodeLab Primary</TitleComponent>
+      <TitleComponent>MiniCodeLab Not Primary</TitleComponent>
     </div>
   );
 }
@@ -161,27 +194,69 @@ function App() {
 export default App;
 ```
 
+Antes de pasar al siguiente punto, habrás podido observar dos cosas importantes en nuestro código:
+
+- Hemos creado un tag de CSS adicional utilizado la utilidad `css`, esto permite abstraer estilos que van a ser reutilizados de la siguiente forma:
+
+```tsx
+import styled, { css } from 'styled-components';
+
+const commonStyles = css`
+  background-color: indianred;
+  border: 1px solid skyblue;
+  font-size: 20px;
+`;
+
+const MiniCodeBold = styled.div`
+  ${commonStyles};
+  font-weight: bold;
+`;
+
+const MiniCodeNotBold = styled.div`
+  ${commonStyles};
+  font-weight: normal;
+`;
+```
+
+- Hemos usado pseudoselectores como `:hover` en los estilos. Esto se debe a que podemos utilizar el "nesting" propio de SCSS en nuestros **`styled-components`** sin problemas. Aquí un ejemplo:
+
+```tsx
+const StyledButton = styled.button`
+  background-color: indianred;
+  color: white;
+  font-size: 20px;
+
+  &:hover {
+    background-color: skyblue;
+  }
+
+  &:focus {
+    background-color: coral;
+  }
+`;
+```
+
 ---
 
 ### `Styled-Component` como Layouting
 
-Como ya os habéis imaginado la versatilidad que podemos alcanzar con estos componentes es increíble, por ello os vamos a dejar un ejemplo de cómo usarlos a modo de layouting, y lo sencillo que puede llegar a ser.
+Como ya te habrás imaginado, la versatilidad que podemos alcanzar con estos componentes es increíble, por ello te vamos a dejar un ejemplo de cómo usarlos a modo de "layouting", y lo sencillo y útil que puede llegar a ser usar este patrón.
 
-Creamos un **`styled component`** que se comportará como un div y le indicamos el posicionamiento de elementos. Es decir será un contenedor o un **`div`** con unos estilos predefinidos.
+Creamos un **`styled component`** que se generará un elemento div y le indicamos el posicionamiento de elementos que contiene. Es decir, será un contenedor o un **`div`** con unos estilos predefinidos.
 
-```jsx
+```tsx
 import React from 'react';
 import styled from 'styled-components';
 
-const StyleDiv = styled.div`
+const StyledDiv = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
 `;
 
-const DivFlexComponent = ({ children }) => {
-  return <StyleDiv>{children}</StyleDiv>;
+const DivFlexComponent = ({ children }: { children: React.ReactNode }) => {
+  return <StyledDiv>{children}</StyledDiv>;
 };
 
 export default DivFlexComponent;
@@ -189,18 +264,18 @@ export default DivFlexComponent;
 
 Y ahora tenemos un **`div`** contenedor con flex en el que poder wrappear o envolver todos los elementos que queramos, en nuestro caso serán todos los componentes generados con anterioridad.
 
-```jsx
-import './App.css';
+```tsx
 import styled from 'styled-components';
+import './App.css';
+import DivFlexComponent from './components/ui/DivFlexComponent';
 import TextComponent from './components/ui/TextComponent';
 import TitleComponent from './components/ui/TitleComponent';
-import DivFlexComponent from './components/ui/DivFlexComponent';
 
-const ButtonStyled = styled.button`
+const ButtonStyled = styled.button<{ backgroundColor: string }>`
   background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
+  border: 0;
   color: white;
   font-size: 20px;
-  border: 0;
 `;
 
 function App() {
@@ -222,51 +297,58 @@ export default App;
 
 ### Mejorando nuestro `Styled-Component` Layout
 
-Vamos a configurar nuestro "layout" en base algunas propiedades que le indicamos desde el componente en el que le estamos usando de este modo veremos la facilidad de uso de este tipo de componentes.
+Vamos a configurar nuestro "layout" en base algunas propiedades que le indicamos desde el componente en el que estamos usándolo. De este modo veremos la facilidad y versatilidad de uso de este tipo de componentes.
 
-```jsx
+```tsx
 import React from 'react';
 import styled from 'styled-components';
 
-const StyleDiv = styled.div`
+const StyledDiv = styled.div<{ direction: string }>`
+  align-items: center;
   display: flex;
   flex-direction: ${(props) => (props.direction === 'row' ? 'row' : 'column')};
   justify-content: center;
-  align-items: center;
 `;
 
-const DivFlexComponent = ({ children, direction }) => {
-  return <StyleDiv direction={direction}>{children}</StyleDiv>;
+const DivFlexComponent = ({
+  children,
+  direction
+}: {
+  children: React.ReactNode;
+  direction: string;
+}) => {
+  return <StyledDiv direction={direction}>{children}</StyledDiv>;
 };
 
 export default DivFlexComponent;
 ```
 
-Ahora vamos a ver qué podemos hacer usando este componente dentro de nuestro **`App`**, recordad que son ejemplos sencillos que os proponemos para que descubráis las virtudes de los **`styled components`**.
+Ahora vamos a ver qué podemos hacer usando este componente dentro de nuestro archivo **`App`**, recuerda que son ejemplos sencillos que te proponemos para que descubras las virtudes de los **`styled components`**.
 
-```jsx
-import './App.css';
+```tsx
 import styled from 'styled-components';
+import './App.css';
+import DivFlexComponent from './components/ui/DivFlexComponent';
 import TextComponent from './components/ui/TextComponent';
 import TitleComponent from './components/ui/TitleComponent';
-import DivFlexComponent from './components/ui/DivFlexComponent';
 
-const ButtonStyled = styled.button`
+const ButtonStyled = styled.button<{ backgroundColor: string }>`
   background-color: ${(props) => (props.backgroundColor === 'coral' ? 'coral' : 'skyblue')};
+  border: 0;
   color: white;
   font-size: 20px;
-  border: 0;
 `;
 
 function App() {
   return (
     <div className="App">
-      <DivFlexComponent direction={'column'}>
+      <DivFlexComponent direction="column">
         <TitleComponent primary>Mi Título</TitleComponent>
         <ButtonStyled backgroundColor="coral">SEND</ButtonStyled>
         <TextComponent backgroundColor="default">Mi texto</TextComponent>
       </DivFlexComponent>
-      <DivFlexComponent direction={'row'}>
+
+      <DivFlexComponent direction="row">
         <TitleComponent primary>Mi Título</TitleComponent>
         <ButtonStyled backgroundColor="coral">SEND</ButtonStyled>
         <TextComponent backgroundColor="default">Mi texto</TextComponent>
@@ -282,25 +364,92 @@ export default App;
 
 ### Media queries `Styled-Component`
 
-En caso de necesitar alguna media para que tus componentes se comporten a nivel visual como te lo pide el diseño podemos definir nuestros styled en base a una variable que haga saltar nuestro componente.
+En caso de necesitar alguna `media query` para que tus componentes se comporten a nivel visual como te lo pide el diseño podemos definir nuestros styled en base a una variable o función que haga cambiar nuestro componente de forma dinámica.
 
-```jsx
+```tsx
 const desktopStartWidth = 996;
 
 const desktop = `@media (min-width: ${desktopStartWidth}px)`;
 const mobile = `@media (max-width: ${desktopStartWidth}px)`;
 
-const square = styled.div`
-  ... ${mobile} {
-    width: 100%;
+const Square = styled.div`
+  background-color: coral;
+
+  ${desktop} {
+    background-color: turquoise;
   }
 `;
 ```
 
 ---
 
+### Utilizando funciones en Styled Components
+
+Antes de cerrar este artículo, vamos a dejarte un ejemplo en el que combinamos todo lo anterior con buenas prácticas para crear un sistema de botones dinámicos. ¡Vamos allá!
+
+Comenzamos creando un componente **`Button`** que acepte distintas variantes para diferenciar su color de fondo. A su vez, crearemos un component **`ButtonGroup`** para organizar todos con `flex` de forma constante.
+
+```tsx
+import styled from 'styled-components';
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+enum ButtonVariant {
+  SUCCESS = 'success',
+  WARNING = 'warning',
+  DANGER = 'danger'
+}
+
+const getButtonVariantColor = (variant: ButtonVariant): string => {
+  switch (variant) {
+    case ButtonVariant.SUCCESS:
+      return '#72A276';
+    case ButtonVariant.WARNING:
+      return '#E8D33F';
+    case ButtonVariant.DANGER:
+      return '#FF6B6B';
+  }
+};
+
+const Button = styled.button<{ variant: ButtonVariant }>`
+  background-color: ${(props) => getButtonVariantColor(props.variant)};
+  border: 0;
+  color: black;
+  font-size: 1rem;
+  padding: 0.5rem;
+`;
+```
+
+Si estudiamos este código, verás que la función `getButtonVariantColor` devuelve un color estático para cada tipo de variante, y la invocamos directamente dentro del **`Styled Component`** al que hemos definido como Button.
+
+Ahora podemos utilizar estos componentes en nuestros componentes y ver los botones correctamente según los props que utilicemos:
+
+```tsx
+export default function App() {
+  return (
+    <ButtonGroup>
+      <Button variant={ButtonVariant.SUCCESS}>Mini Success</Button>
+      <Button variant={ButtonVariant.WARNING}>Mini Warning</Button>
+      <Button variant={ButtonVariant.DANGER}>Mini Danger</Button>
+    </ButtonGroup>
+  );
+}
+```
+
+¡Nada mejor que un documento gráfico para quedarnos con la idea final de lo que hemos conseguido 📸!
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1646076144/articles/styled-components.png"
+  alt="button group"
+/>
+
+---
+
 ### Conclusión
 
-Hemos visto algunos ejemplos prácticos con la librería de styled-components pero no hemos profundizado en las ventajas de uso. Por ello recordar que el primer y segundo post están enfocados a ejemplos prácticos y uso de librerías, si quieres aprender sobre las ventajas y diferencia entre librerías debes esperar a nuestro tercer post.
+Hemos visto algunos ejemplos prácticos con la librería **`styled-components`** pero no hemos profundizado en las ventajas de uso frente a otras alternativas. Por ello te recordamos que el primer y segundo post están enfocados a ejemplos prácticos y uso de librerías. Si quieres aprender sobre las ventajas y diferencia entre librerías debes esperar a nuestro tercer post 🧙‍♂️.
 
-Un saludo 👋 MiniCoders!
+¡Un saludo 👋 MiniCoders!
