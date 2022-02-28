@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArticleLayout } from 'styles/ui/ArticleLayout';
 import { Metadata } from 'types/common';
-import { getPostAuthor } from 'utils/common';
+import { getMetaAuthor, getMetaData } from 'utils/common';
 
 const components = {
   code: CodeBlock,
@@ -17,17 +17,16 @@ const components = {
   YoutubeVideo
 };
 
-export default function TestPage({ source, meta }: Props) {
+export default function Article({ source, meta }: Props) {
   return (
     <>
       <Layout
         title={meta.title}
-        headChildren={
-          <>
-            <meta name="description" content={meta.description} />
-            <meta name="author" content={getPostAuthor(meta.author)} />
-          </>
-        }
+        headChildren={getMetaData({
+          title: meta.title,
+          description: meta.description,
+          author: meta.author
+        })}
       >
         <ArticleLayout>
           <MDXRemote {...source} components={components} />

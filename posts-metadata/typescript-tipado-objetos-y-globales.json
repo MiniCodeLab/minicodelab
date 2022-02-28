@@ -1,5 +1,10 @@
 {
-  "author": ["@Ccastillo06"],
+  "author": [
+    {
+      "tag": "@Ccastillo06",
+      "link": "https://www.linkedin.com/in/cristiancastillonavarro/"
+    }
+  ],
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/ts.png",
   "description": "Guía Mini Code de TypeScript: Tipado de objetos & Tipos Globales",
   "title": "TypeScript | Tipado de objetos & Tipos Globales",

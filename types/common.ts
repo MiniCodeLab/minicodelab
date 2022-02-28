@@ -8,12 +8,17 @@ export type Profile = {
   twitter: string | null;
 };
 
+export type Author = {
+  tag: string;
+  link: string;
+};
+
 export type PostCover = {
   slug: string;
 } & Metadata;
 
 export type Metadata = {
-  author: string;
+  author: Author;
   cover: string;
   date: string;
   description: string;

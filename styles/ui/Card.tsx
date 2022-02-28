@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { desktopUp, tabletUp } from 'styles/global';
 
 export const CardsWrapper = styled.div`
   align-items: stretch;
@@ -15,7 +16,11 @@ export const CardsWrapper = styled.div`
     width: 100%;
     max-width: var(--card-max-width-mb);
 
-    @media (min-width: 840px) {
+    ${tabletUp} {
+      max-width: var(--card-max-width-tb);
+    }
+
+    ${desktopUp} {
       max-width: var(--card-max-width-dk);
     }
   }
@@ -31,17 +36,24 @@ export const Card = styled.article`
   padding: 20px;
   width: 100%;
 
-  @media (min-width: 840px) {
+  ${tabletUp} {
+    max-width: var(--card-max-width-tb);
+  }
+
+  ${desktopUp} {
     max-width: var(--card-max-width-dk);
   }
 `;
 
 export const CardHeader = styled.div<{ isArticle?: boolean }>`
+  align-items: flex-start;
   display: flex;
   flex-direction: ${({ isArticle }) => (isArticle ? 'row' : 'column')};
-  margin-bottom: 20px;
   gap: 10px;
-  align-items: flex-start;
+
+  ${tabletUp} {
+    margin-bottom: var(--spacing-m);
+  }
 `;
 
 export const CardMediaContent = styled.div<{ isArticle?: boolean }>`
@@ -64,15 +76,20 @@ export const CardTitle = styled.div`
   text-align: right;
 
   > h2 {
-    margin-bottom: 10px;
+    padding: 0;
+    padding-bottom: calc(var(--spacing-m) / 2);
   }
 
   > p {
-    font-size: 1rem;
+    font-size: var(--paragraph);
+
+    a {
+      font-size: var(--paragraph);
+    }
   }
 `;
 
 export const CardArticleLink = styled.div`
-  margin-top: 20px;
+  margin-top: calc(var(--spacing-m) / 2);
   text-align: right;
 `;
