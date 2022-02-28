@@ -11,11 +11,7 @@ export const PageLayout = styled.div`
 
   > main {
     flex: 1;
-    padding-top: var(--spacing-m);
-  }
-
-  a {
-    color: var(--color-paragraph);
-    text-decoration: underline;
+    padding: var(--spacing-m);
+    padding-bottom: calc(2 * var(--spacing-m));
   }
 `;

@@ -1,5 +1,14 @@
 {
-  "author": ["@aRiveraMerida", "@Ccastillo06"],
+  "author": [
+    {
+      "tag": "@aRiveraMerida",
+      "link": "https://www.linkedin.com/in/albertoriveramerida/"
+    },
+    {
+      "tag": "@Ccastillo06",
+      "link": "https://www.linkedin.com/in/cristiancastillonavarro/"
+    }
+  ],
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/ts.png",
   "description": "Guía Mini Code de TypeScript: Funciones",
   "title": "TypeScript | Funciones",

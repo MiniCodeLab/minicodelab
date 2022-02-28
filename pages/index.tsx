@@ -13,11 +13,18 @@ import {
   CardTitle
 } from 'styles/ui/Card';
 import { PostCover } from 'types/common';
-import { getPostAuthor } from 'utils/common';
+import { getMetaData, getPostAuthor } from 'utils/common';
 
 const HomePage: React.FC<Props> = ({ covers }) => {
   return (
-    <Layout>
+    <Layout
+      title="MiniCodeLab"
+      headChildren={getMetaData({
+        title: 'MiniCodeLab',
+        description:
+          'Feed de MiniCodeLab. Descubre y aprende con nuestros artículos de JavaScript, TypeScript, React, Node...'
+      })}
+    >
       <CardsWrapper>
         {covers
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
