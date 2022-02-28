@@ -3,7 +3,7 @@ import { Author } from 'types/common';
 
 export const getPostAuthor = (authorData: Author | Author[]) => {
   const authorArr = Array.isArray(authorData) ? authorData : [authorData];
-  console.log({ authorData, authorArr });
+
   return authorArr.map(({ tag, link }) => (
     <React.Fragment key={tag}>
       {' '}
@@ -13,3 +13,37 @@ export const getPostAuthor = (authorData: Author | Author[]) => {
     </React.Fragment>
   ));
 };
+
+export const getMetaAuthor = (authorData: Author | Author[]) => {
+  const authorArr = Array.isArray(authorData) ? authorData : [authorData];
+
+  return authorArr.map(({ tag }) => tag).join(', ');
+};
+
+const defaultLogoUrl =
+  'https://res.cloudinary.com/db38x6luj/image/upload/c_scale,h_600,w_600/v1646084982/posts/logo-networks.png';
+
+export const getMetaData = ({
+  author,
+  description,
+  logoUrl = defaultLogoUrl,
+  title
+}: {
+  author?: Author | Author[];
+  description: string;
+  logoUrl?: string;
+  title: string;
+}) => (
+  <>
+    <meta name="description" content={description} />
+    {author ? <meta name="author" content={getMetaAuthor(author)} /> : null}
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={title} />
+    <meta property="og:image" content={logoUrl} />
+    <meta property="og:image:url" content={logoUrl} />
+    <meta property="twitter:image" content={logoUrl} />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="es_ES" />
+  </>
+);

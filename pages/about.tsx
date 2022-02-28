@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Layout from 'components/Layout';
 import Image from 'next/image';
 import { tabletUp } from 'styles/global';
+import { getMetaData } from 'utils/common';
 
 const ImageContainer = styled.div`
   width: 100%;
@@ -22,7 +23,13 @@ const BigLink = styled.a`
 
 const AboutPage = () => {
   return (
-    <Layout title="About">
+    <Layout
+      title="¿Quiénes somos?"
+      headChildren={getMetaData({
+        title: '¿Quiénes somos?',
+        description: '¿Qué es MiniCodeLab y quienes lo forman?'
+      })}
+    >
       <section>
         <h1>Somos MiniCodeLab</h1>
 
