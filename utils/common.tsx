@@ -47,3 +47,7 @@ export const getMetaData = ({
     <meta property="og:locale" content="es_ES" />
   </>
 );
+
+export const deduplicate = <T extends {}>(arr: T[]) => [...new Set(arr)];
+export const mapBy = <T extends {}>(entities: T[], field: string): string[] =>
+  entities.flatMap((cover) => cover[field]);

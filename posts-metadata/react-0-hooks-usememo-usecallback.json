@@ -12,5 +12,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
   "description": "Vemos los Hooks useMemo y useCallback en profundidad y al completo",
   "title": "React desde 0 | Hooks [useMemo, useCallback]",
-  "date": "02/17/2022 12:10:00"
+  "date": "02/17/2022 12:10:00",
+  "tags": ["react"]
 }
