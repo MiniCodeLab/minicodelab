@@ -12,5 +12,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
   "description": "Aprendemos a usar la herramienta React.memo",
   "title": "React desde 0 | React Memo",
-  "date": "02/17/2022 12:05:00"
+  "date": "02/17/2022 12:05:00",
+  "tags": ["react"]
 }

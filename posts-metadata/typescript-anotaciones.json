@@ -12,5 +12,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/ts.png",
   "description": "Guía Mini Code de TypeScript: Anotaciones",
   "title": "TypeScript | Anotaciones",
-  "date": "01/31/2022 00:00:00"
+  "date": "01/31/2022 00:00:00",
+  "tags": ["typescript"]
 }

@@ -12,5 +12,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/js.png",
   "description": "Taller Mini Code - Javascript para React",
   "title": "Taller | Javascript para React",
-  "date": "02/03/2022 17:00:02"
+  "date": "02/03/2022 17:00:02",
+  "tags": ["react", "javascript"]
 }

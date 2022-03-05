@@ -8,5 +8,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/ts.png",
   "description": "Guía Mini Code de TypeScript: Tipado de objetos & Tipos Globales",
   "title": "TypeScript | Tipado de objetos & Tipos Globales",
-  "date": "02/03/2022 17:00:01"
+  "date": "02/03/2022 17:00:01",
+  "tags": ["typescript"]
 }
