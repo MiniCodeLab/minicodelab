@@ -1,8 +1,10 @@
+import FeedFilter from 'components/FeedFilter';
 import Layout from 'components/Layout';
 import { retrievePostsCovers } from 'libs/posts';
 import { GetStaticPropsResult } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { Button } from 'styles/ui/Button';
 import {
   Card,
@@ -16,6 +18,8 @@ import { PostCover } from 'types/common';
 import { getMetaData, getPostAuthor } from 'utils/common';
 
 const HomePage: React.FC<Props> = ({ covers }) => {
+  const [filteredCovers, setFilteredCovers] = useState(covers);
+
   return (
     <Layout
       title="MiniCodeLab"
@@ -25,8 +29,10 @@ const HomePage: React.FC<Props> = ({ covers }) => {
           'Feed de MiniCodeLab. Descubre y aprende con nuestros artículos de JavaScript, TypeScript, React, Node...'
       })}
     >
+      <FeedFilter covers={covers} onChangeCovers={setFilteredCovers} />
+
       <CardsWrapper>
-        {covers
+        {filteredCovers
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
           .map((post) => (
             <Card key={post.slug}>

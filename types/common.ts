@@ -22,5 +22,6 @@ export type Metadata = {
   cover: string;
   date: string;
   description: string;
+  tags: string[];
   title: string;
 };

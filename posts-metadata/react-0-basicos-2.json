@@ -12,5 +12,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
   "description": "Creamos nuestra primera app usando la API de Rick & Morty",
   "title": "React desde 0 | Conceptos base - Rick & Morty App",
-  "date": "02/07/2022 20:05:00"
+  "date": "02/07/2022 20:05:00",
+  "tags": ["react"]
 }

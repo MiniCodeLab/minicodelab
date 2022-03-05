@@ -12,5 +12,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
   "description": "Veremos como crear Custom Hooks y tendremos varios ejemplos",
   "title": "React desde 0 | Hooks [Custom Hooks]",
-  "date": "02/23/2022 12:00:00"
+  "date": "02/23/2022 12:00:00",
+  "tags": ["react"]
 }

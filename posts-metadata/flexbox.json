@@ -12,5 +12,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/css.png",
   "description": "Guía MiniCode de Flexbox | Conceptos para trabajar con Flexbox",
   "title": "Guía MiniCode de Flexbox",
-  "date": "02/18/2022 12:00:00"
+  "date": "02/18/2022 12:00:00",
+  "tags": ["css"]
 }

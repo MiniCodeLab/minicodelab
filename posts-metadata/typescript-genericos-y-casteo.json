@@ -12,5 +12,6 @@
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1642108211/posts/ts.png",
   "description": "Guía Mini Code de TypeScript: Genéricos y Casteo de tipos",
   "title": "TypeScript | Genéricos y Casteo de tipos",
-  "date": "02/03/2022 17:00:00"
+  "date": "02/03/2022 17:00:00",
+  "tags": ["typescript"]
 }
