@@ -8,8 +8,10 @@ import {
   FeedFilterWrapper,
   Select,
   TextInput,
-  FilterButton
+  FilterButton,
+  SelectWrapper
 } from 'styles/ui/FeedFilter';
+import Image from 'next/image';
 
 const FeedFilter = ({ covers, onChangeCovers }: Props) => {
   const allTags = deduplicate<string>(mapBy<PostCover>(covers, 'tags'));
@@ -60,15 +62,26 @@ const FeedFilter = ({ covers, onChangeCovers }: Props) => {
           <label>
             <p>Filtrar por tag o tecnología 🔖</p>
 
-            <Select value={tagFilter} onChange={(e) => setTagFilter(e.target.value)}>
-              <option value="">-</option>
+            <SelectWrapper>
+              <Select value={tagFilter} onChange={(e) => setTagFilter(e.target.value)}>
+                <option value="">-</option>
 
-              {allTags.map((tag) => (
-                <option key={tag} value={tag}>
-                  {tag}
-                </option>
-              ))}
-            </Select>
+                {allTags.map((tag) => (
+                  <option key={tag} value={tag}>
+                    {tag}
+                  </option>
+                ))}
+              </Select>
+
+              <div className="arrow-image">
+                <Image
+                  alt="arrow-down"
+                  height={13.5}
+                  src="https://res.cloudinary.com/db38x6luj/image/upload/v1646484086/posts/select-arrow-down.svg"
+                  width={20}
+                />
+              </div>
+            </SelectWrapper>
           </label>
 
           <label>

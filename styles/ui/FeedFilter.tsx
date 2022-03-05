@@ -53,14 +53,27 @@ export const FiltersWrapper = styled.div`
 const inputCss = css`
   border-radius: 4px;
   border: 1px solid var(--color-paragraph);
-  cursor: pointer;
   font-size: var(--paragraph);
   padding: calc(var(--spacing-m) / 2);
   width: 100%;
 `;
 
+export const SelectWrapper = styled.div`
+  position: relative;
+
+  .arrow-image {
+    pointer-events: none;
+    position: absolute;
+    right: calc(var(--spacing-m) / 2);
+    top: 35%;
+  }
+`;
+
 export const Select = styled.select`
   ${inputCss}
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
   text-transform: capitalize;
 
   > option {
@@ -71,6 +84,7 @@ export const Select = styled.select`
 
 export const TextInput = styled.input`
   ${inputCss}
+  cursor: text;
 `;
 
 export const FilterButton = styled(Button)`
