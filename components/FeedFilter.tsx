@@ -12,6 +12,7 @@ import {
   SelectWrapper
 } from 'styles/ui/FeedFilter';
 import Image from 'next/image';
+import useResizeCallback from 'hooks/useResizeCallback';
 
 const FeedFilter = ({ covers, onChangeCovers }: Props) => {
   const allTags = deduplicate<string>(mapBy<PostCover>(covers, 'tags'));
@@ -37,19 +38,12 @@ const FeedFilter = ({ covers, onChangeCovers }: Props) => {
     onChangeCovers(filteredCovers);
   }, [tagFilter, sanitizedTitleFilter, covers, onChangeCovers]);
 
-  useEffect(() => {
-    function filterVisibleHandler() {
-      if (window.innerWidth > 840) {
-        setFiltersVisible(true);
-      }
+  const resizeCb = useCallback(() => {
+    if (window.innerWidth > 840) {
+      setFiltersVisible(true);
     }
-
-    window.addEventListener('resize', filterVisibleHandler);
-
-    return () => {
-      window.removeEventListener('resize', filterVisibleHandler);
-    };
   }, []);
+  useResizeCallback(resizeCb);
 
   return (
     <FeedFilterWrapper>
