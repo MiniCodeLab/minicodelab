@@ -38,7 +38,7 @@ Esta se añade a nuestras dependencias bajo el nombre de react-router-dom.
 
 ### \***\*Definición del mapa de rutas\*\***
 
-En nuestro fichero **`index.tsx`** tenemos que definir el componente `**<BrowserRouter>**` , que contiene todos los componentes que forman el mapa de todas las rutas que vamos a ir habilitando en nuestra aplicación.
+En nuestro fichero **`index.tsx`** tenemos que definir el componente **`<BrowserRouter>`** , que contiene todos los componentes que forman el mapa de todas las rutas que vamos a ir habilitando en nuestra aplicación.
 
 ```tsx
 import ReactDOM from 'react-dom';
@@ -76,15 +76,15 @@ ReactDOM.render(
 );
 ```
 
-Nuestros componentes `**<Routes>**` y `**<Route>**` se utilizan para renderizar un element dependiendo del location actual en la URL. Realmente podemos ver un `**<Route>`** como un **`if`\*\* o un `switch` en el que si el path coincide con la URL actual renderizará el element.
+Nuestros componentes **`<Routes>`** y **`<Route>`** se utilizan para renderizar un element dependiendo del location actual en la URL. Realmente podemos ver un **`<Route>`** como un **`if`** o un `switch` en el que si el path coincide con la URL actual renderizará el element.
 
-Cuando la location cambia, `**<Routes>`** busca dentro de todos sus hijos **`<Route>`\*\* y cuando encuentra la coincidencia solicita el renderizado.
+Cuando la location cambia, **`<Routes>`** busca dentro de todos sus hijos **`<Route>`** y cuando encuentra la coincidencia solicita el renderizado.
 
 Por lo tanto las routes que hemos definido dentro de nuestro proyecto son las siguientes.
 
 - **`/`** → **`Home`**
 - **`/heroes`** → **`Heroes`**
-- **`/herores/:heroesid`** → **`Heroe`**
+- **`/heroes/:heroesid`** → **`Heroe`**
 - **`/About`** → **`About`**
 - `**/***` → **`<p>No existe la ruta!</p>`**
 
@@ -131,15 +131,15 @@ export default App;
 
 ### Componente Link
 
-Tomando como referencia el componente **`App`** que hemos definido antes podemos ver que la estructura es similar a la del **`index`**, ¿recordáis? `**<Route path='/' element={<App />} >**`  pero con la particularidad que cambiamos las `**<Route>**` anidadas dentro de la ruta padre por componentes `**<Link>**`.
+Tomando como referencia el componente **`App`** que hemos definido antes podemos ver que la estructura es similar a la del **`index`**, ¿recordáis? **`<Route path='/' element={<App />} >`**  pero con la particularidad que cambiamos las **`<Route>`** anidadas dentro de la ruta padre por componentes **`<Link>`**.
 
-Explicado de forma más precisa y sencilla podemos decir que nuestro componente `**<Link>**` es un elemento que permite al usuario navegar a otra parte de la App, similar a la etiqueta `**<a>**` en HTML.
+Explicado de forma más precisa y sencilla podemos decir que nuestro componente **`<Link>`** es un elemento que permite al usuario navegar a otra parte de la App, similar a la etiqueta **`<a>`** en HTML.
 
 ---
 
 ### Componente NavLink
 
-Un `**<NavLink>**` es una especie de `**<Link>**` que sabe si la ruta que contiene es la activa en ese momento. Se comporta de una forma muy parecida al `Link` con la diferencia de que propaga la clase `active` al elemento `a` que se corresponda con el Link cuyo path está activo.
+Un **`<NavLink>`** es una especie de **`<Link>`** que sabe si la ruta que contiene es la activa en ese momento. Se comporta de una forma muy parecida al `Link` con la diferencia de que propaga la clase `active` al elemento `a` que se corresponda con el Link cuyo path está activo.
 
 Por ejemplo, en la ruta `/heroes` el elemento `<NavLink to="/heroes" />` tendrá la clase `.active`.
 
@@ -147,9 +147,9 @@ Por ejemplo, en la ruta `/heroes` el elemento `<NavLink to="/heroes" />` tendrá
 
 ### Componente Outlet
 
-El componente Outlet lo usamos dentro de del del componente utilizado en la ruta padre como `Route`, de este modo nos permite renderizar sus  `**<Route>**` hijos. Esto permite a la interfaz anidada mostrar las rutas hijas cuando son renderizadas. Si la ruta seleccionada es la raíz, se renderizará la `**<Route index>**` hija.
+El componente Outlet lo usamos dentro de del del componente utilizado en la ruta padre como `Route`, de este modo nos permite renderizar sus  **`<Route>`** hijos. Esto permite a la interfaz anidada mostrar las rutas hijas cuando son renderizadas. Si la ruta seleccionada es la raíz, se renderizará la **`<Route index>`** hija.
 
-Si la ruta no está mapeada, se renderizará la `**<Route path='*'>**` hija.
+Si la ruta no está mapeada, se renderizará la **`<Route path='*'>`** hija.
 
 ```tsx
 // Para la siguiente combinación de rutas...
@@ -355,17 +355,17 @@ export default function Heroe() {
 
 ### useSearchParams Hook
 
-Este hook es usado para leer y modificar la cadena de consulta en la URL para la actual **_location_**. Al igual que `**useState**`, éste devuelve un array con dos valores: la cadena de consulta y una función para actualizarla. La cadena de consulta es lo que sigue al signo **`?`** en una URL.
+Este hook es usado para leer y modificar la cadena de consulta en la URL para la actual **_location_**. Al igual que **`useState`**, éste devuelve un array con dos valores: la cadena de consulta y una función para actualizarla. La cadena de consulta es lo que sigue al signo **`?`** en una URL.
 
 Un ejemplo de la cadena de consulta o `search params` sería `https://www.minicodelab.dev/?filter=react` donde la parte que dice `?filter=react` representa los parámetros de la URL.
 
-En nuestro ejemplo usamos la cadena de consulta, guardada en la variable `**searchParams**`, para filtrar los heroes buscados en el input. Después se renderiza nuestro menú de heroes con los elementos que cumplen dicho filtrado.
+En nuestro ejemplo usamos la cadena de consulta, guardada en la variable **`searchParams`**, para filtrar los heroes buscados en el input. Después se renderiza nuestro menú de heroes con los elementos que cumplen dicho filtrado.
 
 ---
 
 ### useLocation Hook
 
-Este hook devuelve el actual objeto `**location**`. Puede ser útil si se desea realizar alguna acción después del cambio de la *location*.
+Este hook devuelve el actual objeto **`location`**. Puede ser útil si se desea realizar alguna acción después del cambio de la *location*.
 
 En nuestro ejemplo lo usamos para que el filtro buscado se mantenga entre cambios de heroes cuando clickamos en un link para cambiar la ruta. Ya que de forma normal, se perdería este `search params string`.
 
