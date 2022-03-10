@@ -28,11 +28,6 @@ De todos los hooks que React trae de base, ya conoces casi todos los hooks. Te d
     },
     {
       type: 'internal',
-      url: '/feed/react-0-hooks-useref',
-      title: 'Hook useRef explicado al completo'
-    },
-    {
-      type: 'internal',
       url: '/feed/react-0-react-memo',
       title: 'React.memo en profundidad'
     }
@@ -109,7 +104,7 @@ Como puedes observar aquí, **en caso de que el componente padre provoque un ren
   alt="useMemo-vistamemo1"
 />
 
-Para prevenir esto, podemos utilizar el hook useMemo y memorizar los resultados. **Este hook se componente mediante dos argumentos, el primero es un callback, como con `usEffect` pero que en este caso debe devolver un valor a memorizar, y el segundo es un array de dependencias que permitirán controlar cuando se relanza el hook.** ¡Vamos a ponerlo en práctica!
+Para prevenir esto, podemos utilizar el hook useMemo y memorizar los resultados. **Este hook se compone mediante dos argumentos, el primero es un callback, como con `useEffect` pero que en este caso debe devolver un valor a memorizar, y el segundo es un array de dependencias que permitirán controlar cuando se relanza el hook.** ¡Vamos a ponerlo en práctica!
 
 Refactorizamos un poco el componente y haremos que los props se los envíe como props su componente padre... Con esto podremos ver que aunque el componente que lo contiene se rerendice X veces, los posts no se calcularán a menos que el prop `posts` cambie:
 
@@ -296,6 +291,6 @@ El resultado visual sería el siguiente:
 
 Podrías pensar que por lo tanto es buena idea envolver en `useCallback` a cualquier función que definamos y no queramos redeclarar nuevamente, para “mejorar la performance de nuestra aplicación desde el principio”. A esto, **te recomendamos un claro NO**, y la razón es la misma por la cual utilizar `useMemo` en cualquier sitio puede causar problemas al largo plazo.
 
-Por muy ”performant“ que sea **memoizar** resultados, su cálculo inicial será más pesado para nuestra aplicación, al igual que serán dificilmente controlables a gran escala si tenemos muchos arrays de dependencias en cada componente. Lo más recomendable en estos casos sería **esperar a tener un problema de rendimiento en nuestra app, y entonces buscar soluciones a través de `useMemo` y `useCallback` si se da la situación correcta en que aplicarlos.**
+Por muy ”performant“ que sea **memoizar** (palabra usada para referirse a memorizar resultados de una función pura en nuestro código, de ahí `useMemo` por ejemplo) resultados, su cálculo inicial será más pesado para nuestra aplicación, al igual que serán dificilmente controlables a gran escala si tenemos muchos arrays de dependencias en cada componente. Lo más recomendable en estos casos sería **esperar a tener un problema de rendimiento en nuestra app, y entonces buscar soluciones a través de `useMemo` y `useCallback` si se da la situación correcta en que aplicarlos.**
 
 En el próximo artículo y taller, veremos como crear Hooks Customizados haciendo gala y combinación de todos lo que hemos aprendido. ¡Vamos a tope MiniCoder, y gracias nuevamente por apoyarnos y aprender con nosotros 🥳!
