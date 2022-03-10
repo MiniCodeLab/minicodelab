@@ -1,0 +1,18 @@
+{
+    "author": [
+      {
+        "tag": "@aRiveraMerida",
+        "link": "https://www.linkedin.com/in/albertoriveramerida/"
+      },
+      {
+        "tag": "@Ccastillo06",
+        "link": "https://www.linkedin.com/in/cristiancastillonavarro/"
+      }
+    ],
+    "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
+    "description": "Routing en React",
+    "title": "React desde 0 | Router",
+    "date": "03/10/2022 12:00:00",
+    "tags": ["react"]
+  }
+  

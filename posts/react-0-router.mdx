@@ -1,0 +1,426 @@
+# React desde 0 | Routing
+
+¡Hola 👋 MiniCoder! Hoy nos toca ver un poquito de navegación. Antes de comenzar tenemos que tener claro que React nos permite desarrollar fácilmente sitios web **SPA** (Single Page Application), en los que la navegación a través de los diferentes apartados del sitio se realiza dentro de una sola página y desde el cliente. Con esto queremos decir que no volveremos a pedir recursos al servidor para cargar las rutas, y está comunicación quedará únicamente para el consumo de APIs.
+
+Para navegar entre nuestras páginas, React nos permite usar otras librerías, pero la que más se utiliza es [react-router](https://reactrouter.com/). Debes tener en cuenta que en este post se explicará la versión **v6**, que corresponde a la última versión en el momento que escribimos este post.
+
+---
+
+### React Router en nuestros proyectos
+
+Para añadir navegación a nuestros proyectos de React es tan sencillo como ejecutar el siguiente comando sobre la terminal.
+
+```bash
+npm install react-router-dom@6
+```
+
+Esta se añade a nuestras dependencias bajo el nombre de react-router-dom.
+
+```json
+"dependencies": {
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^16.11.26",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.13",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.6.2",
+    "web-vitals": "^2.1.4"
+  },
+```
+
+---
+
+### \***\*Definición del mapa de rutas\*\***
+
+En nuestro fichero **`index.tsx`** tenemos que definir el componente `**<BrowserRouter>**` , que contiene todos los componentes que forman el mapa de todas las rutas que vamos a ir habilitando en nuestra aplicación.
+
+```tsx
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Pages - Components
+import Home from './pages/Home';
+import About from './pages/About';
+import Heroes from './pages/Heroes';
+import Heroe from './pages/Heroe';
+
+ReactDOM.render(
+  <BrowserRouter basename="/">
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<Home />} />
+        <Route path="heroes" element={<Heroes />}>
+          <Route path=":heroeId" element={<Heroe />} />
+        </Route>
+        <Route path="about" element={<About />} />
+        <Route
+          path="*"
+          element={
+            <main>
+              <p>404 - No existe la ruta!</p>
+            </main>
+          }
+        ></Route>
+      </Route>
+    </Routes>
+  </BrowserRouter>,
+  document.getElementById('root')
+);
+```
+
+Nuestros componentes `**<Routes>**` y `**<Route>**` se utilizan para renderizar un element dependiendo del location actual en la URL. Realmente podemos ver un `**<Route>`** como un **`if`\*\* o un `switch` en el que si el path coincide con la URL actual renderizará el element.
+
+Cuando la location cambia, `**<Routes>`** busca dentro de todos sus hijos **`<Route>`\*\* y cuando encuentra la coincidencia solicita el renderizado.
+
+Por lo tanto las routes que hemos definido dentro de nuestro proyecto son las siguientes.
+
+- **`/`** → **`Home`**
+- **`/heroes`** → **`Heroes`**
+- **`/herores/:heroesid`** → **`Heroe`**
+- **`/About`** → **`About`**
+- `**/***` → **`<p>No existe la ruta!</p>`**
+
+---
+
+### Definición del Layout
+
+Podemos usar cualquier componente propio pero también el componente de App, en este ejemplo lo vamos a usar a modo de Layout. Para ello vamos a dividir nuestro componente en tres partes.
+
+- Encabezado → **`header`**
+- Menú de navegación → **`nav`**
+- Contenido → **`content`**
+
+```tsx
+import './App.css';
+import { NavLink, Outlet } from 'react-router-dom';
+
+const App = () => {
+  return (
+    <div className="App">
+      <header className="header">
+        <h1>React Router v6 - MiniCodeLab 🧪</h1>
+      </header>
+
+      <div className="body">
+        <nav className="nav">
+          <NavLink to="">Home</NavLink>
+          <NavLink to="heroes">Heroes</NavLink>
+          <NavLink to="about">About</NavLink>
+        </nav>
+
+        <main className="content">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
+
+---
+
+### Componente Link
+
+Tomando como referencia el componente **`App`** que hemos definido antes podemos ver que la estructura es similar a la del **`index`**, ¿recordáis? `**<Route path='/' element={<App />} >**`  pero con la particularidad que cambiamos las `**<Route>**` anidadas dentro de la ruta padre por componentes `**<Link>**`.
+
+Explicado de forma más precisa y sencilla podemos decir que nuestro componente `**<Link>**` es un elemento que permite al usuario navegar a otra parte de la App, similar a la etiqueta `**<a>**` en HTML.
+
+---
+
+### Componente NavLink
+
+Un `**<NavLink>**` es una especie de `**<Link>**` que sabe si la ruta que contiene es la activa en ese momento. Se comporta de una forma muy parecida al `Link` con la diferencia de que propaga la clase `active` al elemento `a` que se corresponda con el Link cuyo path está activo.
+
+Por ejemplo, en la ruta `/heroes` el elemento `<NavLink to="/heroes" />` tendrá la clase `.active`.
+
+---
+
+### Componente Outlet
+
+El componente Outlet lo usamos dentro de del del componente utilizado en la ruta padre como `Route`, de este modo nos permite renderizar sus  `**<Route>**` hijos. Esto permite a la interfaz anidada mostrar las rutas hijas cuando son renderizadas. Si la ruta seleccionada es la raíz, se renderizará la `**<Route index>**` hija.
+
+Si la ruta no está mapeada, se renderizará la `**<Route path='*'>**` hija.
+
+```tsx
+// Para la siguiente combinación de rutas...
+<Route path="heroes" element={<Heroes />}>
+	<Route path=":heroeId" element={<Heroe />} />
+</Route>
+
+// Tendremos el Outlet en Heroes
+export default function Heroes() {
+  return (
+    <>
+      <h2>All heroes 🦸‍♂️🦸‍♀️</h2>
+
+      {/* Aquí renderizamos las subrutas incluidas en el path de este componente */}
+      <div>
+        <Outlet />
+      </div>
+    </>
+  );
+}
+
+// Y veremos el componente Heroe en el Outlet cuando la URL sea /heroes/batman
+export default function Heroe() { ... }
+```
+
+De esta forma podremos “nestear” rutas dentro de otras para crear los conocidos como `subpaths`.
+
+---
+
+### Definiendo components de páginas Home
+
+En Home y en About vamos a plantear conceptos muy similares en los que usaremos el **`Link`** para ir a nuestro Heroes.
+
+```tsx
+import { Link } from 'react-router-dom';
+
+function Home() {
+  return (
+    <>
+      <h2>Home Page</h2>
+
+      <p>App ejemplo sobre React Router</p>
+
+      <ul>
+        <li>
+          <p>
+            <span>Visita la página de héroes 🦸‍♀️:</span>
+            <Link to="heroes">Heroes</Link>
+          </p>
+        </li>
+      </ul>
+    </>
+  );
+}
+
+export default Home;
+```
+
+---
+
+### Definiendo nuestra Data
+
+Como queremos simular que los datos vengan de una API. Vamos a simular estas llamadas con unos **mocks** a través de un fichero `data/heroes.ts` que nos permita recoger los héroes, recoger un héroe por id y eliminar héroes por id.
+
+```tsx
+let heroes = [
+  {
+    id: 1,
+    name: 'Superman',
+    age: 65,
+    alias: 'Clark Kent'
+  },
+  {
+    id: 2,
+    name: 'Batman',
+    age: 55,
+    alias: 'Bruce Wayne'
+  },
+  {
+    id: 3,
+    name: 'Wonder Woman',
+    age: 1555,
+    alias: 'Diana'
+  }
+];
+
+export function getHeroes() {
+  return heroes;
+}
+
+// Aquí recibimos string porque utilizaremos la id desde la URL
+export function getHeroe(id: string) {
+  return heroes.find((heroe) => heroe.id.toString() === id);
+}
+
+export async function deleteHeroe(id: number) {
+  heroes = heroes.filter((heroe) => heroe.id !== id);
+}
+```
+
+---
+
+### Definición de Rutas dinámicas
+
+Vamos a crear una ruta que renderiza el componente **`<Heroes>`** en `/heroes` que será hija de la ruta principal **`<App>`**. Y a su vez padre de las rutas dinámicas de **`<Heroe>`** que se renderizará en `/heroes/:heroeId`. Para ello creamos un componente de página con el nombre de **`Heroes.tsx`.**
+
+En nuestra aplicación vamos a poder navegar y mostrar los datos de cada héroe. Dicha navegación se va contruir dinámicamente a partir de los heroes existentes en nuestro `data/heroes.ts`.
+
+```tsx
+// Archivo del componente Heroes.tsx
+import React from 'react';
+import { Outlet, useSearchParams } from 'react-router-dom';
+import QueryNavLink from '../components/QueryNavLink';
+import { getHeroes } from '../data/heroes';
+import { HeroeType } from '../types/types';
+
+export default function Heroes() {
+  const heroes = getHeroes();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleChangeSearch = (event: any) => {
+    const filter = event.target.value;
+
+    if (filter) setSearchParams({ filter });
+    else setSearchParams({});
+  };
+
+  return (
+    <>
+      <nav className="heroes">
+        <h2>All heroes 🦸‍♂️🦸‍♀️</h2>
+
+        <div className="heroes-filter">
+          <label>Find: </label>
+          <input
+            value={searchParams.get('filter') || ''}
+            onChange={(event) => handleChangeSearch(event)}
+          />
+        </div>
+
+        <div className="heroes-links">
+          {heroes
+            .filter((heroes: HeroeType) => {
+              const filter = searchParams.get('filter');
+              if (!filter) return true;
+
+              const name = heroes.name.toLowerCase();
+              return name.startsWith(filter.toLowerCase());
+            })
+            .map((heroes: any) => (
+              <QueryNavLink to={`/heroes/${heroes.id}`} key={heroes.id}>
+                {heroes.name}
+              </QueryNavLink>
+            ))}
+        </div>
+      </nav>
+
+      {/* Aquí renderizamos las subrutas incluidas en el path de este componente */}
+      <div className="content">
+        <Outlet />
+      </div>
+    </>
+  );
+}
+```
+
+Te dejamos aquí el componente `Heroe.tsx` que se renderizará en el **Outlet** de `Heroes.tsx` al ser una subruta.
+
+```tsx
+import { useParams, useNavigate } from 'react-router-dom';
+import { getHeroe, deleteHeroe } from '../data/heroes';
+import { HeroeType } from '../types/types';
+
+export default function Heroe() {
+  const params = useParams();
+  const navigate = useNavigate();
+  const heroe: HeroeType | undefined = getHeroe(params.heroeId as string);
+
+  if (!heroe) return <p>No existe el héroe que buscas 😭</p>;
+
+  return (
+    <div className="hero-profile">
+      <p className="hero-name">
+        {heroe.name}: {heroe.alias}
+      </p>
+
+      <button
+        className="hero-delete"
+        onClick={() => {
+          deleteHeroe(heroe!.id).then(() => {
+            navigate('/heroes');
+          });
+        }}
+      >
+        Borrar a {heroe.name}
+      </button>
+    </div>
+  );
+}
+```
+
+---
+
+### useSearchParams Hook
+
+Este hook es usado para leer y modificar la cadena de consulta en la URL para la actual **_location_**. Al igual que `**useState**`, éste devuelve un array con dos valores: la cadena de consulta y una función para actualizarla. La cadena de consulta es lo que sigue al signo **`?`** en una URL.
+
+Un ejemplo de la cadena de consulta o `search params` sería `https://www.minicodelab.dev/?filter=react` donde la parte que dice `?filter=react` representa los parámetros de la URL.
+
+En nuestro ejemplo usamos la cadena de consulta, guardada en la variable `**searchParams**`, para filtrar los heroes buscados en el input. Después se renderiza nuestro menú de heroes con los elementos que cumplen dicho filtrado.
+
+---
+
+### useLocation Hook
+
+Este hook devuelve el actual objeto `**location**`. Puede ser útil si se desea realizar alguna acción después del cambio de la *location*.
+
+En nuestro ejemplo lo usamos para que el filtro buscado se mantenga entre cambios de heroes cuando clickamos en un link para cambiar la ruta. Ya que de forma normal, se perdería este `search params string`.
+
+Agregamos el atributo **`search`** del objeto **`location`** a los **`<NavLink>`** del menú de heroes para que no solo escuchen si están activos, sino para que también propagen la URL.
+
+```tsx
+import React from 'react';
+import { NavLink, NavLinkProps, useLocation } from 'react-router-dom';
+
+const QueryNavLink = ({
+  to,
+  children,
+  ...props
+}: {
+  to: string;
+  children: React.ReactNode;
+} & NavLinkProps) => {
+  const location = useLocation();
+
+  return (
+    <NavLink to={`${to}${location.search}`} {...props}>
+      {children}
+    </NavLink>
+  );
+};
+
+export default QueryNavLink;
+```
+
+---
+
+### useParams Hook
+
+Este hook nos devolverá los valores de la URL que sean dinámicos en un objeto con combinación clave/valor adecuada, si lo vemos en un ejemplo te quedará más claro.
+
+- Para la URL `https://minicodelab.dev/heroes/:heroeId` sabemos que el elemento dinámico de la ruta es `:heroeId`.
+- Esto significa que para `https://minicodelab.dev/heroes/batman` tendremos que `{ heroeId: 'batman' }` como resultado del hook `useParams`.
+
+Por tanto, podremos utilizar lo siguiente para acceder a esto parámetros de la URL:
+
+```tsx
+const params = useParams();
+console.log(params.heroeId); // batman
+```
+
+---
+
+### useNavigate Hook
+
+Este hook nos devuelve al invocarlo una función `navigate` que podremos usar para navegar por nuestro cliente de forma programática, es decir, si invocamos `navigate('/heroes')` iremos a la ruta `/heroes` automáticamente.
+
+Esto nos permitirá navegar sin necesidad de clickar en elementos. Aunque no es la forma más adecuada de navegar por la web por la falta de accesibilidad que conlleva, hay mucho casos de uso en los que es adecuado e incluso recomendado usarlo.
+
+---
+
+¡Wow MiniCoder 😄! Parece mucho más complejo de lo que realmente es, pero te recordamos que al final estamos haciendo uso de otra librería para manejar la navegación de nuestra aplicación en React. Con esto estaremos manejando DOS librerías importantes de forma simultánea 🧙‍♂️.
+
+En un futuro ahondaremos más en la navegación de React pero por ahora hemos llegado a una buena aproximación para comenzar a trabajar con el concepto de SPA. Te dejamos el repositorio de nuestro proyecto para que lo visites y uses de guía:
