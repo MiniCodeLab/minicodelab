@@ -177,9 +177,9 @@ export default function Component() {
 Vamos ahora con otro ejemplo sencillo pero nos puede ser útil para controlar un valor **`booleano`** de activo o no activo con un toggle.
 
 ```tsx
-import { useState, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 
-const useToggle = () => {
+const useToggle = (): [boolean, () => void] => {
   const [state, setState] = useState<boolean>(false);
 
   const handler = useCallback(() => {
