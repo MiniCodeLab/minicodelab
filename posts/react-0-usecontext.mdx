@@ -1,0 +1,317 @@
+# React desde 0 | Hooks [Context]
+
+¡Hola MiniCoder 👋! Ya se acerca el final del taller de React desde 0... así que vamos a poner toda la carne en el asador y terminar de aprender qué herramientas de React, y adicionales, nos ayudarán a crear aplicaciones increíbles y capaces de todo.
+
+Si antes de continuar quieres consultar algo sobre React que hayamos visto en talleres anteriores, aquí te dejamos los otros artículos:
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-1',
+      title: 'Conceptos básicos de React parte 1'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-2',
+      title: 'Conceptos básicos de React parte 2'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-usestate-useeffect',
+      title: 'Hooks useState y useEffect'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-useref',
+      title: 'Hook useRef explicado al completo'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-custom',
+      title: 'Hooks Customizados'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-router',
+      title: 'React Router y SPA'
+    }
+  ]}
+/>
+
+---
+
+### Introducción
+
+En este artículo hablaremos de Context. Esta es una herramienta proporcionada por el equipo de React para almacenar datos de forma localizada en distintos puntos de nuestra aplicación, en lugar de almacenarla en un solo componente con el uso de estados. Aprovechando esto, podremos evitar pasar la información a través de `props` de componente padre a hijo varios niveles, y conseguiremos conectar cualquier componente a este proveedor de datos llamado Context.
+
+En este esquema te mostramos como funcionaría un caso en el que inyectamos el contexto a nivel componente página (recuerda las entradas a las rutas de react-router) y consumimos el valor del `Context` desde un componente dos niveles por debajo en el árbol de componentes.
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647279360/articles/react-desde-cero-hooks/context-diagram.png"
+  alt="context-diagram"
+/>
+
+---
+
+### ¿Cuándo debemos usar Context?
+
+En ocasiones nos preguntaremos cuándo usar Context en nuestra aplicación de React, en ocasiones podemos reducirlo a los datos globales que queremos compartir y que no vayan a ser altamente dinámicos. Es decir, Context viene bien para gestionar datos de usuarios autenticados, el tema de color (oscuro o claro, por ejemplo) e incluso el idioma de nuestra aplicación.
+
+Idealmente, nuestra aplicación estará pensada de forma que podremos tener diferentes contextos viviendo en distintos puntos de entrada del árbol de componentes y no todos estos estarán inyectados en el mismo punto. Si tenemos un contexto para gestionar la autenticación, `AuthContext`, este será global seguramente, e inyectado desde `App`. En cambio, si tenemos un contexto para gestionar un formulario de múltiples pasos, `MultiStepFormContext`, este se inyectará en el punto de entrada del componente formulario.
+
+---
+
+### ¿Cómo se comporta Context?
+
+Hay que tener cierto cuidado al utilizar `Context`, de forma que no tomemos por costumbre aplicarlo en cualquier punto de la aplicación. Esto se debe a varias características de esta herramienta:
+
+- El envío de información ahora puede saltarse componentes intermediarios, esto es una gran ventaja que puede verse afectada negativamente si compartimos información por medio de contextos muy genéricos, ya que perderemos la capacidad de seguir adecuadamente el flujo de la información al leer nuestro código.
+- Elige bien el punto en el que introduces el contexto. Al final, tendremos que proveer a este contexto de un valor dinámico (en la mayoría de los casos), esto será gestionado por medio de un `useState` o `useReducer` a nivel del `Context`. Y como has visto anteriormente, el cambio que hacemos en un estado acaba pidiendo un nuevo render a React. ¡Cuidado con los renders sin control!
+
+---
+
+Ahora que hemos leído sobre `Context` y conocemos su apartado teórico y características, vamos a hacer un par de ejemplos para aprenderlo con práctica real 💪
+
+### Control de tema (claro u oscuro) en nuestra app
+
+Vamos a usar `Context` para crear un "switcher" de temas en nuestra aplicación. Para ello lo primero que haremos es crear un pequeño proyecto en el que poner en práctica los conceptos sobre los que vamos a trabajar.
+
+Para empezar tendremos que crear una carpeta llamada `context` en nuestra carpeta `**src**`, al igual que hicimos con los componentes y su carpeta `components`. En ella añadiremos un nuevo archivo llamado `ThemeContext**.jsx**` dentro del que crearemos el contexto:
+
+```tsx
+import { createContext } from 'react';
+
+// Creamos un type para representar los valores a compartir en el contexto...
+export type ThemeContextType = {
+  dark: boolean;
+  toggle: () => void;
+};
+
+// Invocamos a createContext() con los valores iniciales que tendrá el contexto...
+export const ThemeContext = createContext<ThemeContextType>({
+  dark: false,
+  toggle: () => {}
+});
+```
+
+---
+
+### ¿Qué hace createContext?
+
+Esta función de React nos permite generar un nuevo contexto, es decir, un elemento transversal en nuestra aplicación que nos ayuda a la hora de compartir información entre componentes en distintos puntos de la aplicación. Es un valor reactivo que actua, por decirlo de alguna forma, como una variable global pero con la particularidad de que puede ser modificada y será escuchada por nuestros componentes de una forma similar a `useState`.
+
+---
+
+### Control de tema en nuestra app
+
+Ahora que tienes una idea más clara de todo esto, y has visto un caso sencillo de uso, vamos a crear un Context para gestionar el Theme de nuestra aplicación de forma adecuada 🚀
+
+Vamos a crear el mismo archivo del ejemplo anterior en `src/context/ThemeContext.ts` en el que añadiremos un `Context` algo más controlado y definido:
+
+```tsx
+import { createContext } from 'react';
+
+// ¡Ahora haremos el valor de theme más estricto!
+export type Theme = 'light' | 'dark';
+export type ThemeContextValue = {
+  theme: Theme;
+  toggleTheme: () => void;
+};
+
+export const ThemeContext = createContext<ThemeContextValue>({
+  theme: 'light',
+  toggleTheme: () => {}
+});
+```
+
+Ahora inyectaremos el nuevo contexto `ThemeContext` en el componente `App`, ya que al ser un contexto global nos interesa acceder desde el punto más alto de nuestra aplicación.
+
+Esto significa que `App` se encargará de la lógica del contexto por ahora, ya que debe añadir un `value` controlado al `ThemeContext.Provider` que usaremos para envolver nuestro árbol de componentes 🌳
+
+```tsx
+import { useState } from 'react';
+import Header from './components/Header';
+import { ThemeContext, Theme } from './context/ThemeContext';
+
+export default function App() {
+  const [theme, setTheme] = useState<Theme>('light');
+
+  // Esta función cambiará entre temas de forma sencilla al invocarla
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div className="App">
+        <Header />
+      </div>
+    </ThemeContext.Provider>
+  );
+}
+```
+
+El componente `Header` será un componente que mostrará unos links de navegación (de `react-router-dom`) y un filtro de búsqueda (que no usaremos ahora). Junto a esto añadiremos el botón para cambiar entre temas `light` y `dark`.
+
+```tsx
+import { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { ThemeContext } from '../context/ThemeContext';
+import ThemeSwitcher from './ThemeSwitcher';
+
+const Header = () => {
+  const { theme } = useContext(ThemeContext);
+
+  return (
+    // Interpolamos theme en la clase para obtener header-light o header-dark
+    <header className={`header header-${theme}`}>
+      <nav>
+        <Link to="/">
+          <img
+            alt="logo"
+            src="https://www.minicodelab.dev/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flonglogo.08a70b46.png&w=256&q=75"
+            width={180}
+          />
+        </Link>
+
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/about">About</NavLink>
+      </nav>
+
+      <div>
+        <ThemeSwitcher />
+
+        <form>
+          <input type="text" placeholder="Search" />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </header>
+  );
+};
+```
+
+¿Te has fijado en cómo accedemos al contexto? Utilizamos un hook `useContext` al que pasaremos el contexto al que queremos acceder, en este caso `ThemeContext`. Esto recogerá los valores almacenados en el contexto, por lo que destructuramos la propiedad `theme` que hemos pasado al `Provider` como `value={{ theme, toggleTheme }}` en `App` 🤯.
+
+Este valor será reactivo, lo que significa que al cambiar este, todos los componentes que utilicen el valor se renderizarán de nuevo para actualizarse de forma adecuada.
+
+Ahora veremos el componente `ThemeSwitcher` para cerrar la lógica de este ejemplo para cambiar el tema de nuestra aplicación:
+
+```tsx
+import { useContext } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
+
+const ThemeSwitcher = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
+  return (
+    <button className="theme-button" onClick={toggleTheme}>
+      <span>{theme === 'dark' ? '🌞' : '🌚'}</span>
+    </button>
+  );
+};
+```
+
+¡Que sencillo! Con esto ya tenemos un botón que al pulsarlo, provocará un cambio del `theme`. Como has podido ver antes en el componente `Header` hemos creado una clase `nav-light` o `nav-dark` que cambiará de forma dinámica... Con un poquito de CSS correctamente gestionado, podemos usar clases dinámicas para conseguir esto:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647279360/articles/react-desde-cero-hooks/toggle-context.gif"
+  alt="context-diagram"
+/>
+
+---
+
+### Bonus: Guardar preferencias en navegador y mejorar la arquitectura
+
+Con el ejemplo que hemos hecho, tenemos en `App` toda la lógica de nuestro contexto. Aunque para una aplicación sencilla esto no debería importar mucho, en el momento en que crezca vamos a tener problemas para controlar el código.
+
+Vamos a crear un componente encargado de envolver a una parte de nuestra aplicación que será el encargado de almacenar la lógica y el `Provider` de nuestro contexto. De esta forma será más fácil localizar y mejorar nuestro `Context` con nuevas aplicaciones.
+
+Vamos a modificar el archivo `src/context/ThemeContext.ts` y añadiremos un componente `ThemeContextProvider` de forma que quede así:
+
+```tsx
+import { createContext } from 'react';
+
+// ¡Ahora haremos el valor de theme más estricto!
+export type Theme = 'light' | 'dark';
+export type ThemeContextValue = {
+  theme: Theme;
+  toggleTheme: () => void;
+};
+
+export const ThemeContext = createContext<ThemeContextValue>({
+  theme: 'light',
+  toggleTheme: () => {}
+});
+
+// Hemos traido aquí la lógica que habíamos creado en App
+export const ThemeContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [theme, setTheme] = useState<Theme>('light');
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+};
+```
+
+De esta forma, el component `App` estará más libre y será más fácil gestionar vistas y lógica en el punto de entrada de la aplicación:
+
+```tsx
+const App() {
+  return (
+    <ThemeContextProvider>
+      <div className="App">
+        <Header />
+      </div>
+    </ThemeContextProvider>
+  );
+}
+
+export default App;Ï
+```
+
+Como último paso, vamos a darle un toque más profesional a nuestro contexto y haremos que la preferencia de nuestros usuarios por el modo de color permanezca entre recargas de la página.
+
+Para esto, añadiremos un `useEffect` que escuche a `theme` y almacene su valor en `localStorage` de forma dinámica, para tener siempre disponible el último seleccionado.
+
+Aparte, inicializaremos el `state` del theme utilizando una función, que como ya vimos en el artículo sobre `useState` permite añadir un valor inicial al estado a través de un código algo más complejo:
+
+```tsx
+export const ThemeContextProvider = ({ children }: { children: React.ReactNode }) => {
+  // Inicializamos el state por medio de una función, haciendo que su
+  // valor inicial dependa del almacenado en localStorage si existe
+  const [theme, setTheme] = useState<Theme>(() => {
+    const initialTheme = window.localStorage.getItem('colorTheme') as Theme;
+    return initialTheme || 'light';
+  });
+
+  // Cada vez que theme cambie, lo almacenamos en localStorage para siguientes recargas
+  useEffect(() => {
+    window.localStorage.setItem('colorTheme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+};
+```
+
+¡Y con esto conseguiremos que el tema de los usuarios permanezca aunque cierren y abran el navegador!
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647279361/articles/react-desde-cero-hooks/context-localstorage.gif"
+  alt="context-diagram"
+/>
+
+---
+
+¿Qué te ha parecido? Es bastante más sencillo de lo que parecía al principio entre tanta teoría 💃 Ahora sabes como funciona `Context` y la comunicación entre componentes a través de esta herramienta.
+
+Vamos a crear un ejemplo más en otro artículo separado (es bastante más complejo 😱) en el que combinaremos varios `Context` con rutas y lógica de `React Router` donde nos hará falta aprender conceptos más profundos de comunicación y arquitectura en `React`.
+
+Gracias por leer otro de nuestros artículos y seguir aprendiendo con nosotros MiniCoder ♥, ¡queda poco para dominar React!
