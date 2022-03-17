@@ -6,6 +6,48 @@ Hoy nos toca ver formularios, algo muy común en todo el mundo web y que a veces
 
 Esta librería se convertirá en una parte importante de tu arsenal, pero antes tenemos que ver cómo crear formularios en React de la forma más tradicional y manual, para que puedas apreciar y te des cuenta del verdadero poder de `react-hook-form`. ¡Vamos con ello!
 
+Si antes de continuar quieres consultar algo sobre React que hayamos visto en talleres anteriores, aquí te dejamos los otros artículos:
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-1',
+      title: 'Conceptos básicos de React parte 1'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-2',
+      title: 'Conceptos básicos de React parte 2'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-usestate-useeffect',
+      title: 'Hooks useState y useEffect'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-useref',
+      title: 'Hook useRef explicado al completo'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-custom',
+      title: 'Hooks Customizados'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-router',
+      title: 'React Router y SPA'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-usecontext',
+      title: 'Hook Context'
+    }
+  ]}
+/>
+
 ---
 
 ### Creamos un form manejado por estados (controlado)
@@ -83,7 +125,10 @@ const StateForm = () => {
 
 Este formulario se vería tal que así, presta atención a los logs por consola:
 
-![stateform.gif](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88de8600-c547-41ba-98d3-f2e45b93a73f/stateform.gif)
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647512026/articles/stateform.gif"
+  alt="state-form"
+/>
 
 ---
 
@@ -174,50 +219,6 @@ Otras ventajas son el peso de la librería que no alcanza ni los 9kb, comprimido
 Visita la documentación aquí: [https://react-hook-form.com/](https://react-hook-form.com/)
 
 En este artículo vamos a ver las funcionalidades más comunes, y vas a aprender a usar esta librería de forma adecuada para la gran mayoría de casos que te encuentres 🔥
-
-Si antes de continuar quieres consultar algo sobre React que hayamos visto en talleres anteriores, aquí te dejamos los otros artículos:
-
-<ReferencesStack
-  links={[
-    {
-      type: 'internal',
-      url: '/feed/react-0-basicos-1',
-      title: 'Conceptos básicos de React parte 1'
-    },
-    {
-      type: 'internal',
-      url: '/feed/react-0-basicos-2',
-      title: 'Conceptos básicos de React parte 2'
-    },
-    {
-      type: 'internal',
-      url: '/feed/react-0-hooks-usestate-useeffect',
-      title: 'Hooks useState y useEffect'
-    },
-    {
-      type: 'internal',
-      url: '/feed/react-0-hooks-useref',
-      title: 'Hook useRef explicado al completo'
-    },
-    {
-      type: 'internal',
-      url: '/feed/react-0-hooks-custom',
-      title: 'Hooks Customizados'
-    },
-    {
-      type: 'internal',
-      url: '/feed/react-0-router',
-      title: 'React Router y SPA'
-    },
-    {
-      type: 'internal',
-      url: '/feed/react-0-usecontext',
-      title: 'Hook Context'
-    }
-  ]}
-/>
-
----
 
 ---
 
@@ -321,7 +322,10 @@ const AuthForm = () => {
 
 Veámoslo en acción con un GIF 🎦:
 
-![hookform1.gif](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3eb3b425-439f-4f57-aeae-c5b93a1250e6/hookform1.gif)
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647512026/articles/hookform1.gif"
+  alt="hook-form-1"
+/>
 
 Ahora toca introducir validaciones para no tener que controlar los valores por nuestra cuenta... ¿Qué te parece? Vamos a proponer las siguientes condiciones:
 
@@ -426,7 +430,10 @@ const AuthForm = () => {
 
 Con nuestra validación, el `console.log` de la función `onFormError` se ve de la siguiente forma:
 
-![Screenshot 2022-03-17 at 09.39.44.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/91f12f44-a5fa-4ca5-ba83-02814beffc72/Screenshot_2022-03-17_at_09.39.44.png)
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647512249/articles/form-error-img.png"
+  alt="form-error-img"
+/>
 
 Cómo puedes ver el objeto `errors` contiene una key para cada campo que haya fallado, en este caso nuestro password no ha cumplido la validación que hemos creado y llamado `format`.
 
@@ -522,7 +529,10 @@ Así quedaría nuestro formulario completo, estamos controlando todos los casos 
 
 Te dejamos un GIF para que veas como se comportaría los elementos de error en el formulario:
 
-![errors.gif](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7c250c45-6a08-4a12-a34e-e13f041dd86e/errors.gif)
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647512026/articles/errors.gif"
+  alt="errors"
+/>
 
 ---
 
