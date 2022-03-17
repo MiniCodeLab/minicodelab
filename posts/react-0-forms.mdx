@@ -1,0 +1,566 @@
+# React desde 0 | Forms
+
+¡Hola MiniCoder 👋! Estamos ya en el último post del Taller de React desde Cero en el que estamos viendo los conceptos iniciales que hay que saber de esta librería para hacer una aplicación completa.
+
+Hoy nos toca ver formularios, algo muy común en todo el mundo web y que a veces se convierte en algo tedioso con lo que trabajar... Aunque vamos a mostrarte una forma de conseguir crear formularios dinámicos de forma muy sencilla. Para ello usaremos la librería `react-hook-form` 🚀
+
+Esta librería se convertirá en una parte importante de tu arsenal, pero antes tenemos que ver cómo crear formularios en React de la forma más tradicional y manual, para que puedas apreciar y te des cuenta del verdadero poder de `react-hook-form`. ¡Vamos con ello!
+
+Si antes de continuar quieres consultar algo sobre React que hayamos visto en talleres anteriores, aquí te dejamos los otros artículos:
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-1',
+      title: 'Conceptos básicos de React parte 1'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-2',
+      title: 'Conceptos básicos de React parte 2'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-usestate-useeffect',
+      title: 'Hooks useState y useEffect'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-useref',
+      title: 'Hook useRef explicado al completo'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-custom',
+      title: 'Hooks Customizados'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-router',
+      title: 'React Router y SPA'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-usecontext',
+      title: 'Hook Context'
+    }
+  ]}
+/>
+
+---
+
+### Creamos un form manejado por estados (controlado)
+
+Una de las direcciones que podemos tomar para crear formularios es manejarlos a través de estados. Los `input` que gestionamos por medio de un estado serán **controlados** en todo momento (siempre y cuando el valor nunca sea `undefined` o `null`).
+
+Esto, aunque pueda parecer una ventaja, tiene varias desventajas asociadas que podríamos mejorar con lo que hemos aprendido hasta ahora:
+
+- Habría que crear un `state` para cada campo del formulario, o un `state` más complejo en forma de objeto.
+- Provocaremos un `rerender` completo del formulario por cada cambio en cada input, ¡imagina lo ineficiente que podría llegar a ser!
+- Tenemos que hacer validaciones a mano para absolutamente todo, ¿y si se nos escapa algo? 😱
+
+```tsx
+const StateForm = () => {
+  // Creamos un state para cada campo...
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+
+  // O un state complejo para todos a la vez
+  // const [form, setForm] = useState({
+  //   username: "",
+  //   password: ""
+  // });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    // Prevenimos que la página recargue
+    e.preventDefault();
+
+    // Haremos un control de error manual...
+    if (!password || !username) {
+      console.error('Formulario incompleto! ❌');
+      return;
+    }
+
+    // Gestionamos el payload del form con los states
+    const formPayload = {
+      username,
+      password
+    };
+    console.log('formPayload vale:', formPayload);
+
+    // Ya podríamos enviar la información a nuestra API
+    // sendToMyApi(formPayload)
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="username">
+        <span>Username:</span>
+        <input
+          id="username"
+          name="username"
+          onChange={(e) => setUserName(e.target.value)}
+          type="text"
+          value={username}
+        />
+      </label>
+
+      <label htmlFor="password">
+        <span>Password:</span>
+        <input
+          id="password"
+          name="password"
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          value={password}
+        />
+      </label>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+```
+
+Este formulario se vería tal que así, presta atención a los logs por consola:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647512026/articles/stateform.gif"
+  alt="state-form"
+/>
+
+---
+
+### Creamos un form manejado por referencias (no controlado)
+
+Otro camino para hacer formularios que quizás te resulte más cómodo de aplicar es a través del hook `useRef`. Como vimos en el taller de `useRef` podemos tomar una referencia de un elemento HTML cualquiera y escucharlo en todo momento. A través de este proceso podremos escuchar a los inputs de forma adecuada sin provocar un nuevo `render` en cada cambio de estos.
+
+Aun así, seguimos encontrando la desventaja asociada de que tendremos que gestionar los errores completamente a mano, y tendremos que seguir creando muchas referencias (en el ejemplo anterior fueron estados) para todos los `input`.
+
+Este código conseguirá el mismo resultado que el del anterior ejemplo con `useState`, pero de una forma más eficiente:
+
+```tsx
+const RefForm = () => {
+  // Creamos una referencia para cada input...
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    // Prevenimos que la página recargue
+    e.preventDefault();
+
+    // Conseguimos el valor de los inputs por medio de su ref, que
+    // pueden ser null, de ahí que usemos el optional chaining.
+    const username = usernameRef.current?.value;
+    const password = passwordRef.current?.value;
+
+    // Haremos un control de error manual...
+    if (!password || !username) {
+      console.error('Formulario incompleto! ❌');
+      return;
+    }
+
+    // Gestionamos el payload del form con los campos de referencia
+    const formPayload = {
+      username,
+      password
+    };
+    console.log('formPayload vale:', formPayload);
+
+    // Ya podríamos enviar la información a nuestra API
+    // sendToMyApi(formPayload)
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="username">
+        <span>Username:</span>
+        <input
+          id="username"
+          name="username"
+          placeholder="MiniCoder"
+          // Añadimos la referencia al input
+          ref={usernameRef}
+          type="text"
+        />
+      </label>
+
+      <label htmlFor="password">
+        <span>Password:</span>
+        <input
+          id="password"
+          name="password"
+          placeholder="*****"
+          // Añadimos la referencia al input
+          ref={passwordRef}
+          type="password"
+        />
+      </label>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+```
+
+---
+
+### Utilizamos `react-hook-form` para crear nuestro formulario
+
+A parte de los dos ejemplo anteriores, puedes crear un formulario de la forma que desees, combinarlos, no usar ninguno... Aun así, siempre se hará complicado manejar un formulario de forma adecuada por muy simple que sea, ya que conlleva un flujo muy dinámico de la información.
+
+Aunque estos últimos años han aparecido herramientas mas que adecuadas para enfrentarnos a este problema, la librería `react-hook-form` está a otro nivel frente al resto en el momento de escribir este artículo. Ya sea por su sencillez de uso, buena documentación y cantidad de funcionalidades 🦄.
+
+React Hook Form tiene un enfoque diferente a otras librerías de formularios puesto que adopta el uso de entradas no controladas usando `ref` en lugar de depender de un `state`**.** Según la documentación nos indica que aumenta el rendimiento de los formularios reduciendo el número de renders.
+
+Otras ventajas son el peso de la librería que no alcanza ni los 9kb, comprimidos con gzip, y podemos añadir que React Hook Form sigue los estándares HTML para validar los formularios utilizando una API de validación basada en restricciones.
+
+Visita la documentación aquí: [https://react-hook-form.com/](https://react-hook-form.com/)
+
+En este artículo vamos a ver las funcionalidades más comunes, y vas a aprender a usar esta librería de forma adecuada para la gran mayoría de casos que te encuentres 🔥
+
+---
+
+### Formulario de autenticación con `react-hook-form`
+
+Vamos a comenzar instalando la librería en nuestro proyecto de React:
+
+```bash
+npm i react-hook-form@latest
+```
+
+Ahora vamos a limpiar el componente formulario que hemos creado antes:
+
+```tsx
+const AuthForm = () => {
+  const onFormSubmit = () => {};
+
+  return (
+    <form onSubmit={onFormSubmit}>
+      <label htmlFor="username">
+        <span>Username:</span>
+        <input id="username" name="username" placeholder="MiniCoder" type="text" />
+      </label>
+
+      <label htmlFor="password">
+        <span>Password:</span>
+        <input id="password" name="password" placeholder="*****" type="password" />
+      </label>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+```
+
+Como puedes ver, el formulario está falto de controlar los campos disponibles y la función de `submit` de forma adecuada.
+
+Vamos a importar el hook principal de `react-hook-form` que se llamará `useForm`, de la siguiente manera al principio del archivo:
+
+```tsx
+import { useForm } from 'react-hook-form';
+```
+
+Con esto podremos invocar el `hook` en nuestro componente para destructurar las siguientes claves del objeto que devuelve:
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+const AuthForm = () => {
+  const { handleSubmit, register } = useForm();
+
+  const onFormSubmit = () => {};
+
+  return <form onSubmit={onFormSubmit}>{/* ... */}</form>;
+};
+```
+
+**¿Cómo funcionan estos valores de `useForm`?**
+
+- `handleSubmit` ⇒ Esta función nos permitirá componer una función `submit` que no solamente evita que el formulario recargue la página, sino que nos proporciona todos los valores del formulario en un objeto formateado, y también se encargará de hacer las validaciones que configuremos en nuestros inputs.
+- `register` ⇒ Esta función acepta dos argumentos. El nombre `name` que le daremos al `input` asociado, y un objeto de configuración para indicar validaciones y características que aplicar al `input`.
+
+Vamos a aplicar estas funciones para que lo veas en código 🚀
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+type FormValues = {
+  username: string;
+  password: string;
+};
+
+const AuthForm = () => {
+  const { handleSubmit, register } = useForm<FormValues>();
+
+  // Recibimos los valores. dleform en nuestro submit handler
+  const onFormSubmit = (values: FormValues) => {
+    console.log('Form values:', values);
+  };
+
+  return (
+    // Envolvemos nuestra función de submit con la que nos da la librería
+    <form onSubmit={handleSubmit(onFormSubmit)}>
+      <label>
+        <span>Username:</span>
+        {/* Invocamos register y pasamos sus atributos en un spread */}
+        <input {...register('username')} placeholder="MiniCoder" type="text" />
+      </label>
+
+      <label>
+        <span>Password:</span>
+        {/* Invocamos register y pasamos sus atributos en un spread */}
+        <input {...register('password')} placeholder="*****" type="password" />
+      </label>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+```
+
+Veámoslo en acción con un GIF 🎦:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647512026/articles/hookform1.gif"
+  alt="hook-form-1"
+/>
+
+Ahora toca introducir validaciones para no tener que controlar los valores por nuestra cuenta... ¿Qué te parece? Vamos a proponer las siguientes condiciones:
+
+- `username` debe tener al menos 2 caracteres y es requerido.
+- `password` debe tener al menos 6 caracteres, conteniendo una minúscula, una mayúscula y un número, además de ser requerido.
+
+Como hemos comentado antes, podemos enviar un objeto de opciones como segundo argumento de `register`, así que vamos a configurarlo de la siguiente forma:
+
+```tsx
+<label>
+  <span>Username:</span>
+  <input
+    {...register("username", {
+      required: true, // Validará que el campo tenga valor
+      minLength: 2 // Validará la longitud mínima
+    })}
+    placeholder="MiniCoder"
+    type="text"
+  />
+</label>
+
+<label>
+  <span>Password:</span>
+  <input
+    {...register("password", {
+      required: true, // Validará que el campo tenga valor
+      minLength: 6, // Validará la longitud mínima
+    })}
+    placeholder="*****"
+    type="password"
+  />
+</label>
+```
+
+Ahora podemos comprobar que cuando pulsamos el botón `Submit` no ocurre nada en nuestra aplicación 😱. Además, nos falta la validación especial de los caracteres de la contraseña... Esto lo conseguiremos por medio de un objeto o función de validaciones que debe devolver `true` para que el input cuente como válido:
+
+```tsx
+{...register("password", {
+	required: true,
+	minLength: 6,
+	// Una función que devuelve true contará como input válido
+	validate: () => true
+})}
+
+```
+
+Aunque esto es correcto y podríamos hacer la comprobación dentro de la función, es mejor crear un objeto con funciones para ponerle nombre a nuestro error, ahora lo verás más claro:
+
+```tsx
+<label>
+  <span>Password:</span>
+  <input
+    {...register('password', {
+      required: true,
+      minLength: 6,
+      // Prevenimos que haya espacios en la contraseña
+      pattern: /^\S*$/,
+      validate: {
+        // Comprobamos que hay mayúsculas, minúsculas y números
+        format: (password) => {
+          return /[A-Z]/g.test(password) && /[a-z]/g.test(password) && /[0-9]/g.test(password);
+        }
+      }
+    })}
+    placeholder="*****"
+    type="password"
+  />
+</label>
+```
+
+Este `input password` con esta validación es totalmente adecuado para un proyecto que necesite usar contraseñas 👏 ¡Puedes quedarte con el ejemplo para el futuro!
+
+Ahora que tenemos todo controlado con respecto a validaciones, `react-hook-form` nos ofrece dos formas distintas de trabajar con errores, ambas pueden coexistir en el mismo componente sin problemas, aunque nosotros nos vamos a centrar en una:
+
+- Objeto `errors` que podemos destructurar de `useForm`, estará actualizado según ocurran validaciones y el primer submit.
+- Función `errorHandler` que podemos enviar a `handleSubmit` como segundo argumento, donde haremos algo más de control por nuestra parte.
+
+**Validación de formulario por medio de una función**
+
+Con la función que controlaremos a mano, quedaría un código como este:
+
+```tsx
+const AuthForm = () => {
+  const { handleSubmit, register } = useForm<FormValues>();
+
+  const onFormSubmit = (values: FormValues) => {
+    console.log('Form values:', values);
+  };
+
+  const onFormError = (errors: any) => {
+    console.log('Form errors:', errors);
+
+    // Aquí podríamos invocar un toast o crear errores de forma manual
+  };
+
+  return (
+    // Hemos enviado onFormError como segundo argumento
+    <form onSubmit={handleSubmit(onFormSubmit, onFormError)}>{/* ... */}</form>
+  );
+};
+```
+
+Con nuestra validación, el `console.log` de la función `onFormError` se ve de la siguiente forma:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647512249/articles/form-error-img.png"
+  alt="form-error-img"
+/>
+
+Cómo puedes ver el objeto `errors` contiene una key para cada campo que haya fallado, en este caso nuestro password no ha cumplido la validación que hemos creado y llamado `format`.
+
+Este error contiene un mensaje que podríamos devolver en la validación manual que hemos generado, aunque vamos a gestionarlo de otra forma menos enrevesada 👍
+
+**Validación de formulario por medio de un objeto `errors`**
+
+Antes te hemos explicado que podemos obtener un objeto `errors` de lo que devuelve `useForm`. Ese objeto tendrá el mismo formato que el que acabamos de ver en la función `onFormError`.
+
+Vamos a mostrarte un ejemplo de código dónde controlaremos ese error directamente, recuerda que en el taller en directo y video de youtube podremos hacer más ejemplos en caso de que quieras repasar lo que hayamos visto.
+
+```tsx
+type FormValues = {
+  username: string;
+  password: string;
+};
+
+const AuthForm = () => {
+  const {
+    handleSubmit,
+    register,
+    // Destructuramos los errores del formulario
+    formState: { errors }
+  } = useForm<FormValues>();
+
+  const onFormSubmit = (values: FormValues) => {
+    console.log('Form values:', values);
+
+    // Gestionamos el submit como nos haga falta...
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onFormSubmit)}>
+      <label>
+        <span>Username:</span>
+        <input
+          {...register('username', {
+            required: true,
+            minLength: 2
+          })}
+          placeholder="MiniCoder"
+          type="text"
+        />
+
+        {/* Mostramos el error si no hay username ya que es requerido */}
+        {errors.username ? (
+          <p className="error">Este campo es requerido y debe tener al menos 2 caracteres</p>
+        ) : null}
+      </label>
+
+      <label>
+        <span>Password:</span>
+        <input
+          {...register('password', {
+            required: true,
+            minLength: 6,
+            pattern: /^\S*$/,
+            validate: {
+              format: (password) => {
+                return (
+                  /[A-Z]/g.test(password) && /[a-z]/g.test(password) && /[0-9]/g.test(password)
+                );
+              }
+            }
+          })}
+          placeholder="*****"
+          type="password"
+        />
+
+        {/* Si hay errores en password mostramos el mensaje */}
+        {errors.password ? (
+          <p className="error">
+            {/* Si es de tipo format avisamos al user, si no, será requerido siempre */}
+            {errors.password.type === 'format'
+              ? 'La contraseña debe contener al menos una mayúscula, una minúscula y un número'
+              : 'Este campo es requerido y debe tener al menos 6 caracteres'}
+          </p>
+        ) : null}
+      </label>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+```
+
+Así quedaría nuestro formulario completo, estamos controlando todos los casos que nos podemos encontrar:
+
+- Hemos hecho `username` requerido y que tenga al menos 2 caracteres.
+- Hemos hecho `password` requerido y que tenga al menos 6 caracteres. Además validará si tiene el formato adecuado con una validación personalizada `format`.
+- Los errores aparecen de forma dinámica en el formulario a partir del primer `submit`.
+- La información que llega a la función `onFormSubmit` estará correctamente validada y no tendrá problemas de formato.
+
+Te dejamos un GIF para que veas como se comportaría los elementos de error en el formulario:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1647512026/articles/errors.gif"
+  alt="errors"
+/>
+
+---
+
+### Conceptos de validación
+
+Antes de terminar os dejamos algunos conceptos básicos de validación por sí queréis usarlos y no habéis buceado por la librería de de React Hook Forms. Para aplicar validaciones a un campo, puede pasar parámetros de validación al método de registro. Los parámetros de validación son similares al estándar de validación de formularios HTML existente.
+
+Estos parámetros de validación incluyen las siguientes propiedades:
+
+- `required` indica si el campo es requerido o no. Si esta propiedad se establece en verdadero, entonces el campo no puede estar vacío.
+- `minlength maxlength` establecen la longitud mínima y máxima para un valor de entrada de cadena min y max establecen los valores mínimo y máximo para un valor numérico.
+- `type` indica el tipo del input, puede ser `email`, `number`, `text` o cualquier otro tipo de entrada HTML estándar.
+- `pattern` usa una expresión regular para validar el input o elemento de entrada.
+
+Otro aspecto a tener en cuenta es que si queremos usar el `onChange` o `onBlur` tienes que pasar `mode` como una propiedad del Hook.
+
+```jsx
+const { register, handleSubmit, errors } = useForm({
+  mode: 'onChange'
+});
+```
+
+---
+
+¡Y con esto hemos acabado con formularios MiniCoder! No solo eso, sino que hemos llegado al final de todos los conceptos básicos que queríamos ver contigo en el **Taller de React desde Cero** 🎉
+
+Ahora toca lo más importante, haremos una serie de talleres en directo trabajando en una aplicación completa en la que aplicaremos todo lo aprendido. En cuanto tengamos el contenido terminado y hayamos trabajado la aplicación, subiremos a esta web los links a los videos en un nuevo artículo.
+
+Mientras tanto, te invitamos a repasar todo lo que hemos visto, pasarte por el repositorio de Github con el taller [https://github.com/MiniCodeLab/taller-react-desde-cero](https://github.com/MiniCodeLab/taller-react-desde-cero)
+
+Ha sido un placer terminar este primer taller contigo, te esperamos en los siguientes artículos y talleres, ¡que el código te acompañe 🧙‍♂️!
