@@ -53,18 +53,16 @@ Si antes de continuar quieres consultar algo sobre React que hayamos visto en ta
 
 ---
 
----
-
 ### ¿Qué necesitamos?
 
-La verdad es que no necesitamos gran cosa, si ya estabas siguiendo el curso de React desde 0 n deberías tener problemas.
+La verdad es que no necesitamos gran cosa, si ya estabas siguiendo el curso de React desde 0 no deberías tener problemas.
 
 1. Instalar Node: [https://nodejs.org/es/](https://nodejs.org/es/)
 2. Instalar npm: [https://www.npmjs.com/](https://www.npmjs.com/)
 3. Crear una cuenta en: [https://cloud.mongodb.com/](https://cloud.mongodb.com/)
 4. Crear una cuenta en: [https://render.com/](https://render.com/)
 
-Las cuentas sin para tener una Data Base de Mongo y para desplegar de nuestro Server.
+Las cuentas son para tener una Data Base de Mongo y para desplegar de nuestro Server.
 
 ---
 
@@ -109,8 +107,6 @@ npm init -y
 	📝 package.json
 	📝 README.md
 	📝 swagger.yaml
-
-
 ```
 
 ---
@@ -145,7 +141,7 @@ La URI de mongo la puedes sacar de vuestra DataBase:
 
 ### Conexión DB
 
-Nuestro server necesitará conectarse a nuestra base de datos y para ello hacemos uso de la librería mongoose que nos permite conectarnos de manera muy sencilla. En nuestro fichero `db.js` generamos nuestra función.
+Nuestro server necesitará conectarse a nuestra base de datos y para ello hacemos uso de la librería `mongoose` que nos permite conectarnos de manera muy sencilla. En nuestro fichero `db.js` generamos nuestra función.
 
 ```jsx
 const mongoose = require('mongoose');
@@ -195,6 +191,8 @@ module.exports = router;
 
 Como es una API sencilla no vamos a usar validadores como yup o joi, por ello vamos a crear un fichero utils donde tendremos algunas funciones validadoras o que nos faciliten nuestro desarrollo dejando otros puntos de código más limpios. En nuestro `utils.js` tendremos funciones como la validación de email o password, la generación de tokens o una función de formateo de errores.
 
+En caso de que estas funciones útiles crecieran en número y variedad, podríamos crear una carpeta utils donde separar cada paquete de funciones por funcionalidad, pero como hemos comentado antes, en este caso con este archivo podremos trabajar perfectamente en el proyecto.
+
 ```jsx
 const jwt = require('jsonwebtoken');
 
@@ -239,7 +237,7 @@ module.exports = {
 
 Los modelos de nuestras APIS son como un contrato de estructura de datos, definimos qué información llegará y de qué tipo. En nuestro caso tendremos un modelo para usuarios, otro para los snippets y por último el de tags.
 
-El más complejo será el de user puesto que antes de guardar la información de un usuario debemos encriptar su contraseña, esto es por normativa ya que nunca se guarda la contraseña del user. Por ello un ejemplo sería `user.model.js`
+El más complejo será el de `user` puesto que antes de guardar la información de un usuario debemos "hashear" su contraseña, esto es por normativa ya que nunca se guarda la contraseña del user. Por ello un ejemplo sería `user.model.js`
 
 ```jsx
 const mongoose = require('mongoose');
@@ -296,7 +294,7 @@ Y finalmente los tags estarán en su modelo `tag.model.js`
 
 ### Definiendo Controladores
 
-Un controlador hace las funciones que su propio nombre indica, es la sala de máquinas en la que operaremos y crearemos la funcionalidad que se invocará cada vez que accedamos a una ruta. Por ejemplo nuestro controlador de code es un CRUD básico que os puede valer para empezar a trabajar con Node `code.controller.js`
+Un controlador hace las funciones que su propio nombre indica, es la sala de máquinas en la que operaremos y crearemos la funcionalidad que se invocará cada vez que accedamos a una ruta. Por ejemplo, nuestro controlador de `code` en el archivo `code.controller.js`, contiene las funciones necesarias para completar un CRUD básico, que te servirá de ejemplo para empezar a trabajar con Node y otros modelos.
 
 ```jsx
 const Code = require('./code.model');
