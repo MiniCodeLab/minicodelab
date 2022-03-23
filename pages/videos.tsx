@@ -13,22 +13,19 @@ import {
   CardTitle
 } from 'styles/ui/Card';
 import { Video } from 'types/common';
-import { sortByDate } from 'utils/common';
 
 const VideoPage: React.FC<Props> = ({ videos }) => {
   return (
     <Layout title="Feed">
       <CardsWrapper>
-        {sortByDate(videos).map((video, idx) => (
+        {videos.map((video, idx) => (
           <Card key={idx}>
             <CardHeader isArticle>
               <Image src={video.cover} alt={video.title} width={60} height={60} />
 
               <CardTitle>
                 <h2>{video.title}</h2>
-                <p>
-                  {Intl.DateTimeFormat('es-ES', { dateStyle: 'long' }).format(new Date(video.date))}
-                </p>
+                <p>{video.date}</p>
               </CardTitle>
             </CardHeader>
 
