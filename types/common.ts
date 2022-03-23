@@ -25,3 +25,12 @@ export type Metadata = {
   tags: string[];
   title: string;
 };
+
+export type Video = {
+  cover: string;
+  date: string;
+  description: string;
+  link: string;
+  relatedArticles: string[];
+  title: string;
+};
