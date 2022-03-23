@@ -90,6 +90,18 @@ export const CardTitle = styled.div`
 `;
 
 export const CardArticleLink = styled.div`
+  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
   margin-top: calc(var(--spacing-m) / 2);
-  text-align: right;
+
+  .article-link {
+    background-color: var(--color-green);
+  }
+
+  a {
+    padding-bottom: 0;
+  }
 `;

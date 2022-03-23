@@ -18,8 +18,8 @@ const Menu: React.FC = () => {
 
       <ul>
         <li>
-          <Link href="/video" passHref>
-            <a title="Video">
+          <Link href="/videos" passHref>
+            <a title="Videos">
               <Image src={youtube} alt="youtube icon" width={40} height={40} />
             </a>
           </Link>
