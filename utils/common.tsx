@@ -53,4 +53,4 @@ export const mapBy = <T extends {}>(entities: T[], field: string): string[] =>
   entities.flatMap((cover) => cover[field]);
 
 export const sortByDate = <T extends { date: string }>(entities: T[]): T[] =>
-  entities.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  [...entities].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
