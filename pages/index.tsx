@@ -15,7 +15,7 @@ import {
   CardTitle
 } from 'styles/ui/Card';
 import { PostCover } from 'types/common';
-import { getMetaData, getPostAuthor, sortByDate } from 'utils/common';
+import { getMetaData, getPostAuthor } from 'utils/common';
 
 const HomePage: React.FC<Props> = ({ covers }) => {
   const [filteredCovers, setFilteredCovers] = useState(covers);
@@ -32,7 +32,7 @@ const HomePage: React.FC<Props> = ({ covers }) => {
       <FeedFilter covers={covers} onChangeCovers={setFilteredCovers} />
 
       <CardsWrapper>
-        {sortByDate(filteredCovers).map((post) => (
+        {filteredCovers.map((post) => (
           <Card key={post.slug}>
             <CardHeader isArticle>
               <div>
