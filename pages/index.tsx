@@ -15,7 +15,7 @@ import {
   CardTitle
 } from 'styles/ui/Card';
 import { PostCover } from 'types/common';
-import { getMetaData, getPostAuthor } from 'utils/common';
+import { getMetaData, getPostAuthor, sortByDate } from 'utils/common';
 
 const HomePage: React.FC<Props> = ({ covers }) => {
   const [filteredCovers, setFilteredCovers] = useState(covers);
@@ -32,34 +32,32 @@ const HomePage: React.FC<Props> = ({ covers }) => {
       <FeedFilter covers={covers} onChangeCovers={setFilteredCovers} />
 
       <CardsWrapper>
-        {filteredCovers
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-          .map((post) => (
-            <Card key={post.slug}>
-              <CardHeader isArticle>
-                <div>
-                  <Image src={post.cover} alt={post.title} width={60} height={60} layout="fixed" />
-                </div>
+        {sortByDate(filteredCovers).map((post) => (
+          <Card key={post.slug}>
+            <CardHeader isArticle>
+              <div>
+                <Image src={post.cover} alt={post.title} width={60} height={60} layout="fixed" />
+              </div>
 
-                <CardTitle>
-                  <h2>{post.title}</h2>
-                  <p>Creado por: {getPostAuthor(post.author)}</p>
-                </CardTitle>
-              </CardHeader>
+              <CardTitle>
+                <h2>{post.title}</h2>
+                <p>Creado por: {getPostAuthor(post.author)}</p>
+              </CardTitle>
+            </CardHeader>
 
-              <CardMediaContent isArticle>
-                <p>{post.description}</p>
+            <CardMediaContent isArticle>
+              <p>{post.description}</p>
 
-                <CardArticleLink>
-                  <Link href={`/feed/${post.slug}`} passHref>
-                    <a>
-                      <Button>Leer más</Button>
-                    </a>
-                  </Link>
-                </CardArticleLink>
-              </CardMediaContent>
-            </Card>
-          ))}
+              <CardArticleLink>
+                <Link href={`/feed/${post.slug}`} passHref>
+                  <a>
+                    <Button>Leer más</Button>
+                  </a>
+                </Link>
+              </CardArticleLink>
+            </CardMediaContent>
+          </Card>
+        ))}
       </CardsWrapper>
     </Layout>
   );
