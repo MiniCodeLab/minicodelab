@@ -51,3 +51,24 @@ export const getMetaData = ({
 export const deduplicate = <T extends {}>(arr: T[]) => [...new Set(arr)];
 export const mapBy = <T extends {}>(entities: T[], field: string): string[] =>
   entities.flatMap((cover) => cover[field]);
+
+export const sortByDate = <T extends { date: string }>(
+  entities: T[],
+  order: 'asc' | 'desc' = 'desc'
+): T[] =>
+  // As sort mutates arrays we should copy it first to prevent original argument mutations
+  [...entities].sort((a, b) =>
+    order === 'desc'
+      ? new Date(b.date).getTime() - new Date(a.date).getTime()
+      : new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+
+export const getFormattedDate = (
+  dateString: string,
+  dateStyle: 'full' | 'long' | 'medium' | 'short' = 'long'
+) => {
+  // If we ever have a bug with dates in Safari again, check the formatting:
+  // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
+  const date = new Date(dateString);
+  return Intl.DateTimeFormat('es-ES', { dateStyle }).format(date);
+};

@@ -13,19 +13,27 @@ import {
   CardTitle
 } from 'styles/ui/Card';
 import { Video } from 'types/common';
+import { getFormattedDate, getMetaData, sortByDate } from 'utils/common';
 
 const VideoPage: React.FC<Props> = ({ videos }) => {
   return (
-    <Layout title="Feed">
+    <Layout
+      title="Videos"
+      headChildren={getMetaData({
+        title: 'MiniCodeLab Videos',
+        description:
+          'Listado de videos en Youtube de MiniCodeLab. Aprende los talleres y charlas de la comunidad.'
+      })}
+    >
       <CardsWrapper>
-        {videos.map((video, idx) => (
+        {sortByDate(videos).map((video, idx) => (
           <Card key={idx}>
             <CardHeader isArticle>
               <Image src={video.cover} alt={video.title} width={60} height={60} />
 
               <CardTitle>
                 <h2>{video.title}</h2>
-                <p>{video.date}</p>
+                <p>{getFormattedDate(video.date)}</p>
               </CardTitle>
             </CardHeader>
 
