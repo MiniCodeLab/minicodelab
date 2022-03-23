@@ -1,0 +1,501 @@
+# MiniCode Guide: Simple Api
+
+Bienvenidos MiniCoders, por fin llega el momento de empezar a construir una aplicación desde cero, como no queremos usar una API pública o datos mock vamos a crear una pequeña API con Node + Express y Mongo como Data Base.
+
+Va ser algo muy sencillo porque estamos en el taller de React y no queremos perder el foco, más adelante esperamos hacer un taller de Node desde 0 aplicando estructuras más complejas y escalables.
+
+Si antes de continuar quieres consultar algo sobre React que hayamos visto en talleres anteriores, aquí te dejamos los otros artículos:
+
+<ReferencesStack
+  links={[
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-1',
+      title: 'Conceptos básicos de React parte 1'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-basicos-2',
+      title: 'Conceptos básicos de React parte 2'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-usestate-useeffect',
+      title: 'Hooks useState y useEffect'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-useref',
+      title: 'Hook useRef explicado al completo'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-hooks-custom',
+      title: 'Hooks Customizados'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-router',
+      title: 'React Router y SPA'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-usecontext',
+      title: 'Hook Context'
+    },
+    {
+      type: 'internal',
+      url: '/feed/react-0-forms',
+      title: 'Forms'
+    }
+  ]}
+/>
+
+---
+
+---
+
+### ¿Qué necesitamos?
+
+La verdad es que no necesitamos gran cosa, si ya estabas siguiendo el curso de React desde 0 n deberías tener problemas.
+
+1. Instalar Node: [https://nodejs.org/es/](https://nodejs.org/es/)
+2. Instalar npm: [https://www.npmjs.com/](https://www.npmjs.com/)
+3. Crear una cuenta en: [https://cloud.mongodb.com/](https://cloud.mongodb.com/)
+4. Crear una cuenta en: [https://render.com/](https://render.com/)
+
+Las cuentas sin para tener una Data Base de Mongo y para desplegar de nuestro Server.
+
+---
+
+### ¿Cómo creamos un proyecto?
+
+```bash
+mkdir instaCode
+cd instaCode
+npm init -y
+```
+
+---
+
+### Estructura de carpetas y ficheros a usar
+
+```bash
+|_📁 instaCode
+	|_📁 src
+		|_📁 api -> Carpeta que define modelos-controladores-rutas
+			|_📁 users
+					📝 user.controller.js
+					📝 user.model.js
+					📝 user.routes.js
+			|_📁 codes
+					📝 code.controller.js
+					📝 code.model.js
+					📝 code.routes.js
+			|_📁 tags
+					📝 tag.controller.js
+					📝 tag.model.js
+					📝 tag.routes.js
+		|_📁 helpers -> Carpeta funciones auxiliares para dejar el index.js limpio
+				📝 db.js
+				📝 swagger.js
+				📝 utils.js
+		|_📁 middlewares -> Carpeta con los middlewares o interceptores
+				📝 authorize.js
+		📝 index.js -> Fichero disparador o inicializador
+	📝 .env
+	📝 .gitignore
+	📝 LICENSE
+	📝 package.json
+	📝 README.md
+	📝 swagger.yaml
+
+
+```
+
+---
+
+### Instalación de dependencias
+
+```bash
+npm i express mongoose bcrypt cors dotenv jsonwebtoken swagger-ui-express yamljs
+npm i -D nodemon
+```
+
+---
+
+### Definir nuestras variables de entorno
+
+En nuestro fichero `.env` tendremos definidas las variables de entorno de nuestro proyecto, después tendremos que usarlas para la puesta en producción.
+
+```jsx
+MONGO_URI=mongodb+srv://name:password@cluster0.xchvl.mongodb.net/projectName?retryWrites=true&w=majority
+PORT=8080
+JWT_SECRET=GenerateYourSecretJwt
+```
+
+La URI de mongo la puedes sacar de vuestra DataBase:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1648030343/articles/react-desde-cero-hooks/MongoURI.gif"
+  alt="Database connect"
+/>
+
+---
+
+### Conexión DB
+
+Nuestro server necesitará conectarse a nuestra base de datos y para ello hacemos uso de la librería mongoose que nos permite conectarnos de manera muy sencilla. En nuestro fichero `db.js` generamos nuestra función.
+
+```jsx
+const mongoose = require('mongoose');
+require('dotenv').config();
+
+const urlDb = process.env.MONGO_DB;
+
+const connectDb = async () => {
+  try {
+    const db = await mongoose.connect(urlDb, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    const { name, host } = db.connection;
+    console.log(`Connected with db 💾 name: ${name} in host: ${host}`);
+  } catch (error) {
+    console.error('Error to connect with db 💾', error);
+  }
+};
+
+module.exports = {
+  connectDb
+};
+```
+
+---
+
+### Swagger config
+
+Swagger es una herramienta que nos permite generar documentación de nuestra API para facilitar el uso de terceros. Para ello haremos uso de la librería de swagger-ui que partiendo de un fichero .yaml nos genera nuestra documentación. Por ello en nuestro `swagger.js`
+
+```jsx
+const express = require('express');
+const router = express.Router();
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('../../swagger.yaml');
+
+router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+module.exports = router;
+```
+
+---
+
+### Utils
+
+Como es una API sencilla no vamos a usar validadores como yup o joi, por ello vamos a crear un fichero utils donde tendremos algunas funciones validadoras o que nos faciliten nuestro desarrollo dejando otros puntos de código más limpios. En nuestro `utils.js` tendremos funciones como la validación de email o password, la generación de tokens o una función de formateo de errores.
+
+```jsx
+const jwt = require('jsonwebtoken');
+
+const validationEmail = (email) => {
+  const response =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return response.test(String(email).toLocaleLowerCase());
+};
+
+const validationPassword = (password) => {
+  const response = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/;
+  return response.test(String(password));
+};
+
+const generateToken = (id, email) => {
+  return jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+};
+
+const verifyToken = (token) => {
+  return jwt.verify(token, process.env.JWT_SECRET);
+};
+
+const setError = (code, message) => {
+  const error = new Error();
+  error.code = code;
+  error.message = message;
+  return error;
+};
+
+module.exports = {
+  validationEmail,
+  validationPassword,
+  generateToken,
+  verifyToken,
+  setError
+};
+```
+
+---
+
+### Definiendo los modelos
+
+Los modelos de nuestras APIS son como un contrato de estructura de datos, definimos qué información llegará y de qué tipo. En nuestro caso tendremos un modelo para usuarios, otro para los snippets y por último el de tags.
+
+El más complejo será el de user puesto que antes de guardar la información de un usuario debemos encriptar su contraseña, esto es por normativa ya que nunca se guarda la contraseña del user. Por ello un ejemplo sería `user.model.js`
+
+```jsx
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
+const { validationPassword } = require('../../helpers/utils');
+
+const schema = new Schema(
+  {
+    username: { type: String, unique: true, required: true },
+    email: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
+    emoji: { type: String, required: true },
+    codes: [{ type: Schema.Types.ObjectId, ref: 'Code', required: true }],
+    FavCodes: [{ type: Schema.Types.ObjectId, ref: 'Code', required: true }]
+  },
+  {
+    timestamps: true
+  }
+);
+
+schema.pre('save', function (next) {
+  if (!validationPassword(this.password)) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  this.password = bcrypt.hashSync(this.password, 10);
+  next();
+});
+
+module.exports = mongoose.model('users', schema);
+```
+
+En el Modelo de Code también tenemos relación con el User y por supuesto con los tags. `code.model.js`
+
+```jsx
+title: { type: String, unique: true, required: true },
+code: { type: String, unique: true, required: true },
+author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+description: { type: String, maxlength: 300 },
+tags: [{ type: Schema.Types.ObjectId, ref: "Tag", required: true }],
+likes: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
+```
+
+Y finalmente los tags estarán en su modelo `tag.model.js`
+
+```jsx
+{
+   title: { type: String, unique: true, required: true },
+   color: { type: String, unique: true, required: true }
+}
+```
+
+---
+
+### Definiendo Controladores
+
+Un controlador hace las funciones que su propio nombre indica, es la sala de máquinas en la que operaremos y crearemos la funcionalidad que se invocará cada vez que accedamos a una ruta. Por ejemplo nuestro controlador de code es un CRUD básico que os puede valer para empezar a trabajar con Node `code.controller.js`
+
+```jsx
+const Code = require('./code.model');
+const { setError } = require('../../helpers/utils');
+
+const getAll = async (req, res, next) => {
+  try {
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const skip = (page - 1) * 20;
+    const codes = await Code.find().populate('author', 'username').skip(skip).limit(20);
+    return res.json({
+      status: 200,
+      message: 'Recovered all codes',
+      data: { codes: codes }
+    });
+  } catch (error) {
+    return next(setError(500, 'Failed all codes'));
+  }
+};
+
+const getById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const code = await Code.findById(id).populate('author', 'username');
+    if (!code) return next(setError(404, 'Code not found'));
+    return res.json({
+      status: 200,
+      message: 'Recovered all codes',
+      data: { code: code }
+    });
+  } catch (error) {
+    return next(setError(500, 'Failed code'));
+  }
+};
+
+const create = async (req, res, next) => {
+  try {
+    const code = new Code(req.body);
+    const codeInBd = await code.save();
+    return res.json({
+      status: 201,
+      message: 'Created new code',
+      data: { code: codeInBd }
+    });
+  } catch (error) {
+    return next(setError(500, 'Failed created code'));
+  }
+};
+
+const update = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const code = new Code(req.body);
+    code._id = id;
+    const updatedCode = await Code.findByIdAndUpdate(id, code);
+    if (!updatedCode) return next(setError(404, 'Code not found'));
+    return res.json({
+      status: 201,
+      message: 'Updated new code',
+      data: { code: updatedCode }
+    });
+  } catch (error) {
+    return next(setError(500, 'Failed updated code'));
+  }
+};
+
+const deleteCode = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deletedCode = await Code.findByIdAndDelete(id);
+    if (!deletedCode) return next(setError(404, 'Code not found'));
+    return res.json({
+      status: 200,
+      message: 'deleted new code',
+      data: { code: deletedCode }
+    });
+  } catch (error) {
+    return next(setError(500, 'Failed deleted code'));
+  }
+};
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  deleteCode
+};
+```
+
+---
+
+### Definiendo rutas
+
+Las rutas son los endpoints que atacaremos desde nuestro frontal, en cada fichero de routes definiremos las rutas asociando la funcionalidad definida en nuestros controladores. Para ello necesitamos el Router de express que nos facilitará nuestro trabajo. Os dejamos un ejemplo de routes con `code.routes.js`
+
+```jsx
+const CodeRoutes = require('express').Router();
+const { authorize } = require('../../middleware/authorize');
+const { getAll, getById, create, update, deleteCode } = require('./code.controller');
+
+CodeRoutes.get('/', [authorize], getAll);
+CodeRoutes.get('/:id', [authorize], getById);
+CodeRoutes.post('/', [authorize], create);
+CodeRoutes.patch('/:id', [authorize], update);
+CodeRoutes.delete('/:id', [authorize], deleteCode);
+
+module.exports = CodeRoutes;
+```
+
+---
+
+### Middleware Auth
+
+Si os fijáis en nuestras rutas tenemos un middleware de auth que define si el usuario está autorizado o no, eso es en base al login, estos middlewares funcionan como interceptores que lanzan una comprobación o funcionalidad cuando atacamos a dicha ruta. Pro ejemplo nuestro `authorize.js`
+
+```jsx
+const { verifyToken, setError } = require('../helpers/utils');
+const User = require('../api/users/user.model');
+
+const authorize = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    if (!token) return next(setError(401, 'Unauthorized'));
+    const parsedToken = token.replace('Bearer ', '');
+    const validToken = verifyToken(parsedToken, process.env.JWT_SECRET);
+    const user = await User.findById(validToken.id);
+    delete user.password;
+    req.user = user;
+    next();
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = {
+  authorize
+};
+```
+
+---
+
+Finalmente tenemos nuestro `index.js` que es nuestro elemento de entrada, por decirlo de alguna manera hace de orquestador disparando toda la funcionalidad asociada a nuestro proyecto.
+
+```jsx
+// Library
+const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+// Routes
+const UserRoutes = require('./api/users/user.routes');
+const CodeRoutes = require('./api/codes/code.routes');
+const TagRoutes = require('./api/tags/tag.routes');
+// DB
+const { connectDb } = require('./helpers/db');
+// Port
+const PORT = process.env.PORT || 8000;
+// inicilizate express
+const app = express();
+// Connect DataBase
+connectDb();
+// Headers & Verbs
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+// Cors enable
+app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: true }));
+// Json Data
+app.use(express.json({ limit: '1mb' }));
+// urlEncoded
+app.use(express.urlencoded({ limit: '1mb', extended: true }));
+// Routes
+app.use('/api/user', UserRoutes);
+app.use('/api/code', CodeRoutes);
+app.use('/api/tag', TagRoutes);
+// Swagger docs route
+app.use('/api/docs', require('./helpers/swagger'));
+// Routes not found 404
+app.use('*', (req, res, next) => {
+  const error = new Error();
+  error.status = 404;
+  error.message = 'Route not found';
+  return next(error);
+});
+// Error handler
+app.use((error, req, res, next) => {
+  return res.status(error.status || 500).json(error.message || 'Unexpected error');
+});
+// Enable Language
+app.disable('x-powered-by');
+// Open Listener Server
+app.listen(PORT, () => {
+  console.log('Server is running in http://localhost:' + PORT);
+});
+```
+
+---
+
+Os dejamos el Repo de Github [https://github.com/MiniCodeLab/api-instacode](https://github.com/MiniCodeLab/api-instacode) y con esto hemos empezado nuestro proyecto 🎉. Nos vemos pronto MiniCoders.
