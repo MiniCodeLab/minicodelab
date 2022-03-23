@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import about from 'public/images/about.png';
-import calendar from 'public/images/calendar.png';
+import youtube from 'public/images/youtube.png';
 import longLogo from 'public/images/longlogo.png';
 import ColorMode from './ColorMode';
 
@@ -18,9 +18,9 @@ const Menu: React.FC = () => {
 
       <ul>
         <li>
-          <Link href="/calendar" passHref>
-            <a title="Calendario">
-              <Image src={calendar} alt="Calendar icon" width={40} height={40} />
+          <Link href="/video" passHref>
+            <a title="Video">
+              <Image src={youtube} alt="youtube icon" width={40} height={40} />
             </a>
           </Link>
         </li>

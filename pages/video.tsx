@@ -11,11 +11,11 @@ import {
   CardTitle
 } from 'styles/ui/Card';
 
-const CalendarPage: React.FC<Props> = ({ calendar }) => {
+const VideoPage: React.FC<Props> = ({ video }) => {
   return (
     <Layout title="Feed">
       <CardsWrapper>
-        {calendar.map((event, idx) => (
+        {video.map((event, idx) => (
           <Card key={idx}>
             <CardHeader isArticle>
               <Image src={event.cover} alt={event.title} width={60} height={60} />
@@ -46,7 +46,7 @@ const CalendarPage: React.FC<Props> = ({ calendar }) => {
 };
 
 export type Props = {
-  calendar: {
+  video: {
     cover: string;
     date: string;
     description: string;
@@ -56,16 +56,16 @@ export type Props = {
 };
 
 export const getStaticProps = async (): Promise<GetStaticPropsResult<Props>> => {
-  const calendar: Props['calendar'] = await (
+  const video: Props['video'] = await (
     await fetch(`${process.env.NEXT_PUBLIC_CONTENT_URL}calendar.json`)
   ).json();
 
   return {
     props: {
-      calendar
+      video
     },
     revalidate: 3600
   };
 };
 
-export default CalendarPage;
+export default VideoPage;
