@@ -3,14 +3,14 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "Qué es Mini Code Lab",
     "description": "Presentación de Mini Code Lab",
-    "date": "01-24-2022 20:30",
+    "date": "01/24/2022 20:30",
     "link": "https://youtu.be/coE0HFyfKQc"
   },
   {
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "Taller de Introducción a NextJS",
     "description": "Introducción a NextJs con @Ccastillo06 & @aRiveraMerida",
-    "date": "01-27-2022 20:30",
+    "date": "01/27/2022 20:30",
     "link": "https://www.youtube.com/watch?v=J-goNq63p84",
     "relatedArticles": ["https://www.minicodelab.dev/feed/taller-introduccion-nextjs"]
   },
@@ -18,14 +18,14 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "Code talk #1",
     "description": "Hablamos sobre desarrollo web con Francisco Javier Linde",
-    "date": "02-01-2022 20:30",
+    "date": "02/01/2022 20:30",
     "link": "https://www.youtube.com/watch?v=1FZDR4UTuMA"
   },
   {
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "Taller | Javascript para React & TypeScript",
     "description": "Conceptos básicos de Javascript para React y Typescript",
-    "date": "02-03-2022 20:30",
+    "date": "02/03/2022 20:30",
     "link": "https://www.youtube.com/watch?v=VLu74gQ14fE",
     "relatedArticles": ["https://www.minicodelab.dev/feed/taller-js-react"]
   },
@@ -33,7 +33,7 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Fundamentos y primer proyecto",
     "description": "Funcionamiento interno de React y conceptos básicos. Consumimos una API para crear un proyecto.",
-    "date": "02-08-2022 20:30",
+    "date": "02/08/2022 20:30",
     "link": "https://www.youtube.com/watch?v=iXZYPN3Nilc",
     "relatedArticles": [
       "https://www.minicodelab.dev/feed/react-0-basicos-1",
@@ -44,7 +44,7 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Hooks [useState, useEffect]",
     "description": "Vemos los Hooks useState y useEffect en profundidad y al completo",
-    "date": "02-10-2022 20:30",
+    "date": "02/10/2022 20:30",
     "link": "https://www.youtube.com/watch?v=5EiAGGHunOA",
     "relatedArticles": ["https://www.minicodelab.dev/feed/react-0-hooks-usestate-useeffect"]
   },
@@ -52,14 +52,14 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "Code talk #2",
     "description": "Charla con @desarrollo_util",
-    "date": "02-16-2022 20:00",
+    "date": "02/16/2022 20:00",
     "link": "https://www.youtube.com/watch?v=LzvYvvZbKZQ"
   },
   {
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Hooks [useRef]",
     "description": "Vemos el Hook useRef en profundidad y al completo",
-    "date": "02-17-2022 20:30",
+    "date": "02/17/2022 20:30",
     "link": "https://www.youtube.com/watch?v=Fd1uwJcYZLY",
     "relatedArticles": ["https://www.minicodelab.dev/feed/react-0-hooks-useref"]
   },
@@ -67,14 +67,14 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "Code talk #3",
     "description": "Disfrutando del camino a Senior con @nikoto.jpg",
-    "date": "02-22-2022 20:30",
+    "date": "02/22/2022 20:30",
     "link": "https://www.youtube.com/watch?v=QVrKwpyKN6o"
   },
   {
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Hooks [useMemo, useCallback]",
     "description": "Vemos los Hooks useMemo y useCallback en profundidad y al completo",
-    "date": "02-24-2022 20:30",
+    "date": "02/24/2022 20:30",
     "link": "https://www.youtube.com/watch?v=4sPPwGUH52c",
     "relatedArticles": ["https://www.minicodelab.dev/feed/react-0-hooks-usememo-usecallback"]
   },
@@ -82,7 +82,7 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Hooks [Custom Hooks]",
     "description": "Veremos como crear Custom Hooks y tendremos varios ejemplos",
-    "date": "03-04-2022 20:30",
+    "date": "03/04/2022 20:30",
     "link": "https://www.youtube.com/watch?v=xOgGfmxLle4",
     "relatedArticles": ["https://www.minicodelab.dev/feed/react-0-hooks-custom"]
   },
@@ -90,14 +90,14 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "Code talk #4",
     "description": "Día a día en La Liga con @sergio_herrera",
-    "date": "03-08-2022 20:30",
+    "date": "03/08/2022 20:30",
     "link": "https://www.youtube.com/watch?v=Z0-4hzgl668"
   },
   {
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Routing con React Router",
     "description": "Añadiendo routing en React para crear una SPA",
-    "date": "03-10-2022 20:30",
+    "date": "03/10/2022 20:30",
     "link": "https://www.youtube.com/watch?v=1rxnQP-Mt1A",
     "relatedArticles": ["https://www.minicodelab.dev/feed/react-0-router"]
   },
@@ -105,7 +105,7 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Hooks [useContext]",
     "description": "Añadiendo useContext en React y comunicación entre componentes",
-    "date": "03-15-2022 20:30",
+    "date": "03/15/2022 20:30",
     "link": "https://www.youtube.com/watch?v=tdP9O0z0HZ8",
     "relatedArticles": ["https://www.minicodelab.dev/feed/react-0-usecontext"]
   },
@@ -113,7 +113,7 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Forms",
     "description": "Formularios con React Hooks Forms",
-    "date": "03-17-2022 20:30",
+    "date": "03/17/2022 20:30",
     "link": "https://www.youtube.com/watch?v=aMJxx9g9dag",
     "relatedArticles": ["https://www.minicodelab.dev/feed/react-0-forms"]
   },
@@ -121,7 +121,7 @@
     "cover": "https://res.cloudinary.com/db38x6luj/image/upload/h_60,w_60/v1643275521/calendar/youtube.png",
     "title": "React desde 0 | Node Js",
     "description": "API REST simple para proyecto en React",
-    "date": "03-22-2022 20:30",
+    "date": "03/22/2022 20:30",
     "link": "https://www.youtube.com/watch?v=h3i0-Yq8NHU",
     "relatedArticles": ["https://www.minicodelab.dev/feed/react-0-api-node"]
   }
