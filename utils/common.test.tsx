@@ -1,4 +1,4 @@
-import { getFormattedDate, sortByDate } from './common';
+import { getFormattedDate, sortByDate, getMetaAuthor } from './common';
 
 describe('sortByDate', () => {
   it('returns empty array if empty array is passed', () => {
@@ -64,5 +64,28 @@ describe('getFormattedDate', () => {
   it('should return dates formatted in short format if chosen', () => {
     const validDate = '02/21/2020';
     expect(getFormattedDate(validDate, 'short')).toBe('21/2/20');
+  });
+});
+
+describe('getMetaAuthor', () => {
+  it('should return the tag', () => {
+    const author = {
+      tag: '@johndoe',
+      link: 'https://twitter.com/johndoe'
+    };
+    expect(getMetaAuthor(author)).toBe(author.tag);
+  });
+  it('should return the tag', () => {
+    const authors = [
+      {
+        link: 'https://twitter.com/johndoe',
+        tag: '@johndoe'
+      },
+      {
+        link: 'https://twitter.com/janedoe',
+        tag: '@janedoe'
+      }
+    ];
+    expect(getMetaAuthor(authors)).toContain(authors[0].tag);
   });
 });

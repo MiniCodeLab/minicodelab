@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 const YoutubeVideo: React.FC<Props> = ({ url }) => {
   return (
     <IframeWrapper
+      data-testid="iframe-wrapper"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
       frameBorder="0"
