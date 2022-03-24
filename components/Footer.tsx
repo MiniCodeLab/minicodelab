@@ -7,7 +7,7 @@ import twitter from 'public/images/twitter.png';
 import youtube from 'public/images/youtube.png';
 import { Footer as FooterUi } from 'styles/ui/Footer';
 
-const socialLogos = [
+export const socialLogos = [
   { link: 'https://github.com/MiniCodeLab', src: github, alt: 'logo github' },
   { link: 'https://www.instagram.com/minicodelab/', src: instagram, alt: 'logo instagram' },
   { link: 'https://www.linkedin.com/in/minicodelab/', src: linkedin, alt: 'logo linkedin' },
