@@ -1,0 +1,301 @@
+# High Order Components (HOC)
+
+¡Hola MiniCoder 👋! Hoy volvemos con un nuevo artículo enfocado en React, en el que explicaremos uno de los patrones más conocido a la hora de crear aplicaciones escalables y mantenibles con una correcta organización del código. Al concepto que vas a aprender en este artículo le llamamos HOC, que para entendernos sería un "componente de orden superior".
+
+Para definir un HOC, podríamos decir que se trata de un componente cuya única labor es la de envolver a otro componente y devolverlo de forma consistente, pero añadiendo un comportamiento adicional de forma controlada y esperable. Por así decirlo, añade funcionalidad en un nivel intermedio entre el que sería el "parent component" y un "child component" de forma que podremos abstraer lógida y no llenar nuestros componentes de condiciones ✨.
+
+---
+
+### Crea tu primer HOC
+
+Ahora que tenemos la definición de lo que es un HOC, vamos a verlo en código para entener el concepto y aprender a usarlo en las situaciones necesarias.
+
+Lo primero que tienes que tener en cuenta es que un HOC se llamará normalmente con la palabra `With` seguido de la funcionalidad que estamos añadiendo, por ejemplo, un HOC que hace un console.log con el nombre del componente que envuelve, se llamaría `WithComponentNameLog`:
+
+```jsx
+const WithComponentNameLog = (Component) => {
+  console.log('HOC invocado con el componente:', Component.name);
+
+  return (props) => {
+    return <Component {...props} />;
+  };
+};
+```
+
+Como puedes ver, aquí tenemos un concepto muy importante en marcha, la currificación de nuestros componentes, lo que trataremos en otro artículo hablando del concepto `curry` en JavaScript. En resumen, esto consiste en crear funciones que al ser invocadas devuelven otra función lista para invocarse 🎁.
+
+En este caso, la función `WithComponentNameLog` recibe un `Component` como argumento, hace un `console.log` con su nombre al ser invocada y devuelve un nuevo componente intermedio que simplemente devuelve a `Component` con los props que se le pasan.
+
+Parece una locura así de primeras, pero este tipo de conceptos es muy bueno conocerlos para ocasiones futuras y seguramente lo encuentres aplicado en multitud de proyectos, vamos a ver el uso de este HOC en práctica.
+
+Tendremos un archivo `hocs/WithComponentNameLog.jsx` que exporta el HOC que hemos creado:
+
+```jsx
+// Tenemos un HOC que al ser invocado hace un log con el nombre del componente
+const WithComponentNameLog = (Component) => {
+  console.log('HOC invocado con el componente:', Component.name);
+
+  return (props) => {
+    return <Component {...props} />;
+  };
+};
+
+export default WithComponentNameLog;
+```
+
+Tendremos un archivo `components/HomePage.jsx` que exporta un componente `HomePage` muy sencillo:
+
+```jsx
+// Tenemos un componente HomePage que queremos envolver en el HOC
+const HomePage = () => <h1>Home 🏠</h1>;
+
+export default HomePage;
+```
+
+Y por último en `App.jsx` vamos a importar todo y a generar un componente `HomePage` vitaminado con ayuda del HOC:
+
+```jsx
+import HomePage from './components/HomePage';
+import WithComponentNameLog from './hocs/WithComponentNameLog';
+
+// Siempre FUERA DEL RENDER de un componente, envolvemos al componente que queremos en un HOC
+const HomeWithLog = WithComponentNameLog(HomePage);
+
+const App = () => {
+  return (
+    <div className="App">
+      {/* Ahora podemos invocar al componente HomeWithLog directamente como si fuese HomePage */}
+      <HomeWithLog />
+    </div>
+  );
+};
+```
+
+Y esta sería la forma de utilizar un HOC, la línea en la que lo invocamos pasándole el componente que queremos envolver, se invocará a su vez la primera parte de la función `WithComponentNameLog` y esto hará que veamos por consola:
+
+```bash
+HOC invocado con el componente HomeWithLog
+```
+
+---
+
+### Casos de uso reales de un HOC
+
+Vale, ahora que has visto en qué consiste un HOC y la forma de aplicarlos, vamos a ver un caso de uso real que tenga bastante más sentido que el HOC que hace `console.log` que acabamos de ver 😂.
+
+Imagina que tienes tu web personal llena de secciones con títulos y descripciones, y has creado una animación por medio de CSS para que únicamente las secciones que tu quieras cambien de colores como un arcoiris 🌈.
+
+```css
+.color-swap {
+  animation-name: colorSwap;
+  animation-duration: 1000ms;
+}
+
+@keyframes colorSwap {
+  0% {
+    color: red;
+  }
+  25% {
+    color: orange;
+  }
+  50% {
+    color: yellow;
+  }
+  75% {
+    color: grey;
+  }
+  100% {
+    color: white;
+  }
+}
+```
+
+Ahora tienes que elegir entre:
+
+- Aplicar este `className` a mano en cada sección que quieras, envolviendo todo en un `div` al que aplicar la clase y añadiendo una lógica a cada componente que realmente no querrías gestionar en ese punto.
+- Crear un HOC que gestione esta lógica sobre tus componentes sin alterarlos, teniendo un único punto de influencia localizado.
+
+Como te puedes imaginar, la segunda opción es la más viable a largo plazo, así que vamos a crear un HOC llamado `WithColorSwap`:
+
+```jsx
+const WithColorSwap = (Component) => (props) => {
+  return (
+    <div className="color-swap">
+      <Component {...props} />
+    </div>
+  );
+};
+```
+
+O su versión con TypeScript (ya sabes que aquí nos encanta TS) para que veas como crear HOCs con tipos genéricos:
+
+```tsx
+const WithColorSwap =
+  <T extends {}>(Component: (props: T) => JSX.Element) =>
+  (props: T) => {
+    return (
+      <div className="color-swap">
+        <Component {...props} />
+      </div>
+    );
+  };
+```
+
+Como habrás podido observar aquí, este HOC es muy sencillo y lo que hace es devolver un componente envuelto en un `div` con la clase `color-swap` aplicada. Podría tener algo más de lógica para aplicar la clase cuando el componente entre en pantalla para tener transiciones muy dinámicas, pero para este ejemplo no queremos complicar más la cosa 😱
+
+El HOC se usaría de la siguiente forma:
+
+```jsx
+// 1. Componente Section que recibe un título y una descripción, reusable:
+const Section = ({ title, description }) => {
+  return (
+    <section>
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </section>
+  );
+};
+
+// 2. Creamos un nuevo componente ColorSwapSection que tiene el HOC aplicado a Section
+const ColorSwapSection = WithColorSwap(Section);
+
+export default function App() {
+  return (
+    <div className="App">
+      {/** 3. Podemos usar el componente en App como si fuese Section, pero con la animación aplicada: **/}
+      <ColorSwapSection
+        title="MiniCodeLab"
+        description="¿Qué te parece el contenido de MiniCodeLab? Compártelo en redes para ayudarnos a crecer en comunidad 🚀"
+      />
+    </div>
+  );
+}
+```
+
+Y esto se podría aplicar a tantos componentes como queramos sin modificar su lógica interna, veríamos lo siguiente en nuestra web:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1648380349/articles/colorswap.gif"
+  alt="color-swap-hoc-gif"
+/>
+
+---
+
+### Consideraciones sobre los HOCs
+
+Ahora que has visto un caso de uso real, habrás podido observar varias cosas importantes:
+
+- Un HOC puede ser sustituido por un componente que envuelva a nuestro componente sin necesidad de tener funciones currificadas, si te resulta más cómoda esta forma de aplicar lógica a tus componentes, no dudes en utilizarla:
+
+```jsx
+const WithColorSwap = ({ children }) => {
+  return <div className="color-swap">{children}</div>;
+};
+
+// Lo usaríamos de la siguiente forma, como un componente normal:
+export default function App() {
+  return (
+    <div className="App">
+      <WithColorSwap>
+        <Section
+          title="MiniCodeLab"
+          description="¿Qué te parece el contenido de
+        MiniCodeLab? Compártelo en redes para ayudarnos a crecer en comunidad
+        🚀"
+        />
+      </WithColorSwap>
+    </div>
+  );
+}
+```
+
+- Desde que existen los HOOKS en react, podemos crear [Custom Hooks](https://www.minicodelab.dev/feed/react-0-hooks-custom) para aplicar parte de está lógica en algunos casos, no dudes en usar patrones que manejes mejor si tienes alternativas 🚀.
+
+- Un HOC debe ser una función lo más pura posible, es decir, para un mismo `input` en las mismas condiciones, debes devolver siempre el mismo output. Si tu HOC añade lógiica que depende de un contexto por ejemplo, debes documentarlo correctamente o indicarlo en su nombre.
+
+- Si quieres usar un state o algún HOOK dentro de la segunda función de un HOC, debes crear esa segunda función por separado para mejorar la legibilidad, a continuación te dejamos un ejemplo bonus (muy útil por cierto) para que lo veas aplicado.
+
+Y recuerda MiniCoder 🧙‍♂️, este tipo de prácticas y patrones de desarrollo deben aplicarse siempre y cuando el equipo con el que trabajas entienda por qué y cómo se aplican, siempre hay alternativas para todas las soluciones que planteamos, por lo que el camino adecuado para tener un proyecto escalable y fácil de mantener es estar de acuerdo con el equipo en qué prácticas aplicamos.
+
+---
+
+### Bonus HOC: Rutas protegidas y TypeScript
+
+Te dejamos aquí un último HOC pensado para tener rutas protegidas en React Router v6. Está simplificado y no gestiona estados como la carga de datos del usuario, por lo que tendrás que ampliarlo si quieres tener la funcionalidad completa.
+
+Como te hemos comentado antes, si un HOC va a utilizar un HOOK en su interior, necesita tener la segunda función separada como si fuese un componente para mejorar su comprensión y lectura. Este HOC se conectará a un `Context AuthContext` para cargar un valor `authenticated` que será un booleano, y nos indicará si el usuario está o no está logeado. En caso negativo, hará una redirección a la raiz de nuestra web (podríamos ampliarlo por medio de props).
+
+Definimos primero un contexto para gestionar la autenticación:
+
+```tsx
+import { createContext } from 'react';
+
+export const AuthContext = createContext(false);
+```
+
+Ahora creamos un HOC `WithAuthentication` que proteja nuestras rutas cuando lo apliquemos:
+
+```tsx
+import { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+
+const WrappedComponent = <T extends { Component: (props: T) => JSX.Element }>(props: T) => {
+  const { Component } = props;
+  const authenticated = useContext(AuthContext);
+
+  return authenticated ? <Component {...props} /> : <Navigate to="/" />;
+};
+
+// HOC para permitir el paso a un componente si estamos autenticados
+export const WithAuthentication =
+  <T extends {}>(Component: (props: T) => JSX.Element) =>
+  (props: T) => {
+    return <WrappedComponent {...props} Component={Component} />;
+  };
+```
+
+Y por último, añadimos la lógica de React Router en `App` y aplicamos el HOC a los componentes de que queramos tener en rutas protegidas:
+
+```tsx
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext';
+import { WithAuthentication } from './hocs/WithAuthentication';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import './styles.css';
+
+// Componente Profile envuelto por el HOC
+const AuthProfile = WithAuthentication(Profile);
+
+export default function App() {
+  return (
+    <div className="App">
+      {/* 🚨 Cambia este valor entre true/false para probar la ruta protegida 🚨 */}
+      <AuthContext.Provider value={true}>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Home />} />
+
+            {/* Usamos una ruta normal, pero con el componente protegido */}
+            <Route path="profile" element={<AuthProfile />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthContext.Provider>
+    </div>
+  );
+}
+```
+
+Ahora podremos probar la ruta protegida cambiando el valor que proveemos en `App` al `AuthContext.Provider` y veremos como somos redirigidos a la `Home` de la aplicación si no tenemos autenticación:
+
+<img
+  src="https://res.cloudinary.com/db38x6luj/image/upload/v1648381638/articles/redirection-hoc.gif"
+  alt="color-swap-hoc-gif"
+/>
+
+Te dejamos por aquí el link al Codesandbox donde tenemos subido el ejemplo por si quieres verlo en un editor online: https://codesandbox.io/s/auth-hoc-9o99y5
+
+---
+
+¡Esperamos que te haya gustado este artículo! Ahora toca poner todo en práctica y mejorar nuestro control sobre React y patrones de desarrollo de mayor nivel, gracias por leernos y si puedes compartir estos artículo para crecer juntos no haces un gran favor. ¡Hasta el próximo artículo 🎉!

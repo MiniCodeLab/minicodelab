@@ -1,0 +1,13 @@
+{
+  "author": [
+    {
+      "tag": "@Ccastillo06",
+      "link": "https://www.linkedin.com/in/cristiancastillonavarro/"
+    }
+  ],
+  "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
+  "description": "¿Qué son los High Order Components?",
+  "title": "React | Patrón HOC",
+  "date": "03/27/2022 12:00:00",
+  "tags": ["react"]
+}
