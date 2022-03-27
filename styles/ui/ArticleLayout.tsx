@@ -66,8 +66,10 @@ export const ArticleLayout = styled.div`
   pre {
     margin: var(--base-padding) auto;
     border-radius: var(--code-radius);
+    font-size: 0.9rem;
 
     @media (min-width: 840px) {
+      font-size: 1rem;
       margin: var(--base-padding-dk) auto;
     }
   }
