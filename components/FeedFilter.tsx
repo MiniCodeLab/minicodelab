@@ -17,7 +17,7 @@ import useResizeCallback from 'hooks/useResizeCallback';
 const FeedFilter = ({ covers, onChangeCovers }: Props) => {
   const allTags = deduplicate<string>(mapBy<PostCover>(covers, 'tags'));
 
-  const [filtersVisible, setFiltersVisible] = useState<boolean>(true);
+  const [filtersVisible, setFiltersVisible] = useState<boolean>(false);
   const [tagFilter, setTagFilter] = useState<string>('');
   const [titleFilter, setTitleFilter] = useState<string>('');
   const debouncedTitleFilter = useDebounce<string>(titleFilter, 250);
@@ -43,6 +43,7 @@ const FeedFilter = ({ covers, onChangeCovers }: Props) => {
       setFiltersVisible(true);
     }
   }, []);
+
   useResizeCallback(resizeCb);
 
   return (

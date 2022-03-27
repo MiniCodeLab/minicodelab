@@ -222,7 +222,7 @@ export const AppStyles = css`
   li {
     color: var(--color-paragraph);
     font-size: var(--paragraph);
-    line-height: 120%;
+    line-height: 140%;
     padding: calc(var(--spacing-m) / 2) 0;
   }
 

@@ -1,3 +1,4 @@
+import AuthorLinksWithName from 'components/AuthorLinks';
 import CodeBlock from 'components/CodeBlock';
 import Layout from 'components/Layout';
 import ReferencesStack from 'components/ReferencesStack';
@@ -9,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArticleLayout } from 'styles/ui/ArticleLayout';
 import { Metadata } from 'types/common';
-import { getMetaAuthor, getMetaData } from 'utils/common';
+import { getMetaData } from 'utils/common';
 
 const components = {
   code: CodeBlock,
@@ -29,6 +30,7 @@ export default function Article({ source, meta }: Props) {
         })}
       >
         <ArticleLayout>
+          <AuthorLinksWithName authors={meta.author} />
           <MDXRemote {...source} components={components} />
         </ArticleLayout>
       </Layout>

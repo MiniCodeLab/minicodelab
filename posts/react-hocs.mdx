@@ -2,7 +2,7 @@
 
 ¡Hola MiniCoder 👋! Hoy volvemos con un nuevo artículo enfocado en React, en el que explicaremos uno de los patrones más conocido a la hora de crear aplicaciones escalables y mantenibles con una correcta organización del código. Al concepto que vas a aprender en este artículo le llamamos HOC, que para entendernos sería un "componente de orden superior".
 
-Para definir un HOC, podríamos decir que se trata de un componente cuya única labor es la de envolver a otro componente y devolverlo de forma consistente, pero añadiendo un comportamiento adicional de forma controlada y esperable. Por así decirlo, añade funcionalidad en un nivel intermedio entre el que sería el "parent component" y un "child component" de forma que podremos abstraer lógida y no llenar nuestros componentes de condiciones ✨.
+Para definir un HOC, podríamos decir que se trata de un componente cuya única labor es la de envolver a otro componente y devolverlo de forma consistente, pero añadiendo un comportamiento adicional de forma controlada y esperable. Por así decirlo, añade funcionalidad en un nivel intermedio entre el que sería el "parent component" y un "child component" de forma que podremos abstraer lógica y no llenar nuestros componentes de condiciones ✨.
 
 ---
 
@@ -24,7 +24,11 @@ const WithComponentNameLog = (Component) => {
 
 Como puedes ver, aquí tenemos un concepto muy importante en marcha, la currificación de nuestros componentes, lo que trataremos en otro artículo hablando del concepto `curry` en JavaScript. En resumen, esto consiste en crear funciones que al ser invocadas devuelven otra función lista para invocarse 🎁.
 
-En este caso, la función `WithComponentNameLog` recibe un `Component` como argumento, hace un `console.log` con su nombre al ser invocada y devuelve un nuevo componente intermedio que simplemente devuelve a `Component` con los props que se le pasan.
+Si analizamos este caso encontramos lo siguiente:
+
+1. La función `WithComponentNameLog` recibe un `Component` como argumento.
+2. Hace un `console.log` con el nombre del componente nombre al ser invocada por primera vez.
+3. Devuelve un nuevo componente intermedio que a su vez devuelve a `Component` con los props que se le pasan al componente intermedio.
 
 Parece una locura así de primeras, pero este tipo de conceptos es muy bueno conocerlos para ocasiones futuras y seguramente lo encuentres aplicado en multitud de proyectos, vamos a ver el uso de este HOC en práctica.
 
