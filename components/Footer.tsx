@@ -8,15 +8,15 @@ import youtube from 'public/images/youtube.png';
 import { Footer as FooterUi } from 'styles/ui/Footer';
 
 export const socialLogos = [
-  { link: 'https://github.com/MiniCodeLab', src: github, alt: 'logo github' },
-  { link: 'https://www.instagram.com/minicodelab/', src: instagram, alt: 'logo instagram' },
-  { link: 'https://www.linkedin.com/in/minicodelab/', src: linkedin, alt: 'logo linkedin' },
-  { link: 'https://www.twitch.tv/minicodelab', src: twitch, alt: 'logo twitch' },
-  { link: 'https://twitter.com/minicodelab/', src: twitter, alt: 'logo twitter' },
+  { link: 'https://github.com/MiniCodeLab', src: github, alt: 'github' },
+  { link: 'https://www.instagram.com/minicodelab/', src: instagram, alt: 'instagram' },
+  { link: 'https://www.linkedin.com/in/minicodelab/', src: linkedin, alt: 'linkedin' },
+  { link: 'https://www.twitch.tv/minicodelab', src: twitch, alt: 'twitch' },
+  { link: 'https://twitter.com/minicodelab/', src: twitter, alt: 'twitter' },
   {
     link: 'https://www.youtube.com/channel/UCN1SyK4zRHbdIO6HptDoDOA',
     src: youtube,
-    alt: 'logo youtube'
+    alt: 'youtube'
   }
 ];
 
@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
         {socialLogos.map((logo, idx) => (
           <li key={idx}>
             <a href={logo.link}>
-              <Image src={logo.src} alt={logo.alt} width={40} height={40} />
+              <Image src={logo.src} alt={`logo ${logo.alt}`} width={40} height={40} />
             </a>
           </li>
         ))}

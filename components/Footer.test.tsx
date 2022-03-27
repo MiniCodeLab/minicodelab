@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Footer from './Footer';
-import { socialLogos } from './Footer';
+import Footer, { socialLogos } from './Footer';
 
 describe('Footer', () => {
   it('renders the component correctly', () => {
@@ -10,7 +9,7 @@ describe('Footer', () => {
     expect(footerMsg).toBeVisible();
 
     socialLogos.forEach((logo) => {
-      expect(screen.getByAltText(logo.alt)).toBeVisible();
+      expect(screen.getByAltText(`logo ${logo.alt}`)).toBeVisible();
     });
   });
 });
