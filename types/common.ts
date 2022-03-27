@@ -9,21 +9,26 @@ export type Profile = {
 };
 
 export type Author = {
-  tag: string;
   link: string;
+  name: string;
+  tag: string;
 };
 
 export type PostCover = {
   slug: string;
 } & Metadata;
 
-export type Metadata = {
-  author: Author;
+export type RawMetadata = {
+  author: string[];
   cover: string;
   date: string;
   description: string;
   tags: string[];
   title: string;
+};
+
+export type Metadata = Omit<RawMetadata, 'author'> & {
+  author: Author | Author[];
 };
 
 export type Video = {

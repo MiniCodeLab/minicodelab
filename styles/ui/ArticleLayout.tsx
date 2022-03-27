@@ -7,9 +7,11 @@ export const ArticleLayout = styled.div`
   --base-padding-dk: calc(var(--base-padding) * 2);
 
   padding: var(--base-padding);
+  padding-top: 0;
 
   @media (min-width: 840px) {
     padding: var(--base-padding-dk);
+    padding-top: 0;
   }
 
   > h1 {
@@ -56,11 +58,18 @@ export const ArticleLayout = styled.div`
     }
   }
 
+  > ol {
+    list-style: number;
+    padding-left: calc(2 * var(--paragraph));
+  }
+
   pre {
     margin: var(--base-padding) auto;
     border-radius: var(--code-radius);
+    font-size: 0.9rem;
 
     @media (min-width: 840px) {
+      font-size: 1rem;
       margin: var(--base-padding-dk) auto;
     }
   }
@@ -86,8 +95,9 @@ export const ArticleLayout = styled.div`
     background-color: var(--code-block);
     border-radius: var(--code-radius);
     color: var(--code-text);
-    padding: 0 var(--code-radius);
+    font-size: 1rem;
     padding-bottom: 1px;
+    padding: 0 var(--code-radius);
 
     @media (min-width: 840px) {
       font-size: 80%;

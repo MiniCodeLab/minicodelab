@@ -1,8 +1,5 @@
 {
-  "author": {
-    "tag": "@Ccastillo06",
-    "link": "https://www.linkedin.com/in/cristiancastillonavarro/"
-  },
+  "author": ["@Ccastillo06"],
   "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1643366443/posts/next.png",
   "description": "Artículo del taller en directo como Introducción a Next.js",
   "title": "Taller de Introducción a NextJS",

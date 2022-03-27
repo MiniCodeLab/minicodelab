@@ -1,18 +1,8 @@
 {
-    "author": [
-      {
-        "tag": "@Ccastillo06",
-        "link": "https://www.linkedin.com/in/cristiancastillonavarro/"
-      },
-      {
-        "tag": "@aRiveraMerida",
-        "link": "https://www.linkedin.com/in/albertoriveramerida/"
-      }
-    ],
-    "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
-    "description": "Formularios con React Hooks Forms",
-    "title": "React desde 0 | Forms",
-    "date": "03/17/2022 12:00:00",
-    "tags": ["react"]
-  }
-  
+  "author": ["@aRiveraMerida", "@Ccastillo06"],
+  "cover": "https://res.cloudinary.com/db38x6luj/image/upload/v1644260534/posts/react.png",
+  "description": "Formularios con React Hooks Forms",
+  "title": "React desde 0 | Forms",
+  "date": "03/17/2022 12:00:00",
+  "tags": ["react"]
+}

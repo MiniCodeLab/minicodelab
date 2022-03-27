@@ -1,14 +1,14 @@
 import React from 'react';
 import { Author } from 'types/common';
 
-export const getPostAuthor = (authorData: Author | Author[]) => {
+export const getPostAuthor = (authorData: Author | Author[], prop: 'tag' | 'name' = 'tag') => {
   const authorArr = Array.isArray(authorData) ? authorData : [authorData];
 
-  return authorArr.map(({ tag, link }) => (
-    <React.Fragment key={tag}>
+  return authorArr.map((author) => (
+    <React.Fragment key={author.tag}>
       {' '}
-      <a href={link} target="_blank" rel="noopener noreferrer">
-        {tag}
+      <a href={author.link} target="_blank" rel="noopener noreferrer">
+        {author[prop]}
       </a>
     </React.Fragment>
   ));
