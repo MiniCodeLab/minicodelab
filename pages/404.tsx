@@ -1,13 +1,14 @@
+import styled from '@emotion/styled';
 import FeedList from 'components/FeedList';
 import Layout from 'components/Layout';
+import Loader from 'components/Loader';
 import { retrievePostsCovers } from 'libs/posts';
 import { GetStaticPropsResult } from 'next';
 import dynamic from 'next/dynamic';
 import { PostCover } from 'types/common';
 import { getMetaData, sortByDate } from 'utils/common';
-import styled from '@emotion/styled';
-import Loader from 'components/Loader';
 
+const Toastcontainer = dynamic(() => import('components/ToastContainer'));
 const CanvasScene = dynamic(() => import('components/ThreeScene'), {
   loading: () => <Loader />,
   ssr: false
@@ -29,9 +30,7 @@ const errorPage = ({ covers }: Props) => {
       </h3>
       <hr />
 
-      <CanvasContainer>
-        <CanvasScene />
-      </CanvasContainer>
+      <CanvasScene />
 
       <hr />
 
@@ -42,6 +41,8 @@ const errorPage = ({ covers }: Props) => {
 
         <FeedList covers={covers} />
       </RecommendedSection>
+
+      <Toastcontainer theme="light" limit={1} pauseOnFocusLoss={false} />
     </Layout>
   );
 };
@@ -50,9 +51,6 @@ export type Props = {
   covers: PostCover[];
 };
 
-export const CanvasContainer = styled.div`
-  padding: 0 1rem;
-`;
 export const RecommendedSection = styled.div`
   text-align: center;
 `;

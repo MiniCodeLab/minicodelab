@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { Html, OrbitControls, useGLTF } from '@react-three/drei';
 import { BoxGeometryProps, Canvas, MaterialProps } from '@react-three/fiber';
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Button } from 'styles/ui/Button';
+import { showInfoToast } from 'utils/common';
 
 // Inspirations:
 // https://drei.pmnd.rs/?path=/story/loaders-gltf--draco-local-scene-st
@@ -38,20 +40,33 @@ const Model = (props) => {
   );
 };
 
-const LightBulb = (props) => {
-  return (
-    <mesh {...props}>
-      <pointLight castShadow />
-      <sphereBufferGeometry args={[0.2, 20, 5]} />
-      <meshPhongMaterial emissive={'white'} transparent opacity={0} />
-    </mesh>
-  );
-};
-
-const SceneContainer = styled.div`
+const SceneManager = styled.div<{ interactive: boolean }>`
   height: 100vh;
   max-height: 400px;
   min-height: 400px;
+  width: 100%;
+  position: relative;
+
+  > button {
+    font-size: 1rem;
+    opacity: ${({ interactive }) => (interactive ? 1 : 0.75)};
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }
+`;
+
+const AbsoluteDiv = styled.div<{ interactive: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: ${({ interactive }) => (interactive ? '0' : '100%')};
+  inset: 0;
+  z-index: 1;
+`;
+
+const SceneContainer = styled.div`
+  height: 100%;
   width: 100%;
 
   .canvas {
@@ -65,38 +80,57 @@ const SceneContainer = styled.div`
 // https://github.com/pmndrs/react-three-next
 const CanvasScene = () => {
   const domRef = useRef<HTMLDivElement | null>(null);
+  const [canInteract, setCanInteract] = useState(false);
+
+  const interact = useCallback(() => {
+    setCanInteract((prevVal) => !prevVal);
+  }, []);
+
+  useEffect(() => {
+    if (canInteract) {
+      showInfoToast('Prueba y mueve a MiniCody');
+    }
+  }, [canInteract]);
 
   return (
-    <SceneContainer ref={domRef}>
-      <Canvas
-        mode="concurrent"
-        shadows={true}
-        className="canvas"
-        camera={{
-          position: [1, 0.5, 3.5]
-        }}
-      >
-        <ambientLight color={'white'} intensity={0.2} />
-        <LightBulb position={[0, 3, 2]} />
-        <LightBulb position={[2, 4, -2]} />
-
-        <React.Suspense
-          fallback={
-            <Html>
-              <span>Cargando modelo...</span>
-            </Html>
-          }
+    <SceneManager interactive={canInteract}>
+      <SceneContainer ref={domRef}>
+        <Canvas
+          mode="concurrent"
+          shadows={true}
+          className="canvas"
+          camera={{
+            position: [0, 0.5, 3.5]
+          }}
         >
-          <Model position={[0, -2.5, 0]} />
-        </React.Suspense>
-        <OrbitControls
-          domElement={domRef.current}
-          enableZoom={false}
-          enablePan={false}
-          autoRotate
-        />
-      </Canvas>
-    </SceneContainer>
+          <ambientLight color="white" intensity={0.3} />
+          <directionalLight color="white" intensity={2} />
+          {/* <directionalLight color="white" intensity={1} /> */}
+
+          <React.Suspense
+            fallback={
+              <Html>
+                <span>Cargando modelo...</span>
+              </Html>
+            }
+          >
+            <Model position={[0, -2.5, 0]} />
+          </React.Suspense>
+          <OrbitControls
+            autoRotate
+            domElement={domRef.current}
+            enablePan={canInteract}
+            enableRotate={canInteract}
+            enableZoom={canInteract}
+          />
+        </Canvas>
+      </SceneContainer>
+
+      <AbsoluteDiv interactive={canInteract} />
+      <Button onClick={interact} variant={canInteract ? 'green' : 'purple'}>
+        {canInteract ? 'Bloquear 🔒' : 'Interactuar 🔛'}
+      </Button>
+    </SceneManager>
   );
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 import { Author } from 'types/common';
 
 export const getPostAuthor = (authorData: Author | Author[], prop: 'tag' | 'name' = 'tag') => {
@@ -71,4 +72,15 @@ export const getFormattedDate = (
   // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
   const date = new Date(dateString);
   return Intl.DateTimeFormat('es-ES', { dateStyle }).format(date);
+};
+
+export const showInfoToast = (message: string) => {
+  toast.info(message, {
+    autoClose: 2000,
+    closeOnClick: true,
+    draggable: false,
+    hideProgressBar: true,
+    pauseOnHover: false,
+    position: 'bottom-right'
+  });
 };
