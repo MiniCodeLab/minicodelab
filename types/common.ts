@@ -39,3 +39,15 @@ export type Video = {
   relatedArticles: string[];
   title: string;
 };
+
+export type Course = {
+  name: string;
+  description: string;
+  duration: string;
+  content: Content[];
+};
+
+export type Content = {
+  blockName: string;
+  hours: string;
+};

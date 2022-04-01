@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Curso de Javascript",
+        "description": "Aprende Javascript trabajando desde los conceptos más básicos hasta convertirte en un verdadero ninja 🥷 ",
+        "duration": "4 semanas",
+        "content": [
+            {
+                "blockName": "Variables",
+                "hours": "2 horas"
+            },
+            {
+                "blockName": "Tipos de datos",
+                "hours": "2 horas"
+            },
+            {
+                "blockName": "Operadores - Lógicos & Aritméticos",
+                "hours": "2 horas"
+            },
+            {
+                "blockName": "Condicionales & bucles",
+                "hours": "2 horas"
+            },
+            {
+                "blockName": "Objetos & Arrays",
+                "hours": "2 horas"
+            },
+            {
+                "blockName": "Métodos de Arrays",
+                "hours": "2 horas"
+            },
+            {
+                "blockName": "Manejo del DOM y eventos",
+                "hours": "2 horas"
+            }
+        ]
+    }
+]
