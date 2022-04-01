@@ -14,4 +14,10 @@ export const PageLayout = styled.div`
     padding: var(--spacing-m);
     padding-bottom: calc(2 * var(--spacing-m));
   }
+
+  hr {
+    background-color: #2d2d2d;
+    border: none;
+    height: 1px;
+  }
 `;
