@@ -29,7 +29,7 @@ type Person = Record<string, string | number>;
 const person: Person = { name: 'MiniCoder', age: 30 };
 ```
 
-Con esto estamos diciendo que `person` puede ser un objeto que tenga claves de tipo `string` y valores de tipo `string` o `number` para dichas claves. Podemos observar con esto que crearemos tipos bastante dinámicos, pero con el riesgo de confundir calves, por lo que hay que usar `Record` con cierta precaución.
+Con esto estamos diciendo que `person` puede ser un objeto que tenga claves de tipo `string` y valores de tipo `string` o `number` para dichas claves. Podemos observar con esto que crearemos tipos bastante dinámicos, pero con el riesgo de confundir claves, por lo que hay que usar `Record` con cierta precaución.
 
 Aquí te dejamos un ejemplo para que veas su utilidad en situaciones más complejas, donde no podremos tipar correctamente el acumulador `acc` a menos que lo identifiquemos como un `Record<string, string>`:
 
@@ -98,7 +98,7 @@ Aunque este código sea correcto, TypeScript considera que existe la posibilidad
   alt="TS capture"
 />
 
-Para solucionar esto, podemos tipar `network` de forma más abstracta con `Record<string, string>` y solucionar este problema:
+Para solucionar esto, podemos tipar `networks` de forma más abstracta con `Record<string, string>` y solucionar este problema:
 
 <img
   src="https://res.cloudinary.com/db38x6luj/image/upload/v1643901211/articles/ts2.png"
